@@ -1,14 +1,29 @@
 # Nima 🤖
 
-A Large Language Model built from scratch using PyTorch. Nima demonstrates the fundamental concepts of transformer architecture, attention mechanisms, and modern NLP techniques through a clean, modular implementation.
+> **A complete Large Language Model implementation from scratch**
 
-## 🎯 Project Goals
+Nima is a production-ready LLM framework built from first principles using PyTorch. It demonstrates transformer architecture, modern training techniques, and efficient inference with a clean, modular design.
 
-- Build a complete LLM from first principles
-- Understand transformer architecture deeply
-- Implement production-ready training and inference pipelines
-- Create a modular, extensible codebase
-- Document the learning journey
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## ✨ Features
+
+- 🏗️ **Complete Transformer Implementation**: Multi-head attention, feed-forward networks, and positional encoding from scratch
+- 🎨 **Multiple Architectures**: GPT-style decoder-only and full encoder-decoder models
+- 📊 **Flexible Tokenization**: Character-level, word-level, and BPE tokenizers
+- 🚀 **Production Training**: Distributed training, mixed precision, gradient accumulation
+- 💬 **Advanced Generation**: Top-k, top-p, beam search, and temperature sampling
+- 📈 **Comprehensive Metrics**: Perplexity, accuracy, BLEU score, and more
+- 🔧 **Easy to Extend**: Modular design makes experimentation simple
+
+## 🎯 Why Nima?
+
+- **Educational**: Learn LLMs by building one from scratch
+- **Practical**: Train real models on your own data
+- **Customizable**: Modify any component to experiment with new ideas
+- **Well-Documented**: Extensive documentation and examples
 
 ## 🏗️ Project Structure
 
