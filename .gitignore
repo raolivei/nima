@@ -1,1 +1,34 @@
+# OS
 .DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.pip/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Model checkpoints (large binary files)
+experiments/checkpoints/*.pt
+experiments/*/checkpoints/*.pt
+*.ckpt
+*.pth
+
+# Logs and monitoring
+experiments/logs/
+experiments/*/logs/
+experiments/*/tensorboard/
+wandb/
+
+# Data (optional - uncomment if datasets are large)
+# data/processed/
+# data/raw/*.txt

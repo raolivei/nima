@@ -21,9 +21,9 @@ model:
 # Training Configuration
 training:
   # Basic settings
-  epochs: 10  # Reduced for quick testing on small dataset
-  batch_size: 4   # Small batch for small dataset
-  gradient_accumulation_steps: 2  # Effective batch size = 8
+  epochs: 10 # Reduced for quick testing on small dataset
+  batch_size: 4 # Small batch for small dataset
+  gradient_accumulation_steps: 2 # Effective batch size = 8
   max_steps: null # If set, overrides epochs
 
   # Learning rate
