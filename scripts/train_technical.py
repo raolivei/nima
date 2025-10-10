@@ -278,7 +278,7 @@ def train_with_monitoring(
                 val_loss=val_loss,
                 train_perplexity=train_perplexity,
                 val_perplexity=val_perplexity,
-                learning_rate=trainer.get_lr()
+                learning_rate=trainer._get_lr()
             )
             
             # Log to TensorBoard
@@ -287,7 +287,7 @@ def train_with_monitoring(
                 tb_logger.log_scalar('val/loss', val_loss, step)
                 tb_logger.log_scalar('train/perplexity', train_perplexity, step)
                 tb_logger.log_scalar('val/perplexity', val_perplexity, step)
-                tb_logger.log_scalar('learning_rate', trainer.get_lr(), step)
+                tb_logger.log_scalar('learning_rate', trainer._get_lr(), step)
             
             # Log to W&B
             if wandb_logger:
@@ -297,7 +297,7 @@ def train_with_monitoring(
                     'val/loss': val_loss,
                     'train/perplexity': train_perplexity,
                     'val/perplexity': val_perplexity,
-                    'learning_rate': trainer.get_lr()
+                    'learning_rate': trainer._get_lr()
                 }, step=step)
             
             # Save best model
