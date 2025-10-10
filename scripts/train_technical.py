@@ -158,16 +158,19 @@ def setup_training(config: Dict) -> tuple:
     
     # Create training config
     training_config = TrainingConfig(
-        output_dir=train_config['checkpoint_dir'],
+        checkpoint_dir=train_config['checkpoint_dir'],
         num_epochs=train_config['epochs'],
         batch_size=train_config['batch_size'],
         learning_rate=train_config['learning_rate'],
         warmup_steps=train_config.get('warmup_steps', 0),
         max_grad_norm=train_config.get('max_grad_norm', 1.0),
-        log_interval=train_config.get('log_steps', 50),
-        eval_interval=train_config.get('eval_steps', 500),
-        save_interval=train_config.get('save_steps', 500),
-        use_mixed_precision=train_config.get('use_mixed_precision', False)
+        logging_steps=train_config.get('log_steps', 50),
+        eval_steps=train_config.get('eval_steps', 500),
+        save_steps=train_config.get('save_steps', 500),
+        use_mixed_precision=train_config.get('use_mixed_precision', False),
+        gradient_accumulation_steps=train_config.get('gradient_accumulation_steps', 1),
+        weight_decay=train_config.get('weight_decay', 0.01),
+        lr_scheduler_type=train_config.get('lr_scheduler', 'cosine')
     )
     
     return model, train_loader, val_loader, test_loader, tokenizer, training_config
@@ -230,7 +233,12 @@ def train_with_monitoring(
         )
     
     # Create trainer
-    trainer = Trainer(model, training_config)
+    trainer = Trainer(
+        model=model,
+        config=training_config,
+        train_dataloader=train_loader,
+        eval_dataloader=val_loader
+    )
     
     logger.info("\n" + "=" * 80)
     logger.info("STARTING TRAINING")
