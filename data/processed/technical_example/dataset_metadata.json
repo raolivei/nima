@@ -1,0 +1,15 @@
+{
+  "tokenizer_type": "bpe",
+  "vocab_size": 121,
+  "num_sources": 2,
+  "split_ratios": [
+    0.8,
+    0.1,
+    0.09999999999999995
+  ],
+  "train_samples": 14,
+  "val_samples": 1,
+  "test_samples": 3,
+  "max_length": 512,
+  "min_length": 50
+}

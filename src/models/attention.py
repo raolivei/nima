@@ -139,7 +139,16 @@ class MultiHeadAttention(nn.Module):
         # 3. Apply attention to each head
         if mask is not None:
             # Expand mask for all heads
-            mask = mask.unsqueeze(1).repeat(1, self.n_heads, 1, 1)
+            # Handle different mask dimensions
+            if mask.dim() == 2:
+                # (batch_size, seq_len) -> (batch_size, 1, 1, seq_len)
+                mask = mask.unsqueeze(1).unsqueeze(2)
+            elif mask.dim() == 3:
+                # (batch_size, seq_len, seq_len) -> (batch_size, 1, seq_len, seq_len)
+                mask = mask.unsqueeze(1)
+            # Expand for all heads if needed
+            if mask.size(1) == 1:
+                mask = mask.expand(-1, self.n_heads, -1, -1)
         
         attn_output, attn_weights = self.attention(Q, K, V, mask)
         

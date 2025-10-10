@@ -33,6 +33,7 @@ where head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)
 ```
 
 Benefits:
+
 - Captures different types of relationships
 - Attends to different positions simultaneously
 - More expressive representation
@@ -71,6 +72,7 @@ output = LayerNorm(x + Sublayer(x))
 ```
 
 Benefits:
+
 - Stabilizes training
 - Allows deeper models
 - Faster convergence
@@ -96,6 +98,7 @@ Layer Norm → Output Projection → Logits
 ```
 
 Key features:
+
 - **Causal masking**: Can only attend to previous tokens
 - **Autoregressive**: Generates one token at a time
 - **Unidirectional**: Left-to-right processing
@@ -110,6 +113,7 @@ Target → Decoder (with cross-attention to Context) → Output
 ```
 
 Useful for:
+
 - Machine translation
 - Summarization
 - Any seq2seq task
@@ -141,6 +145,7 @@ Cosine decay: LR decreases following cosine curve
 ```
 
 Benefits:
+
 - Warm start prevents instability
 - Cosine decay allows fine-tuning at the end
 
@@ -169,43 +174,53 @@ This is why we limit max_seq_len (typically 512-2048).
 ### Sampling Strategies
 
 #### 1. Greedy Decoding
+
 ```python
 next_token = argmax(logits)
 ```
+
 - Deterministic
 - Fast
 - Can be repetitive
 
 #### 2. Temperature Sampling
+
 ```python
 probs = softmax(logits / temperature)
 next_token = sample(probs)
 ```
+
 - Temperature < 1: More focused
 - Temperature > 1: More random
 
 #### 3. Top-K Sampling
+
 ```python
 top_k_probs = keep_top_k(probs, k)
 next_token = sample(top_k_probs)
 ```
+
 - Only sample from k most likely tokens
 - Prevents unlikely tokens
 
 #### 4. Top-P (Nucleus) Sampling
+
 ```python
 top_p_probs = keep_cumulative(probs, p)
 next_token = sample(top_p_probs)
 ```
+
 - Dynamic cutoff based on cumulative probability
 - Adapts to confidence
 
 #### 5. Beam Search
+
 ```python
 Maintain k best sequences
 Expand each by vocabulary
 Keep top k total
 ```
+
 - More thorough search
 - Better for tasks with clear correct answer
 - Slower than sampling
@@ -222,15 +237,16 @@ Training tokens ∝ sqrt(compute)
 ```
 
 In practice:
+
 - **Small models**: Train longer (more data)
 - **Large models**: Need proportionally more data
 
 ### Nima Model Sizes
 
-| Preset | Parameters | d_model | Layers | Heads | FFN | Use Case |
-|--------|------------|---------|--------|-------|-----|----------|
-| tiny   | ~10M       | 256     | 4      | 4     | 1024 | Testing |
-| small  | ~125M      | 768     | 12     | 12    | 3072 | Experiments |
+| Preset | Parameters | d_model | Layers | Heads | FFN  | Use Case       |
+| ------ | ---------- | ------- | ------ | ----- | ---- | -------------- |
+| tiny   | ~10M       | 256     | 4      | 4     | 1024 | Testing        |
+| small  | ~125M      | 768     | 12     | 12    | 3072 | Experiments    |
 | medium | ~350M      | 1024    | 24     | 16    | 4096 | Small projects |
 
 ## Best Practices
@@ -328,7 +344,7 @@ Nima implements a complete, modern transformer architecture with:
 
 - ✅ Multi-head attention with proper scaling
 - ✅ Multiple feed-forward variants
-- ✅ Proper normalization and residual connections  
+- ✅ Proper normalization and residual connections
 - ✅ Flexible positional encoding
 - ✅ Efficient training infrastructure
 - ✅ Advanced generation techniques

@@ -27,6 +27,7 @@ python scripts/prepare_data.py --dataset tiny_shakespeare --tokenizer char
 ```
 
 This will:
+
 - Download the Tiny Shakespeare dataset
 - Create a character-level tokenizer
 - Split data into train/validation sets
@@ -63,6 +64,7 @@ Nima includes several transformer architectures:
 - **Transformer models**: Full encoder-decoder for seq2seq tasks
 
 Available model sizes:
+
 - `gpt-tiny`: 256d, 4 layers (good for learning/testing)
 - `gpt-small`: 768d, 12 layers (GPT-1 style)
 - `gpt-medium`: 1024d, 24 layers (GPT-2 medium style)
@@ -72,11 +74,13 @@ Available model sizes:
 Three tokenization strategies are available:
 
 1. **Character-level** (`char`):
+
    - Simplest approach
    - Good for small datasets
    - Large vocabulary for general text
 
 2. **Word-level** (`word`):
+
    - Splits on words
    - Human-readable tokens
    - Better for well-formed text
@@ -110,6 +114,7 @@ python scripts/prepare_data.py \
 ```
 
 Output:
+
 ```
 Dataset prepared:
   Tokenizer: char
@@ -124,7 +129,7 @@ Create or edit `configs/my_model.yaml`:
 
 ```yaml
 model:
-  vocab_size: 65  # From tokenizer
+  vocab_size: 65 # From tokenizer
   d_model: 256
   n_heads: 4
   n_layers: 4
@@ -148,6 +153,7 @@ python scripts/train.py --config configs/my_model.yaml
 ```
 
 You'll see output like:
+
 ```
 Epoch 1/50
   Step 100: loss=3.2456, lr=0.000030

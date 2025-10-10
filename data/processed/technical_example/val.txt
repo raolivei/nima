@@ -1,0 +1,46 @@
+Q: What's the purpose of ConfigMaps in Kubernetes?
+
+A: ConfigMaps store non-confidential configuration data as key-value pairs. They decouple configuration from container images, making applications more portable. Use ConfigMaps for:
+
+1. Application configuration files
+2. Command-line arguments
+3. Environment variables
+4. Configuration data that doesn't contain secrets
+
+Example:
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  database_url: "postgres://db.example.com:5432/mydb"
+  log_level: "info"
+  config.json: |
+    {
+      "feature_flags": {
+        "new_ui": true
+      }
+    }
+---
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: app
+    env:
+    - name: DATABASE_URL
+      valueFrom:
+        configMapKeyRef:
+          name: app-config
+          key: database_url
+    volumeMounts:
+    - name: config
+      mountPath: /etc/config
+  volumes:
+  - name: config
+    configMap:
+      name: app-config
+```
+
+ConfigMaps can be mounted as files or exposed as environment variables.

@@ -1,0 +1,36 @@
+Q: How do I deploy an application to Kubernetes?
+
+A: To deploy an application to Kubernetes, you need to create a Deployment manifest. First, create a YAML file defining your deployment with the container image, replicas, and other specifications. Then use `kubectl apply -f deployment.yaml` to deploy it. For example:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: my-app:latest
+        ports:
+        - containerPort: 8080
+```
+
+What is Kubernetes?
+
+Kubernetes is an open-source container orchestration platform that automates the deployment, scaling, and management of containerized applications.
+
+Troubleshooting
+
+When a pod fails to start, check:
+
+1. Pod status: `kubectl describe pod pod-name`
+2. Container logs: `kubectl logs pod-name`
+3. Events: `kubectl get events`

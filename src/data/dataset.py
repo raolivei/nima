@@ -397,10 +397,11 @@ def prepare_dataset(
     val_text = text[split_idx:]
     
     # Create tokenizer
-    tokenizer = create_tokenizer(
-        tokenizer_type,
-        vocab_size=vocab_size if tokenizer_type in ['word', 'bpe'] else None
-    )
+    tokenizer_kwargs = {}
+    if tokenizer_type in ['word', 'bpe'] and vocab_size is not None:
+        tokenizer_kwargs['vocab_size'] = vocab_size
+    
+    tokenizer = create_tokenizer(tokenizer_type, **tokenizer_kwargs)
     
     # Build vocabulary on training text
     tokenizer.build_vocab([train_text])

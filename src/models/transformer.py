@@ -314,8 +314,11 @@ class GPTModel(nn.Module):
         
         # Combine with attention mask if provided
         if attention_mask is not None:
+            # Convert to boolean and expand dimensions
+            # (batch_size, seq_len) -> (batch_size, 1, 1, seq_len)
             attention_mask = attention_mask.unsqueeze(1).unsqueeze(2)
-            causal_mask = causal_mask & attention_mask
+            # Combine masks: use logical_and to ensure boolean output
+            causal_mask = torch.logical_and(causal_mask, attention_mask)
         
         # Pass through transformer layers
         for layer in self.layers:

@@ -1,0 +1,42 @@
+[
+    {
+        "question": "How do I deploy an application to Kubernetes?",
+        "answer": "To deploy an application to Kubernetes, you need to create a Deployment manifest. First, create a YAML file defining your deployment with the container image, replicas, and other specifications. Then use `kubectl apply -f deployment.yaml` to deploy it. For example:\n```yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: my-app\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: my-app\n  template:\n    metadata:\n      labels:\n        app: my-app\n    spec:\n      containers:\n      - name: my-app\n        image: my-app:latest\n        ports:\n        - containerPort: 8080\n```"
+    },
+    {
+        "question": "What's the difference between Docker and Kubernetes?",
+        "answer": "Docker is a containerization platform that packages applications and their dependencies into containers. Kubernetes is a container orchestration system that manages and schedules containers across multiple machines. Docker creates the containers, while Kubernetes deploys, scales, and manages them in production. You use Docker to build container images, and Kubernetes to run those containers at scale."
+    },
+    {
+        "question": "How do I debug a Python application running in Docker?",
+        "answer": "To debug a Python application in Docker, you have several options:\n1. Use `docker logs container-name` to view application logs\n2. Execute a shell inside the container: `docker exec -it container-name bash`\n3. Run Python with `-u` flag for unbuffered output\n4. Use remote debugging with ptvsd or debugpy\n5. Mount your source code as a volume for live editing\n\nExample Dockerfile for debugging:\n```dockerfile\nFROM python:3.11\nWORKDIR /app\nCOPY requirements.txt .\nRUN pip install -r requirements.txt\nRUN pip install debugpy  # Add debugger\nCOPY . .\nCMD [\"python\", \"-u\", \"app.py\"]\n```"
+    },
+    {
+        "question": "What are Terraform modules and how do I use them?",
+        "answer": "Terraform modules are reusable packages of Terraform configurations. They help you organize and reuse infrastructure code. To use a module:\n\n1. Create a module directory with main.tf, variables.tf, outputs.tf\n2. Call the module from your main configuration:\n\n```hcl\nmodule \"vpc\" {\n  source = \"./modules/vpc\"\n  \n  vpc_cidr = \"10.0.0.0/16\"\n  environment = \"production\"\n}\n\n# Use module outputs\nresource \"aws_instance\" \"example\" {\n  subnet_id = module.vpc.public_subnet_id\n}\n```\n\nModules can also be sourced from the Terraform Registry or Git repositories."
+    },
+    {
+        "question": "How do I set resource limits in Kubernetes?",
+        "answer": "Resource limits in Kubernetes are set in the container spec of your pod or deployment. You define both requests (guaranteed resources) and limits (maximum resources):\n\n```yaml\nresources:\n  requests:\n    memory: \"64Mi\"\n    cpu: \"250m\"\n  limits:\n    memory: \"128Mi\"\n    cpu: \"500m\"\n```\n\nRequests ensure the pod gets at least that amount of resources. Limits prevent the pod from using more than specified. CPU is measured in millicores (1000m = 1 CPU), and memory in bytes (Mi = Mebibytes). Always set both to prevent resource contention and ensure cluster stability."
+    },
+    {
+        "question": "What's the best way to manage secrets in Kubernetes?",
+        "answer": "Best practices for managing secrets in Kubernetes:\n\n1. **Use Kubernetes Secrets**: Store sensitive data as Secret resources\n2. **External secret managers**: Use tools like HashiCorp Vault, AWS Secrets Manager, or Azure Key Vault\n3. **Encrypt at rest**: Enable encryption for etcd\n4. **RBAC**: Limit access to secrets with Role-Based Access Control\n5. **Never commit secrets**: Use sealed-secrets or external tools\n\nExample using Kubernetes Secrets:\n```yaml\napiVersion: v1\nkind: Secret\nmetadata:\n  name: db-secret\ntype: Opaque\ndata:\n  username: YWRtaW4=  # base64 encoded\n  password: cGFzc3dvcmQ=\n---\napiVersion: v1\nkind: Pod\nspec:\n  containers:\n  - name: app\n    env:\n    - name: DB_USER\n      valueFrom:\n        secretKeyRef:\n          name: db-secret\n          key: username\n```"
+    },
+    {
+        "question": "How do I troubleshoot a failed Terraform apply?",
+        "answer": "When Terraform apply fails, follow these debugging steps:\n\n1. **Read the error message**: Terraform provides detailed error output\n2. **Check the plan**: Run `terraform plan` to see what will change\n3. **Enable debug logging**: Set `TF_LOG=DEBUG` environment variable\n4. **Verify credentials**: Ensure provider credentials are correct\n5. **Check resource state**: Use `terraform state list` and `terraform state show`\n6. **Validate configuration**: Run `terraform validate`\n\nCommon issues:\n- Provider authentication failures\n- Resource naming conflicts\n- Dependency cycles\n- API rate limits\n- Invalid resource configurations\n\nUse `terraform refresh` to sync state with actual infrastructure if there's drift."
+    },
+    {
+        "question": "What is a Kubernetes Ingress and when should I use it?",
+        "answer": "A Kubernetes Ingress is an API object that manages external access to services in a cluster, typically HTTP/HTTPS. Use Ingress when you need:\n\n1. **Host-based routing**: Route traffic based on hostname\n2. **Path-based routing**: Route based on URL paths\n3. **SSL/TLS termination**: Manage certificates centrally\n4. **Load balancing**: Distribute traffic across pods\n\nExample Ingress:\n```yaml\napiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: example-ingress\nspec:\n  rules:\n  - host: myapp.example.com\n    http:\n      paths:\n      - path: /api\n        pathType: Prefix\n        backend:\n          service:\n            name: api-service\n            port:\n              number: 80\n      - path: /web\n        pathType: Prefix\n        backend:\n          service:\n            name: web-service\n            port:\n              number: 80\n```\n\nYou'll need an Ingress Controller (like NGINX or Traefik) installed in your cluster."
+    },
+    {
+        "question": "How do I optimize Docker image size?",
+        "answer": "To optimize Docker image size:\n\n1. **Use minimal base images**: Alpine Linux or distroless images\n2. **Multi-stage builds**: Separate build and runtime stages\n3. **Combine RUN commands**: Reduce layers\n4. **Remove unnecessary files**: Clean caches and temporary files\n5. **Use .dockerignore**: Exclude unnecessary files from build context\n\nExample optimized Dockerfile:\n```dockerfile\n# Build stage\nFROM golang:1.21-alpine AS builder\nWORKDIR /app\nCOPY go.* ./\nRUN go mod download\nCOPY . .\nRUN CGO_ENABLED=0 go build -o app\n\n# Runtime stage\nFROM alpine:3.18\nRUN apk --no-cache add ca-certificates\nWORKDIR /root/\nCOPY --from=builder /app/app .\nCMD [\"./app\"]\n```\n\nThis reduces image size from ~800MB to ~15MB for a Go application."
+    },
+    {
+        "question": "What's the purpose of ConfigMaps in Kubernetes?",
+        "answer": "ConfigMaps store non-confidential configuration data as key-value pairs. They decouple configuration from container images, making applications more portable. Use ConfigMaps for:\n\n1. Application configuration files\n2. Command-line arguments\n3. Environment variables\n4. Configuration data that doesn't contain secrets\n\nExample:\n```yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: app-config\ndata:\n  database_url: \"postgres://db.example.com:5432/mydb\"\n  log_level: \"info\"\n  config.json: |\n    {\n      \"feature_flags\": {\n        \"new_ui\": true\n      }\n    }\n---\napiVersion: v1\nkind: Pod\nspec:\n  containers:\n  - name: app\n    env:\n    - name: DATABASE_URL\n      valueFrom:\n        configMapKeyRef:\n          name: app-config\n          key: database_url\n    volumeMounts:\n    - name: config\n      mountPath: /etc/config\n  volumes:\n  - name: config\n    configMap:\n      name: app-config\n```\n\nConfigMaps can be mounted as files or exposed as environment variables."
+    }
+]
