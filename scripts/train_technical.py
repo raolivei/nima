@@ -306,8 +306,7 @@ def train_with_monitoring(
                 results['best_epoch'] = epoch + 1
                 results['best_val_loss'] = val_loss
                 
-                checkpoint_path = Path(training_config.output_dir) / 'checkpoint_best.pt'
-                trainer.save_checkpoint(str(checkpoint_path), val_loss)
+                trainer.save_checkpoint('checkpoint_best')
                 logger.info(f"✓ Saved best model (val_loss: {val_loss:.4f})")
             
             # Early stopping check
@@ -437,7 +436,7 @@ def main():
         # Final evaluation on test set
         if test_loader:
             # Load best model
-            best_checkpoint = Path(training_config.output_dir) / 'checkpoint_best.pt'
+            best_checkpoint = Path(training_config.checkpoint_dir) / 'checkpoint_best.pt'
             if best_checkpoint.exists():
                 logger.info(f"\nLoading best model from: {best_checkpoint}")
                 checkpoint = torch.load(best_checkpoint, map_location=device)
