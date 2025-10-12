@@ -421,7 +421,7 @@ def main():
         # Load checkpoint
         if args.resume:
             logger.info(f"Loading checkpoint: {args.resume}")
-            checkpoint = torch.load(args.resume, map_location=device)
+            checkpoint = torch.load(args.resume, map_location=device, weights_only=False)
             model.load_state_dict(checkpoint['model_state_dict'])
         
         # Evaluate on test set
@@ -439,7 +439,7 @@ def main():
             best_checkpoint = Path(training_config.checkpoint_dir) / 'checkpoint_best.pt'
             if best_checkpoint.exists():
                 logger.info(f"\nLoading best model from: {best_checkpoint}")
-                checkpoint = torch.load(best_checkpoint, map_location=device)
+                checkpoint = torch.load(best_checkpoint, map_location=device, weights_only=False)
                 model.load_state_dict(checkpoint['model_state_dict'])
             
             evaluate_on_test_set(model, test_loader, tokenizer, config, device)
