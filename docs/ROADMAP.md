@@ -5,6 +5,7 @@
 NIMA is a comprehensive Large Language Model implementation built from scratch using PyTorch. The project demonstrates a complete ML engineering pipeline with a 547K parameter GPT-style transformer, multiple tokenization strategies, robust training infrastructure, and flexible inference capabilities.
 
 **Current Status:** ✅ Fully operational and validated
+
 - **Model Architecture:** GPT-style transformer with multi-head attention
 - **Parameters:** 547,000 trainable parameters
 - **Datasets:** Shakespeare (964K characters) + Technical (352 samples)
@@ -15,7 +16,9 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
 ## Immediate Next Steps (1-2 weeks)
 
 ### 1. Model Performance Enhancement
+
 - **Hyperparameter Optimization**
+
   - Systematic grid search for learning rate, batch size, dropout rates
   - Implement Optuna for automated hyperparameter tuning
   - Document optimal configurations for different dataset types
@@ -26,7 +29,9 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
   - Add early stopping with validation loss monitoring
 
 ### 2. Dataset Expansion and Quality
+
 - **Data Collection**
+
   - Curate larger, more diverse text datasets
   - Implement data quality filters and deduplication
   - Add multilingual support starting with Spanish/French
@@ -37,7 +42,9 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
   - Implement dynamic vocabulary sizing based on dataset characteristics
 
 ### 3. Evaluation Framework
+
 - **Metrics Implementation**
+
   - Add perplexity calculation across validation sets
   - Implement BLEU scores for text generation quality
   - Add human evaluation framework for coherence assessment
@@ -50,7 +57,9 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
 ## Medium-Term Goals (1-3 months)
 
 ### 1. Architecture Improvements
+
 - **Model Scaling**
+
   - Implement larger model variants (1M, 5M, 10M parameters)
   - Add support for different attention mechanisms (sparse, sliding window)
   - Experiment with MoE (Mixture of Experts) architectures
@@ -61,7 +70,9 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
   - Explore distributed training across multiple GPUs
 
 ### 2. Advanced Features
+
 - **Fine-tuning Capabilities**
+
   - Implement LoRA (Low-Rank Adaptation) for efficient fine-tuning
   - Add instruction following capabilities with supervised fine-tuning
   - Create domain-specific fine-tuning pipelines (code, science, creative writing)
@@ -72,7 +83,9 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
   - Implement conversation history and context management
 
 ### 3. Research Directions
+
 - **Novel Architectures**
+
   - Experiment with RetNet (retention networks) as Transformer alternative
   - Implement Mamba/State Space Models for long sequence handling
   - Explore mixture architectures combining different model types
@@ -85,7 +98,9 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
 ## Long-Term Vision (3-12 months)
 
 ### 1. Production Readiness
+
 - **Performance Optimization**
+
   - Model quantization (INT8, INT4) for deployment efficiency
   - TensorRT/ONNX conversion for optimized inference
   - Edge deployment capabilities for mobile/embedded devices
@@ -96,7 +111,9 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
   - Monitoring and alerting for production deployments
 
 ### 2. Advanced Applications
+
 - **Specialized Models**
+
   - Code generation assistant with programming language support
   - Technical writing assistant for documentation and reports
   - Creative writing companion with style adaptation
@@ -107,7 +124,9 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
   - Document understanding with layout awareness
 
 ### 3. Research Contributions
+
 - **Open Source Impact**
+
   - Publish detailed technical blog posts and papers
   - Create educational content for ML practitioners
   - Contribute to open-source ML ecosystem
@@ -120,18 +139,21 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
 ## Technical Priorities by Impact
 
 ### High Impact, Low Effort
+
 1. **Hyperparameter tuning** - Can significantly improve performance with minimal code changes
 2. **Better evaluation metrics** - Essential for measuring progress and comparing approaches
 3. **Learning rate scheduling** - Proven technique for training stability and convergence
 4. **Gradient clipping** - Prevents training instability with minimal implementation complexity
 
 ### High Impact, Medium Effort
+
 1. **Larger datasets** - Will improve model capabilities but requires data collection/processing
 2. **Fine-tuning infrastructure** - Enables specialization but needs careful architecture design
 3. **Web interface** - Dramatically improves accessibility but requires frontend development
 4. **Model quantization** - Enables broader deployment but needs careful optimization
 
 ### Medium Impact, High Effort
+
 1. **Distributed training** - Enables larger models but complex infrastructure requirements
 2. **Multi-modal capabilities** - Expands use cases but requires significant architecture changes
 3. **RLHF implementation** - Improves safety and alignment but complex training pipeline
@@ -140,12 +162,14 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
 ## Success Metrics
 
 ### Technical Metrics
+
 - **Model Performance:** Perplexity < 10 on validation sets
 - **Training Efficiency:** < 1 hour training time for 10M parameter models
 - **Inference Speed:** < 100ms latency for 50-token generation
 - **Model Quality:** BLEU score > 0.3 on text completion tasks
 
 ### Project Metrics
+
 - **Documentation:** 100% API coverage, comprehensive tutorials
 - **Testing:** > 90% code coverage, automated integration tests
 - **Usability:** One-command setup for new users
@@ -154,16 +178,19 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
 ## Resource Requirements
 
 ### Immediate (Next 2 weeks)
+
 - **Compute:** Single GPU (RTX 3080 or equivalent) sufficient
 - **Time:** 10-15 hours/week for implementation and experimentation
 - **Tools:** Existing Python environment with PyTorch
 
 ### Medium-term (1-3 months)
+
 - **Compute:** Multiple GPUs for larger model training
 - **Storage:** 100GB+ for larger datasets and model checkpoints
 - **Infrastructure:** Cloud computing credits for experimentation ($200-500/month)
 
 ### Long-term (3-12 months)
+
 - **Compute:** High-end GPU cluster or cloud resources for large-scale experiments
 - **Team:** Potential collaboration with other researchers/engineers
 - **Infrastructure:** Production deployment environment with monitoring and CI/CD
@@ -171,12 +198,14 @@ NIMA is a comprehensive Large Language Model implementation built from scratch u
 ## Risk Mitigation
 
 ### Technical Risks
+
 - **Overfitting:** Mitigate with proper validation strategies and regularization
 - **Training Instability:** Address with gradient clipping, learning rate scheduling
 - **Resource Constraints:** Implement efficient training techniques, use cloud resources strategically
 - **Model Degradation:** Establish comprehensive testing and rollback procedures
 
 ### Project Risks
+
 - **Scope Creep:** Maintain clear priorities and milestone-based development
 - **Technical Debt:** Regular code reviews and refactoring cycles
 - **Performance Regression:** Automated benchmarking and performance monitoring
