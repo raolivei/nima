@@ -1,10 +1,49 @@
-# CHANGELOG
+# Changelog
 
-Track important changes to the Nima AI learning project.
+All notable changes to the NIMA LLM project will be documented in this file.
 
-## [2.0.0] - 2025-10-14
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### What's New
+## [2.1.0] - 2024-12-24
+
+### Added
+- Comprehensive project validation and testing framework
+- Professional Medium.com article showcasing project architecture and capabilities
+- Interactive ask_nima.py script for model interaction
+- Enhanced PyTorch 2.6+ compatibility with weights_only parameter handling
+- Improved training configuration management with proper error handling
+- TokenizerAdapter for seamless inference pipeline integration
+
+### Fixed
+- PyTorch checkpoint loading compatibility issues with newer PyTorch versions
+- TrainingConfig attribute errors in training pipeline
+- Circular import issues in training modules
+- get_lr() method calls in learning rate scheduling
+
+### Documentation
+- Created comprehensive technical article for Medium publication
+- Simplified README for better accessibility to beginners
+- Updated documentation with practical examples and usage patterns
+- Enhanced architecture explanations with code samples
+
+### Validation
+- End-to-end validation of all project components
+- Verified data pipeline functionality with both Shakespeare and Technical datasets
+- Confirmed training system operability with 547K parameter GPT model
+- Tested inference engine with multiple tokenizer types
+- Validated configuration management across all components
+
+### Learning Outcomes
+- Successfully implemented GPT-style transformer from scratch (547K parameters)
+- Developed robust data preprocessing pipeline supporting multiple tokenizer types
+- Created comprehensive training system with monitoring and checkpointing
+- Built flexible inference engine with text generation capabilities
+- Established modular architecture enabling easy extension and experimentation
+
+## [2.0.0] - 2024-01-15
+
+### Added
 
 - **Complete Training System**: Added full pipeline for training AI models from scratch
 - **Interactive Chat**: Test your trained models with `scripts/ask_nima.py`
