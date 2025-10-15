@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated documentation with practical examples
 - Enhanced architecture explanations with code samples
 
-## [0.2.0] - 2024-01-15
+## [0.2.0] - 2025-10-14
 
 ### Added
 
@@ -57,3 +57,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 **Key Lesson**: Model quality depends heavily on dataset size. Our technical model (18 samples) produces lower quality text than the Shakespeare model (much larger dataset).
 
 **Next Steps**: Either collect more training data or learn about fine-tuning pre-trained models for better results with small datasets.
+
+## [0.1.0] - 2025-10-11
+
+### Added
+
+- Initial LLM implementation with GPT-style transformer architecture
+- Complete data processing pipeline with multiple tokenizer support
+- Training system with monitoring and checkpointing
+- Basic inference engine for text generation
+- Project structure and configuration management
+
+### Features
+
+- 547K parameter transformer model with multi-head attention
+- Character-level and BPE tokenization
+- Training on Shakespeare and technical datasets
+- Model evaluation and text generation capabilities
