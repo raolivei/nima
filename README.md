@@ -1,266 +1,175 @@
 # Nima 🤖
 
-> **A complete Large Language Model implementation from scratch**
+> **Learn AI by building your own language model from scratch**
 
-Nima is a production-ready LLM framework built from first principles using PyTorch. It demonstrates transformer architecture, modern training techniques, and efficient inference with a clean, modular design.
+A beginner-friendly project for understanding how AI text generation works. Build and train your own small language models using PyTorch.
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## ✨ Features
+## 🎯 What You'll Learn
 
-- 🏗️ **Complete Transformer Implementation**: Multi-head attention, feed-forward networks, and positional encoding from scratch
-- 🎨 **Multiple Architectures**: GPT-style decoder-only and full encoder-decoder models
-- 📊 **Flexible Tokenization**: Character-level, word-level, and BPE tokenizers
-- 🎯 **Specialized Training**: Technical documentation, engineering content, and Q&A datasets
-- 🚀 **Production Training**: Early stopping, learning rate scheduling, gradient accumulation
-- 📈 **Advanced Monitoring**: TensorBoard, W&B integration, automatic visualization
-- 💬 **Advanced Generation**: Top-k, top-p, beam search, and temperature sampling
-- 🧪 **Comprehensive Evaluation**: Perplexity, accuracy, BLEU score, and sample generation
-- 🔧 **Easy to Extend**: Modular design makes experimentation simple
+- **How AI generates text**: Build the core transformer architecture from scratch
+- **Training process**: Watch your model learn and improve over time
+- **Real experimentation**: Train models on different types of text (Shakespeare, technical docs)
+- **Evaluation**: Test how well your model performs and understand the results
 
-## 🎯 Why Nima?
+## ✨ What's Included
 
-- **Educational**: Learn LLMs by building one from scratch
-- **Practical**: Train real models on your own data
-- **Customizable**: Modify any component to experiment with new ideas
-- **Well-Documented**: Extensive documentation and examples
+- 🧠 **Complete AI Model**: All the code to build a text-generating AI
+- � **Training Pipeline**: Tools to train your model on any text data
+- � **Progress Monitoring**: Visual graphs to watch training progress
+- 💬 **Chat Interface**: Test your trained model with questions
+- 📚 **Learning Examples**: Pre-configured training on Shakespeare and technical content
 
 ## 🏗️ Project Structure
 
-```
-├── src/                    # Core implementation
-│   ├── models/            # Model architectures
-│   ├── data/              # Data processing
-│   ├── training/          # Training loops
-│   ├── evaluation/        # Evaluation metrics
-│   ├── inference/         # Inference engine
-│   └── utils/             # Utility functions
-├── data/                  # Dataset storage
-│   ├── raw/              # Raw datasets
-│   └── processed/        # Processed datasets
-├── configs/              # Configuration files
-├── experiments/          # Training experiments
-│   ├── checkpoints/      # Model checkpoints
-│   └── logs/             # Training logs
-├── notebooks/            # Jupyter notebooks
-├── scripts/              # Utility scripts
-├── tests/                # Unit tests
-└── docs/                 # Documentation
+```text
+├── src/                    # Core AI model code
+│   ├── models/            # The actual neural network
+│   ├── data/              # Text processing tools
+│   ├── training/          # Training logic
+│   └── inference/         # Text generation
+├── scripts/               # Easy-to-use training scripts
+│   ├── train_technical.py # Train on technical content
+│   ├── ask_nima.py        # Chat with your model
+│   └── prepare_data.py    # Process your text data
+├── configs/               # Training settings
+├── experiments/           # Your trained models
+└── data/                  # Your training text files
 ```
 
 ## 🚀 Quick Start
 
-### Basic Training (Tiny Shakespeare)
+### Step 1: Install Requirements
 
 ```bash
-# 1. Install dependencies
 pip install -r requirements.txt
-
-# 2. Prepare sample data
-python scripts/prepare_data.py --dataset tiny_shakespeare --tokenizer char
-
-# 3. Quick training test
-python scripts/train.py --quick_test
-
-# 4. Generate text
-python scripts/inference.py \
-  --checkpoint experiments/gpt_model/checkpoint_best.pt \
-  --tokenizer data/processed/tiny_shakespeare/char_tokenizer.json \
-  --prompt "Once upon a time"
 ```
 
-### Technical Model Training (System Engineering)
+### Step 2: Try Training on Shakespeare
 
 ```bash
-# 1. View quick start guide
-python scripts/example_technical_training.py
+# Train a small model on Shakespeare text
+python scripts/train.py --config configs/base_model.yaml
 
-# 2. Prepare technical data
-python scripts/prepare_technical_data.py \
-  --output-dir data/processed/technical \
-  --tokenizer bpe \
-  --text-files data/raw/sample_k8s_doc.md \
-  --json-files data/raw/technical_qa.json \
-  --format qa
-
-# 3. Train specialized model
-python scripts/train_technical.py \
-  --config configs/technical_training.yaml
-
-# 4. Monitor training
-tensorboard --logdir experiments/nima_technical/tensorboard
-
-# 5. Evaluate and generate
-python scripts/train_technical.py \
-  --config configs/technical_training.yaml \
-  --resume experiments/nima_technical/checkpoint_best.pt \
-  --eval-only
+# Watch training progress (in another terminal)
+tensorboard --logdir experiments/logs
 ```
 
-## 🧠 Model Architecture
-
-Our implementation includes:
-
-- **Multi-Head Attention**: Core attention mechanism
-- **Positional Encoding**: Position-aware embeddings
-- **Feed-Forward Networks**: Transformer building blocks
-- **Layer Normalization**: Training stability
-- **Residual Connections**: Gradient flow optimization
-
-## 📊 Implementation Status
-
-### Core Architecture ✅
-
-- [x] Multi-head attention mechanism
-- [x] Multiple transformer architectures (Encoder-Decoder, GPT-style)
-- [x] Positional encoding (learned and sinusoidal)
-- [x] Layer normalization and residual connections
-- [x] Model factory with pre-configured sizes
-
-### Data Processing ✅
-
-- [x] Three tokenizer types (char, word, BPE)
-- [x] Efficient data loading and preprocessing
-- [x] Technical data preparation pipeline
-- [x] Multi-format support (text, markdown, JSON, JSONL)
-- [x] 80/10/10 train/val/test splits
-
-### Training ✅
-
-- [x] Training pipeline with checkpointing
-- [x] Early stopping
-- [x] Learning rate scheduling (warmup + cosine decay)
-- [x] Gradient clipping and accumulation
-- [x] Mixed precision training (FP16)
-- [x] TensorBoard and W&B integration
-
-### Evaluation ✅
-
-- [x] Comprehensive metrics (perplexity, accuracy, BLEU)
-- [x] Automatic visualization (loss curves, plots)
-- [x] Test set evaluation
-- [x] Sample text generation for verification
-
-### Inference ✅
-
-- [x] Advanced text generation (sampling strategies)
-- [x] Top-k, top-p (nucleus), temperature sampling
-- [x] Beam search
-- [x] Interactive generation mode
-- [x] Batch generation
-
-### Coming Soon 🚧
-
-- [ ] Distributed training (multi-GPU)
-- [ ] Model quantization
-- [ ] ONNX export
-- [ ] Efficient attention (Flash Attention)
-- [ ] Fine-tuning utilities
-
-## 🔧 Configuration
-
-Model and training parameters are managed through YAML configuration files in the `configs/` directory:
-
-- `base_model.yaml`: Basic model configuration
-- `small_model.yaml`: Smaller model for quick experimentation
-- `large_model.yaml`: Larger model for better performance
-
-## 📈 Monitoring
-
-Training progress can be monitored using:
-
-- **TensorBoard**: Real-time training metrics
-- **Weights & Biases**: Experiment tracking (optional)
-- **Custom logging**: Detailed training logs
-
-## 🧪 Testing
-
-Run the test suite:
+### Step 3: Chat with Your Model
 
 ```bash
-pytest tests/
+# Test your trained model
+python scripts/ask_nima.py \
+  --checkpoint experiments/checkpoints/best_model.pt \
+  --prompt "To be or not to be"
 ```
 
-## 🎓 Training Specialized Models
-
-Nima supports training on specialized domains like system engineering and technical documentation:
-
-### Supported Data Types
-
-- **Technical Documentation**: Kubernetes, Terraform, AWS, DevOps guides
-- **Q&A Datasets**: StackOverflow-style technical questions and answers
-- **Code Examples**: With syntax preservation for various languages
-- **Engineering Blogs**: Technical articles and tutorials
-- **Custom Notes**: Your own curated technical content
-
-### Key Features
-
-- **Smart Preprocessing**: Preserves code blocks, technical formatting, and commands
-- **Multi-Source**: Combine multiple data sources with custom weights
-- **Automatic Splits**: 80/10/10 train/validation/test splits with shuffling
-- **Early Stopping**: Prevents overfitting with configurable patience
-- **Comprehensive Monitoring**: TensorBoard, W&B, and automatic plot generation
-- **Sample Generation**: Verify model quality with domain-specific prompts
-
-### Example: Training on Kubernetes Documentation
+### Step 4: Train on Your Own Text
 
 ```bash
-# Prepare data
-python scripts/prepare_technical_data.py \
-  --output-dir data/processed/k8s \
-  --tokenizer bpe \
-  --text-files docs/k8s/*.md \
-  --json-files data/raw/k8s_qa.json \
-  --format qa
+# Train on technical documentation
+python scripts/train_technical.py --config configs/technical_training.yaml
 
-# Train
-python scripts/train_technical.py \
-  --config configs/technical_training.yaml
-
-# Generate samples
-python scripts/inference.py \
+# Chat with technical model
+python scripts/ask_nima.py \
   --checkpoint experiments/nima_technical/checkpoint_best.pt \
-  --tokenizer data/processed/k8s/tokenizer_bpe.json \
-  --prompt "To deploy with Kubernetes"
+  --prompt "What is Kubernetes?"
 ```
 
-See **[docs/training_technical.md](docs/training_technical.md)** for complete guide.
+## 🧠 How It Works
+
+The AI model uses a **transformer architecture** - the same technology behind ChatGPT, but much smaller for learning:
+
+- **Attention Mechanism**: The model learns which words to pay attention to
+- **Text Processing**: Converts text into numbers the AI can understand
+- **Training Loop**: The model gradually learns patterns in your text data
+- **Generation**: Uses learned patterns to create new, similar text
+
+## 🎓 Learning Path
+
+### Beginner (Start Here)
+
+1. **Run the Shakespeare example** - See a working model in 10 minutes
+2. **Watch TensorBoard** - Understand how training works visually
+3. **Try the chat interface** - See what your model learned
+4. **Read the training logs** - Understand loss, perplexity, and improvement
+
+### Intermediate
+
+1. **Train on your own text** - Use technical documentation or your writing
+2. **Experiment with settings** - Change model size, learning rate, epochs
+3. **Compare different datasets** - See how data affects model quality
+4. **Study the code** - Understand attention, embeddings, and training loops
+
+### Advanced
+
+1. **Modify the architecture** - Add layers, change attention heads
+2. **Implement new features** - Try different optimizers or sampling methods
+3. **Scale up training** - Use larger datasets and models
+4. **Fine-tune pre-trained models** - Start with existing models instead of from scratch
+
+## ⚙️ Configuration Files
+
+Training settings are in simple YAML files in `configs/`:
+
+- `base_model.yaml` - Small model, good for learning
+- `technical_training.yaml` - Settings for technical content
+- `longer_training.yaml` - Train for more epochs
+
+## 📈 Monitoring Your Training
+
+**TensorBoard** shows real-time graphs:
+
+```bash
+tensorboard --logdir experiments/logs
+# Open http://localhost:6006 in your browser
+```
+
+**Training logs** explain what's happening:
+
+- **Loss**: How wrong the model is (lower = better)
+- **Perplexity**: How confused the model is (lower = better)
+- **Epoch**: One complete pass through your data
+
+## 🎯 Understanding Results
+
+**Good signs**:
+
+- Loss decreases over time
+- Generated text makes sense
+- Model responds appropriately to prompts
+
+**Warning signs**:
+
+- Loss stops decreasing (model stopped learning)
+- Generated text is repetitive or gibberish
+- Need more/better training data
 
 ## 📚 Learning Resources
 
-### Documentation
+**Documentation**: Check the `docs/` folder for detailed guides
+**Examples**: Look in `scripts/` for working code examples  
+**Configs**: See `configs/` for training settings you can modify
 
-- **[Getting Started](docs/getting_started.md)**: Quick start guide with examples
-- **[Architecture](docs/architecture.md)**: Deep dive into transformer implementation
-- **[Training Guide](docs/training.md)**: General training pipeline
-- **[Technical Training](docs/training_technical.md)**: Specialized model training
+## 💡 Key Machine Learning Concepts You'll Learn
 
-### Notebooks
+- **Neural Networks**: How layers of math create intelligence
+- **Transformers**: The architecture that powers modern AI
+- **Training**: How models learn from data through repetition
+- **Overfitting**: When models memorize instead of learning
+- **Evaluation**: How to measure if your model is working
+- **Hyperparameters**: Settings that control learning speed and quality
 
-Check out the `notebooks/` directory for:
+## 🚀 Next Steps for Learning
 
-- Architecture deep dives
-- Training tutorials
-- Inference examples
-- Performance analysis
+1. **Start small**: Train the Shakespeare model first
+2. **Understand the basics**: Learn what loss and perplexity mean
+3. **Experiment**: Try different settings and see what happens
+4. **Read the code**: Start with `src/models/` to understand the AI architecture
+5. **Scale up**: Try larger models and datasets as you learn more
 
-## 🤝 Contributing
+This project gives you hands-on experience with the same concepts used in ChatGPT, just at a smaller, learnable scale.
 
-This is a learning project! Feel free to:
-
-1. Fork the repository
-2. Create feature branches
-3. Submit pull requests
-4. Share improvements
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🎓 Learning Journey
-
-Document your learning process and insights as you build and evolve this LLM. Each component teaches fundamental ML concepts that apply broadly in the field.
-
-Happy coding! 🚀
+Happy learning! 🎓
