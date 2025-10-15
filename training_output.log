@@ -1,0 +1,63 @@
+2025-10-10 18:50:56,547 - __main__ - INFO - Loaded configuration from: configs/technical_training.yaml
+2025-10-10 18:50:56,547 - __main__ - INFO - ================================================================================
+2025-10-10 18:50:56,547 - __main__ - INFO - SETTING UP TRAINING FOR NIMA - TECHNICAL MODEL
+2025-10-10 18:50:56,547 - __main__ - INFO - ================================================================================
+2025-10-10 18:50:56,548 - __main__ - INFO - Loading bpe tokenizer from: data/processed/technical_example/tokenizer_bpe.json
+2025-10-10 18:50:56,548 - __main__ - INFO - Vocabulary size: 121
+2025-10-10 18:50:56,548 - __main__ - INFO - Creating model from preset: gpt-tiny
+2025-10-10 18:50:56,603 - __main__ - INFO - Total parameters: 3,321,600
+2025-10-10 18:50:56,603 - __main__ - INFO - Trainable parameters: 3,321,600
+2025-10-10 18:50:56,603 - __main__ - INFO - Model size: 12.67 MB
+2025-10-10 18:50:56,603 - __main__ - INFO - 
+Loading datasets...
+2025-10-10 18:50:56,633 - __main__ - INFO - Training samples: 12
+2025-10-10 18:50:56,637 - __main__ - INFO - Validation samples: 1
+2025-10-10 18:50:56,641 - __main__ - INFO - Test samples: 1
+2025-10-10 18:50:56,641 - __main__ - INFO - Using device: cpu
+2025-10-10 18:50:56,641 - training.monitoring - INFO - EarlyStopping initialized: patience=5, metric=val_loss, mode=min
+2025-10-10 18:50:56,732 - training.monitoring - INFO - TensorBoard logging enabled: experiments/nima_technical/tensorboard
+/Users/roliveira/WORKSPACE/raolivei/nima/scripts/../src/training/trainer.py:124: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler() if config.use_mixed_precision else None
+/Users/roliveira/.pyenv/versions/nima/lib/python3.11/site-packages/torch/amp/grad_scaler.py:136: UserWarning: torch.cuda.amp.GradScaler is enabled, but CUDA is not available.  Disabling.
+  warnings.warn(
+2025-10-10 18:50:57,533 - __main__ - INFO - 
+================================================================================
+2025-10-10 18:50:57,533 - __main__ - INFO - STARTING TRAINING
+2025-10-10 18:50:57,533 - __main__ - INFO - ================================================================================
+2025-10-10 18:50:57,533 - __main__ - INFO - 
+Epoch 1/10
+2025-10-10 18:50:57,533 - __main__ - INFO - --------------------------------------------------------------------------------
+/Users/roliveira/WORKSPACE/raolivei/nima/scripts/../src/training/trainer.py:294: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast(enabled=self.config.use_mixed_precision):
+/Users/roliveira/.pyenv/versions/nima/lib/python3.11/site-packages/torch/amp/autocast_mode.py:266: UserWarning: User provided device_type of 'cuda', but CUDA is not available. Disabling
+  warnings.warn(
+2025-10-10 18:51:15,469 - __main__ - INFO - Train Loss: 4.8532, Perplexity: 128.16
+2025-10-10 18:51:15,507 - __main__ - INFO - Val Loss: 4.8016, Perplexity: 121.70
+2025-10-10 18:51:15,791 - training.monitoring - INFO - Saved loss curves to: experiments/nima_technical/plots/final_metrics.png
+2025-10-10 18:51:15,791 - __main__ - INFO - Saved final metrics plot to: experiments/nima_technical/plots/final_metrics.png
+
+================================================================================
+METRICS SUMMARY
+================================================================================
+train_loss                    : 4.853244 (latest)
+                                Best: 4.853244
+val_loss                      : 4.801583 (latest)
+                                Best: 4.801583
+train_perplexity              : 128.155487 (latest)
+                                Best: 128.155487
+val_perplexity                : 121.702956 (latest)
+                                Best: 121.702956
+learning_rate                 : 0.000000 (latest)
+                                Best: 0.000000
+================================================================================
+
+Traceback (most recent call last):
+  File "/Users/roliveira/WORKSPACE/raolivei/nima/scripts/train_technical.py", line 460, in <module>
+    main()
+  File "/Users/roliveira/WORKSPACE/raolivei/nima/scripts/train_technical.py", line 435, in main
+    results = train_with_monitoring(model, train_loader, val_loader, training_config, config)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/roliveira/WORKSPACE/raolivei/nima/scripts/train_technical.py", line 309, in train_with_monitoring
+    checkpoint_path = Path(training_config.output_dir) / 'checkpoint_best.pt'
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TrainingConfig' object has no attribute 'output_dir'

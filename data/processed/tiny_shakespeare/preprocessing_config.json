@@ -1,0 +1,10 @@
+{
+  "lowercase": false,
+  "remove_urls": true,
+  "remove_emails": true,
+  "remove_phone_numbers": true,
+  "normalize_whitespace": true,
+  "normalize_unicode": true,
+  "min_length": 10,
+  "max_length": null
+}

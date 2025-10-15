@@ -212,6 +212,15 @@ class Trainer:
         else:
             return self.optimizer.param_groups[0]['lr']
             
+    def get_lr(self) -> float:
+        """
+        Get current learning rate (public interface).
+        
+        Returns:
+            Current learning rate
+        """
+        return self._get_lr()
+            
     def train(self) -> Dict[str, Any]:
         """
         Run training loop.
