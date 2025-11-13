@@ -32,3 +32,7 @@ wandb/
 # Data (optional - uncomment if datasets are large)
 # data/processed/
 # data/raw/*.txt
+
+# Temporary data processing directories
+data/processed/processed/
+data/processed/raw/
