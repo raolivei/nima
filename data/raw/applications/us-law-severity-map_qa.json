@@ -1,0 +1,298 @@
+[
+  {
+    "question": "What is US Law Severity Map?",
+    "answer": "US Law Severity Map is Interactive choropleth map showing law severity scores and crime statistics for US states."
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n🇺🇸 US Law Severity & Crime Statistics Map\n\n\nAn advanced, interactive data visualization project that generates a comprehensive choropleth map of the United States showing law severity scores alongside detailed crime statistics for all 50 states. Click any state to zoom in and view detailed statistics in a dynamic panel.\n\n![US Law Severity Map](screenshot.png)\n_Interactive map with click-to-zoom functionality and comprehensive state statistics_"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n🗺️ **Advanced Interactive Map**\n\n\n- **Click-to-View**: Click any state to zoom in AND display comprehensive statistics panel\n- **Smooth Pan & Zoom**: Scroll to zoom, drag to navigate\n- **Simple Hover**: State names appear on hover (statistics shown only on click)\n- **Responsive Design**: Modern, professional interface optimized for any screen size"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n📊 **Comprehensive Statistics**\n\n\nFor each state, the map displays:\n\n- **Law Severity Score** (0-100 scale)\n- **Death Penalty Status** (Active/Abolished/Moratorium)\n- **Murder Rate** (per 100,000 population)\n- **Gun Death Rate** (per 100,000 population)\n- **Traffic Fatality Rate** (per 100,000 population)\n- **Total Population** (2023 estimates)\n- **Incarceration Rate** (prisoners per 100,000)\n- **Contextual Notes** (historical information, notable policies)"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n🎨 **Modern Visualization**\n\n\n- Professional color gradient from green (lenient) to red (severe)\n- Clean, high-contrast design\n- Informative legends and guides\n- US average comparisons for context"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n💾 **Export Capabilities**\n\n\n- Automatically saves as standalone HTML file\n- Share-friendly format (works offline)\n- Fully interactive in any modern browser"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n100 - Very Severe (Death Penalty Active)\n\n\nStates with active death penalty statutes:\n\n- **TX** (National leader in executions)\n- **FL, AL, GA, MO, AZ, OK, MS, SC, AR** (High execution rates)\n- **OH, TN, SD, ID, WY, MT, KS, NE, KY, IN** (Active but varying usage)"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n80-95 - Severe\n\n\nStates with strict sentencing:\n\n- **LA** (95) - Highest incarceration rate in nation\n- **VA** (92) - Recently abolished death penalty (2021)\n- **NC** (88) - De facto moratorium\n- **UT** (90), **NV** (85), **ND** (85), **IA** (80)"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n40-60 - Moderate\n\n\nStates with balanced approaches:\n\n- **WV** (60), **DE, PA** (58), **MI, MD** (55)\n- **CO** (52), **NH, WI** (50), **NM** (48), **MN** (45)"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n20-40 - Lenient (Rehabilitation-Focused)\n\n\nStates emphasizing rehabilitation:\n\n- **HI** (20) - Most progressive, lowest crime\n- **VT** (22) - Lowest incarceration rate\n- **ME, RI** (25), **MA** (28), **CT** (30)\n- **AK** (30), **NJ, OR** (32), **NY, WA** (35), **CA, IL** (38)"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nPrerequisites\n\n\n- Python 3.8 or higher\n- pip package manager\n- Modern web browser (for viewing interactive map)"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nSetup Instructions\n\n\n1. **Clone the repository:**\n\n   ```bash\n   git clone https://github.com/yourusername/us-law-severity-map.git\n   cd us-law-severity-map\n   ```\n\n2. **Create a virtual environment (recommended):**\n\n   ```bash\n   python -m venv us-law-severity-map\n\n   # On macOS/Linux:\n   source us-law-severity-map/bin/activate\n\n   # On Windows:\n   us-law-severity-map\\Scripts\\activate\n   ```\n\n3. **Install dependencies:**\n   ```bash\n   pip install -r requirements.txt\n   ```"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nLocal Development\n\n\nRun the main script:\n\n```bash\npython main.py\n```"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nWhat Happens:\n\n\n1. ✓ Downloads US Census Bureau shapefile (if not cached)\n2. 🗺️ Loads geographic data for all 50 states\n3. 📊 Enriches data with comprehensive statistics\n4. 🎨 Generates interactive visualization\n5. 🌐 Opens map in your default browser\n6. 💾 Saves as `us_law_severity_map_interactive.html`"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nInteraction Guide:\n\n\n- **Click any state** → Auto-zoom + display detailed statistics panel\n- **Double-click** → Reset to full US view (clears statistics panel)\n- **Hover over state** → See state name only\n- **Scroll wheel** → Zoom in/out\n- **Click and drag** → Pan the map\n- **Use toolbar** → Additional controls (screenshot, reset axes, etc.)\n\n---"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n🎯 Recommended Workflow (Safest)\n\n\n**Manual Apply** - Full control, zero risk:\n\n```bash"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n1. Create PR with infrastructure changes\n\ngit checkout -b feat/my-changes"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n... make changes to terraform/ ...\n\ngit push origin feat/my-changes"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nGo to: Actions → \"Terraform Apply (Manual)\" → Run workflow"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nIf failed → Fix code and retry\n\n```\n\n**Why this approach?**\n- ✅ Test infrastructure before merging\n- ✅ Can't merge until apply succeeds (branch protection)\n- ✅ Complete control over when changes happen\n- ✅ Easy rollback (just close PR)\n\nSee [Manual Workflow Guide](docs/MANUAL_TERRAFORM_WORKFLOW.md) for step-by-step instructions."
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n1. Install Terraform\n\nbrew install terraform  # macOS"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n2. Configure AWS credentials\n\nexport AWS_ACCESS_KEY_ID=\"your-key\"\nexport AWS_SECRET_ACCESS_KEY=\"your-secret\""
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n3. Deploy infrastructure\n\ncd terraform/s3-cloudfront\nterraform init\nterraform apply"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n4. Generate and upload map\n\ncd ../..\npython main.py\naws s3 cp us_law_severity_map_interactive.html s3://us-law-severity-map/index.html\naws cloudfront create-invalidation --distribution-id YOUR_ID --paths \"/*\"\n```\n\n**Cost**: $1-5/month for 5-50 daily visitors (see [Cost Analysis](docs/AWS_COST_ANALYSIS.md))"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n🤖 GitHub Actions Workflows\n\n\n| Workflow | Trigger | Purpose |\n|----------|---------|---------|\n| **Terraform Plan** | Automatic on PR | Shows infrastructure changes |\n| **Terraform Apply** | Manual (you trigger) | Applies infrastructure changes |\n| **Deploy to S3** | Manual | Deploys website HTML |\n| **Terraform Destroy** | Manual with confirmation | Tears down infrastructure |\n\n**Branch Protection**: The `main` branch requires successful Terraform Apply before merge!"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n🏗️ Infrastructure Stack\n\n\n- **Hosting**: Amazon S3 (static website)\n- **CDN**: CloudFront (global edge caching)\n- **State Management**: S3 + DynamoDB (locking)\n- **CI/CD**: GitHub Actions\n- **IaC**: Terraform\n- **Cost**: ~$1-5/month (mostly CloudFront)"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n📚 Complete Documentation\n\n\n- 📘 [Manual Workflow Guide](docs/MANUAL_TERRAFORM_WORKFLOW.md) - **Recommended reading!**\n- 🔀 [Workflow Comparison](docs/WORKFLOW_COMPARISON.md) - Compare 3 approaches\n- 📖 [Workflows README](.github/workflows/README.md) - Quick reference\n- 💰 [Cost Analysis](docs/AWS_COST_ANALYSIS.md) - Detailed pricing\n- 🚀 [Deployment Guide](docs/DEPLOYMENT_QUICKSTART.md) - Step-by-step\n- ☁️ [AWS Strategies](docs/AWS_DEPLOYMENT.md) - Architecture options"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nGeographic Data\n\n\n- **US Census Bureau TIGER/Line Shapefiles**\n- Dataset: `cb_2022_us_state_20m` (20m resolution)\n- Source: https://www.census.gov/geographies/mapping-files/"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nCrime Statistics (2022-2023 estimates)\n\n\n- **Murder Rates**: FBI Uniform Crime Reporting (UCR) Program\n- **Gun Death Rates**: CDC WONDER Database\n- **Traffic Fatalities**: NHTSA Fatality Analysis Reporting System (FARS)\n- **Incarceration**: Bureau of Justice Statistics (BJS)\n- **Population**: US Census Bureau population estimates"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n📁 Project Structure\n\n\n```\nus-law-severity-map/\n├── main.py                                    # Main visualization script\n├── requirements.txt                           # Python dependencies\n├── README.md                                  # This file\n├── CHANGELOG.md                               # Version history\n├── LICENSE                                    # MIT License\n├── PROMPT.md                                  # AI recreation prompt\n├── .github/\n│   └── workflows/                             # GitHub Actions\n│       ├── README.md                          # Workflows documentation\n│       ├── terraform-pr-plan.yml              # Automatic plan on PR\n│       ├── terraform-pr-apply.yml             # Manual apply workflow\n│       ├── deploy-to-s3.yml                   # Deploy website to S3\n│       └── terraform-destroy.yml              # Infrastructure teardown\n├── terraform/\n│   └── s3-cloudfront/                         # AWS infrastructure\n│       ├── main.tf                            # Main Terraform config\n│       ├── variables.tf                       # Input variables\n│       ├── outputs.tf                         # Output values\n│       ├── backend.tf                         # S3 state backend\n│       └── README.md                          # Terraform docs\n├── docs/                                      # Documentation\n│   ├── MANUAL_TERRAFORM_WORKFLOW.md           # Recommended workflow guide\n│   ├── WORKFLOW_COMPARISON.md                 # Compare workflow options\n│   ├── AWS_DEPLOYMENT.md                      # Deployment strategies\n│   ├── AWS_COST_ANALYSIS.md                   # Cost breakdown\n│   └── DEPLOYMENT_QUICKSTART.md               # Quick start guide\n├── github/                                    # GitHub configuration\n│   ├── setup-branch-protection.sh             # Branch protection script\n│   └── branch-protection-config.json          # Protection rules config\n├── data/                                      # Auto-generated shapefiles\n│"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n📦 Dependencies\n\n\nCore Libraries:\n\n- **geopandas** (≥0.14.0) - Geographic data manipulation\n- **plotly** (≥5.18.0) - Interactive visualizations\n- **requests** (≥2.31.0) - HTTP downloads\n- **matplotlib** (≥3.8.0) - Plotting support\n- **kaleido** (≥0.2.1) - Static image export\n\nGeospatial Stack:\n\n- **pandas**, **shapely**, **fiona**, **pyproj** (required by geopandas)\n\nSee `requirements.txt` for complete list with version constraints."
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nUS National Averages (per 100,000 population):\n\n\n- **Murder Rate**: ~7.2\n- **Gun Death Rate**: ~14.8\n- **Traffic Fatality Rate**: ~12.3\n- **Incarceration Rate**: ~639"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nNotable State Comparisons:\n\n\n**Highest Murder Rates:**\n\n- Mississippi (20.5), Louisiana (15.8), Alabama (12.9)\n\n**Lowest Murder Rates:**\n\n- New Hampshire (1.3), Maine (1.8), Vermont (2.2)\n\n**Highest Gun Death Rates:**\n\n- Mississippi (28.6), Louisiana (26.3), Alabama (26.4)\n\n**Lowest Gun Death Rates:**\n\n- Massachusetts (3.7), New York (5.4), New Jersey (5.2)\n\n**Highest Incarceration Rates:**\n\n- Louisiana (1,090), Oklahoma (1,050), Mississippi (1,030)\n\n**Lowest Incarceration Rates:**\n\n- Vermont (320), Massachusetts (340), Minnesota (370)"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n⚠️ Methodology & Disclaimer\n\n\n**Severity scores are subjective estimates** based on comprehensive analysis of:\n\n- Death penalty status, history, and execution statistics\n- Sentencing guidelines and mandatory minimums\n- Three strikes laws and habitual offender statutes\n- Criminal justice reform initiatives\n- Incarceration rates and prison populations\n- Parole/probation policies\n- Focus on punishment vs. rehabilitation\n\n**Important Notes:**\n\n- This project is for **educational and visualization purposes only**\n- Scores are simplified representations of complex legal systems\n- Crime statistics are estimates based on most recent available data\n- Not all states report data uniformly or consistently\n- Consult official state resources for legal information"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nPerformance Optimizations:\n\n\n- Efficient shapefile caching\n- Optimized GeoJSON conversion\n- Lazy loading of geographic data\n- CDN-based Plotly library (fast HTML loading)"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nModern Web Technologies:\n\n\n- Plotly.js for interactive graphics\n- Responsive mapbox integration\n- HTML5 for standalone deployment\n- CSS-based styling for professional appearance"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nCompleted ✅\n\n\n**Version 3.0.0 - AWS Deployment & Infrastructure:**\n- [x] Complete AWS deployment with S3 + CloudFront\n- [x] Terraform infrastructure as code\n- [x] GitHub Actions CI/CD workflows\n- [x] Manual apply workflow (safest approach)\n- [x] Branch protection rules\n- [x] Comprehensive deployment documentation\n- [x] Cost analysis and optimization guides\n\n**Version 2.0.0 - Interactive Visualization:**\n- [x] Interactive choropleth map with Plotly\n- [x] Click-to-zoom with statistics panel\n- [x] Comprehensive state statistics display on click\n- [x] Simplified hover (state names only)\n- [x] Crime data integration (murder, gun, traffic)\n- [x] Population and incarceration rates\n- [x] Professional color scheme and design\n- [x] HTML export with embedded JavaScript\n- [x] Dynamic statistics panel updates\n\n**Version 1.0.0 - Initial Release:**\n- [x] Static choropleth map\n- [x] Law severity scoring system\n- [x] Death penalty data for all states"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nPotential Future Enhancements 🚀\n\n\n**Data & Analytics:**\n- [ ] Time-series data showing changes over years\n- [ ] Additional metrics (recidivism, prison conditions, reform index)\n- [ ] County-level granularity\n- [ ] Comparison mode (side-by-side states)\n- [ ] Data export functionality (CSV, JSON)\n\n**Infrastructure & DevOps:**\n- [ ] Custom domain with Route53\n- [ ] Automated testing for Terraform\n- [ ] Multi-environment setup (dev/staging/prod)\n- [ ] CloudWatch monitoring and alerts\n- [ ] Automated cost reporting\n\n**Features:**\n- [ ] API integration for real-time data updates\n- [ ] Mobile-optimized version\n- [ ] Embed code for websites/blogs\n- [ ] PDF report generation\n- [ ] Share functionality (social media)"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n🤝 Contributing\n\n\nContributions are welcome! Areas where you can help:"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nData Improvements:\n\n\n- More accurate or recent statistics\n- Additional metrics and data sources\n- Validation of existing scores\n- Historical data for time-series analysis"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nFeatures:\n\n\n- New visualization types\n- Enhanced interactivity\n- Performance optimizations\n- Mobile improvements"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nDocumentation:\n\n\n- Methodology explanations\n- Data source citations\n- Tutorial videos\n- Translation to other languages\n\n**To contribute:**\n\n1. Fork the repository\n2. Create a feature branch (`git checkout -b feature/amazing-feature`)\n3. Commit your changes (`git commit -m 'Add amazing feature'`)\n4. Push to the branch (`git push origin feature/amazing-feature`)\n5. Open a Pull Request"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n📄 License\n\n\nThis project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details."
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n🙏 Acknowledgments\n\n\n- **US Census Bureau** - Geographic boundary data\n- **FBI UCR Program** - Crime statistics\n- **CDC WONDER** - Public health data\n- **NHTSA** - Traffic safety data\n- **Bureau of Justice Statistics** - Incarceration data\n- **Plotly** - Interactive visualization framework\n- **GeoPandas community** - Geospatial tools\n- Criminal justice reform researchers and data journalists"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n📞 Contact & Support\n\n\n- **Issues**: Use GitHub Issues for bug reports and feature requests\n- **Discussions**: Start a discussion for questions or ideas\n- **Security**: Report security vulnerabilities privately\n\n---\n\n**Disclaimer:** This map represents a simplified view of highly complex legal and social systems. The data is provided for educational and informational purposes. For authoritative legal information, always consult official state resources or qualified legal professionals.\n\n**Made with ❤️ and Python** | Data-driven insights into the US criminal justice system"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nAI Prompt: Recreate US Law Severity Map Project\n\n\nThis prompt can be used with AI assistants (Claude, ChatGPT, etc.) to recreate this entire project from scratch.\n\n---"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nMain Prompt\n\n\n```\nCreate a complete, professional data visualization project that displays US law severity\nby state with comprehensive crime statistics. The project should be production-ready\nwith AWS deployment infrastructure.\n\nPROJECT SPECIFICATIONS:\n\n1. INTERACTIVE MAP FEATURES:\n   - Choropleth map of all 50 US states\n   - Click-to-zoom functionality with state-specific centering\n   - Hover shows state name only\n   - Click displays detailed statistics panel (squared box overlay on right side)\n   - Double-click resets view and clears panel\n   - Color gradient: green (lenient) → yellow → orange → red (severe)\n   - Professional UI with smooth animations\n\n2. DATA TO DISPLAY:\n\n   Law Severity Metrics:\n   - Severity score (0-100 scale):\n     * 100: Very Severe (death penalty active)\n     * 80-95: Severe (long sentences)\n     * 40-60: Moderate (balanced approach)\n     * 20-40: Lenient (rehabilitation focus)\n   - Death penalty status (Active/Abolished/Moratorium)\n\n   Crime Statistics (per 100,000 population):\n   - Murder rate (with US average comparison)\n   - Gun death rate (with US average comparison)\n   - Traffic fatality rate (with US average comparison)\n\n   Demographics:\n   - Population (2023 estimates)\n   - Incarceration rate (per 100k)\n\n   Contextual Information:\n   - Historical notes for each state\n   - Notable policies and facts\n\n3. TECHNICAL STACK:\n   - Python 3.8+ with virtual environment\n   - Plotly for interactive visualizations (NOT matplotlib)\n   - GeoPandas for geographic data handling\n   - US Census Bureau shapefiles (automatic download)\n   - HTML/CSS/JavaScript for overlay panel\n   - All text in English\n\n4. USER INTERFACE:\n   - Statistics panel as HTML overlay (not Plotly annotation)\n   - Fixed position on right side, vertically centered\n   - Width: 380px, scrollable if needed\n   - Red border (3px), rounded corners (12px)\n   - Drop shadow for depth\n   - Close button (×) in top right\n   - Organized sections with icons:\n     * ⚖️ Law Severity\n     * 📊 Crim"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nWith Claude (Anthropic)\n\n\n```\nCopy the entire \"Main Prompt\" section above and paste it into a new Claude conversation.\nClaude has excellent code generation and can handle complex multi-file projects.\n```"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nWith ChatGPT (OpenAI)\n\n\n```\nCopy the prompt and paste into ChatGPT-4 or ChatGPT-4 Turbo.\nMay need to break into smaller parts for very long conversations.\nUse Code Interpreter for testing the Python code.\n```"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nWith Cursor AI\n\n\n```\nOpen Cursor IDE and use Composer mode.\nPaste the prompt to generate all files in your workspace.\nCursor can directly create the file structure and edit multiple files.\n```"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nTips for Best Results\n\n\n1. **Start Fresh**: Use a new conversation to avoid context confusion\n\n2. **Specify Environment**:\n\n   ```\n   Additional context: I'm on macOS with Python 3.11 installed.\n   AWS CLI is configured. I want to use Terraform for deployment.\n   ```\n\n3. **Request Step-by-Step**:\n\n   ```\n   After generating the code, walk me through:\n   1. Local setup and testing\n   2. Terraform deployment\n   3. GitHub Actions configuration\n   ```\n\n4. **Ask for Clarifications**:\n\n   ```\n   Before starting, confirm:\n   - What Python version do you recommend?\n   - Should I create a virtual environment?\n   - What AWS region should I use?\n   ```\n\n5. **Iterate on Design**:\n   ```\n   The statistics panel looks good, but can you:\n   - Make the border thicker\n   - Add more spacing between sections\n   - Change the color scheme to blue\n   ```\n\n---"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n✅ Must Have\n\n\n- Plotly for interactivity (NOT matplotlib static map)\n- HTML overlay for statistics panel (NOT Plotly annotation)\n- State-specific zoom coordinates for all 50 states\n- Click shows stats + zooms simultaneously\n- Double-click resets + hides stats\n- All text in English\n- Complete AWS infrastructure\n- GitHub Actions CI/CD\n- Comprehensive documentation"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\n❌ Common Mistakes to Avoid\n\n\n- Using matplotlib instead of Plotly\n- Using Plotly annotations instead of HTML overlay\n- Generic zoom that doesn't center properly\n- Missing state data\n- Incomplete documentation\n- No cost analysis\n- Portuguese text in code/docs\n- Missing Terraform files\n- No CI/CD pipeline\n\n---"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nCustomization Options\n\n\nAfter generating the base project, you can request:"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nVisual Enhancements\n\n\n```\nMake the map more visually appealing by:\n- Adding a gradient background\n- Improving the color scheme\n- Adding drop shadows to states\n- Better typography\n```"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nAdditional Features\n\n\n```\nAdd these features:\n- Search bar to find states\n- Filter by severity category\n- Export data as CSV\n- Time-series animation\n- Comparison mode (2 states side-by-side)\n```"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nInfrastructure Improvements\n\n\n```\nEnhance the AWS setup:\n- Add custom domain with Route53\n- Enable CloudWatch monitoring\n- Set up cost alerts\n- Add staging environment\n- Implement blue-green deployment\n```\n\n---"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nVersion Information\n\n\n- **Current Version**: 2.0.0\n- **Created**: October 29, 2025\n- **Last Updated**: October 29, 2025\n- **Tested With**: Claude 3.5 Sonnet, Python 3.11, Terraform 1.0+\n\n---"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nExpected Outcomes\n\n\nAfter using this prompt, you should have:\n\n1. ✅ **Functional Project**\n\n   - Interactive map working locally\n   - All 50 states with complete data\n   - Professional UI with animations\n\n2. ✅ **AWS Infrastructure**\n\n   - Terraform files ready to deploy\n   - GitHub Actions workflow configured\n   - Estimated cost: $0.00-$0.50/month\n\n3. ✅ **Complete Documentation**\n\n   - README with instructions\n   - Deployment guides\n   - Cost analysis\n   - Changelog\n\n4. ✅ **Production Ready**\n   - No linter errors\n   - Cross-browser compatible\n   - Mobile responsive\n   - Proper error handling\n\n---"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nTroubleshooting\n\n\nIf the AI generates incorrect code:\n\n1. **Re-iterate Requirements**:\n\n   ```\n   The map needs to use Plotly, not matplotlib.\n   Please regenerate using plotly.graph_objects.Choroplethmapbox\n   ```\n\n2. **Request Specific Fixes**:\n\n   ```\n   The statistics panel is not showing. The issue is that it should be\n   an HTML div element, not a Plotly annotation. Please fix.\n   ```\n\n3. **Ask for Explanations**:\n   ```\n   Why did you choose this approach for state centering?\n   Can you explain the zoom level calculation?\n   ```\n\n---"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nMaintenance\n\n\nTo keep this prompt updated:\n\n1. **After Major Changes**: Update the specifications\n2. **New Features**: Add to \"Customization Options\"\n3. **Version Bumps**: Update version information\n4. **Lessons Learned**: Add to \"Common Mistakes to Avoid\"\n\n---"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nLicense\n\n\nThis prompt is part of the US Law Severity Map project and is licensed under MIT.\nFeel free to modify and use for your own projects.\n\n---\n\n**Repository**: https://github.com/raolivei/us-law-severity-map  \n**Contact**: Open an issue on GitHub for questions or improvements"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nChangelog\n\n\nAll notable changes to this project will be documented in this file."
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nAdded\n\n- Kubernetes deployment manifests (deploy.yaml, service.yaml, ingress.yaml, namespace.yaml)\n- Dockerfile for containerized deployment\n- Project conventions documentation (.cursorrules)"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nFixed\n\n- Major UX issues identified in user testing\n- React app errors and functionality improvements\n- Added local US states GeoJSON to avoid 403 errors"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nChanged\n\n- Removed Tailwind @apply directives - use pure CSS\n- Updated PROMPT.md with project documentation"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nAdded - AWS Deployment & Infrastructure\n\n\n- **AWS Infrastructure**: Complete S3 + CloudFront deployment with Terraform\n- **GitHub Actions Workflows**:\n  - `terraform-pr-plan.yml` - Automatic plan on pull requests\n  - `terraform-pr-apply.yml` - Manual apply with full control\n  - `deploy-to-s3.yml` - Website deployment automation\n  - `terraform-destroy.yml` - Safe infrastructure teardown\n- **Branch Protection**: Requires successful Terraform Apply before merge\n- **State Management**: S3 backend with DynamoDB locking\n- **Documentation**:\n  - Complete workflow guides and comparisons\n  - AWS cost analysis (~$1-5/month)\n  - Step-by-step deployment instructions\n  - Branch protection setup script"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nChanged\n\n\n- Consolidated workflows: Removed duplicate/unsafe workflows (7 → 4)\n- Simplified documentation: 3 separate docs → 2 comprehensive guides\n- Updated README with complete AWS deployment section"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nSecurity\n\n\n- Manual apply workflow prevents accidental infrastructure changes\n- Branch protection blocks merge without successful apply\n- Complete audit trail of all infrastructure changes\n- Terraform state locking prevents concurrent modifications"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nAdded - Interactive Visualization\n\n\n- Interactive click-to-zoom functionality for all 50 states\n- Professional statistics panel with comprehensive data overlay\n- Crime statistics: murder rates, gun deaths, traffic fatalities (per 100k)\n- Population and incarceration rate data for each state\n- Plotly-based interactive visualization with smooth animations\n- US average comparisons for crime statistics\n- Close button and double-click reset functionality\n- Standalone HTML export with offline functionality"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nChanged\n\n\n- Migrated from matplotlib to Plotly for advanced interactivity\n- Hover now shows only state names; detailed stats appear on click\n- Converted all text from Portuguese to English\n- Improved zoom centering with state-specific coordinates\n- Enhanced color gradient and visual design"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nFixed\n\n\n- JSON parsing errors in JavaScript\n- Event handling for click interactions\n- Map centering when zooming to states"
+  },
+  {
+    "question": "Tell me about US Law Severity Map ",
+    "answer": "US Law Severity Map :\n\nAdded\n\n\n- Initial release with static choropleth map\n- Law severity scoring system (0-100 scale)\n- Death penalty status for all 50 states\n- Automatic US Census Bureau shapefile download\n- Basic matplotlib visualization\n- Documentation and README\n\n---\n\n**Current Version**: 2.0.0  \n**Repository**: https://github.com/raolivei/us-law-severity-map"
+  },
+  {
+    "question": "Give me an overview of US Law Severity Map",
+    "answer": "# 🇺🇸 US Law Severity & Crime Statistics Map\n\nAn advanced, interactive data visualization project that generates a comprehensive choropleth map of the United States showing law severity scores alongside detailed crime statistics for all 50 states. Click any state to zoom in and view detailed statistics in a dynamic panel.\n\n![US Law Severity Map](screenshot.png)\n_Interactive map with click-to-zoom functionality and comprehensive state statistics_\n\n## ✨ Features\n\n### 🗺️ **Advanced Interactive Map**"
+  }
+]

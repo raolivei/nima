@@ -1,0 +1,306 @@
+Q: What's the best way to manage secrets in Kubernetes?
+
+A: Best practices for managing secrets in Kubernetes:
+
+1. **Use Kubernetes Secrets**: Store sensitive data as Secret resources
+2. **External secret managers**: Use tools like HashiCorp Vault, AWS Secrets Manager, or Azure Key Vault
+3. **Encrypt at rest**: Enable encryption for etcd
+4. **RBAC**: Limit access to secrets with Role-Based Access Control
+5. **Never commit secrets**: Use sealed-secrets or external tools
+
+Example using Kubernetes Secrets:
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+type: Opaque
+data:
+  username: YWRtaW4=  # base64 encoded
+  password: cGFzc3dvcmQ=
+---
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: app
+    env:
+    - name: DB_USER
+      valueFrom:
+        secretKeyRef:
+          name: db-secret
+          key: username
+```
+
+Q: How do I set resource limits in Kubernetes?
+
+A: Resource limits in Kubernetes are set in the container spec of your pod or deployment. You define both requests (guaranteed resources) and limits (maximum resources):
+
+```yaml
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "250m"
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+```
+
+Requests ensure the pod gets at least that amount of resources. Limits prevent the pod from using more than specified. CPU is measured in millicores (1000m = 1 CPU), and memory in bytes (Mi = Mebibytes). Always set both to prevent resource contention and ensure cluster stability.
+
+Terraform Integration
+
+Terraform can provision Kubernetes clusters:
+
+```hcl
+resource "kubernetes_deployment" "example" {
+  metadata {
+    name = "terraform-example"
+  }
+
+  spec {
+    replicas = 3
+
+    selector {
+      match_labels = {
+        app = "MyApp"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "MyApp"
+        }
+      }
+
+      spec {
+        container {
+          image = "nginx:1.21"
+          name  = "example"
+        }
+      }
+    }
+  }
+}
+```
+
+Q: What's the difference between Docker and Kubernetes?
+
+A: Docker is a containerization platform that packages applications and their dependencies into containers. Kubernetes is a container orchestration system that manages and schedules containers across multiple machines. Docker creates the containers, while Kubernetes deploys, scales, and manages them in production. You use Docker to build container images, and Kubernetes to run those containers at scale.
+
+Best Practices
+
+1. **Use namespaces**: Organize resources logically
+2. **Resource limits**: Always set CPU and memory limits
+3. **Health checks**: Implement liveness and readiness probes
+4. **ConfigMaps**: Store configuration separately from code
+5. **Secrets**: Never hardcode sensitive data
+
+Docker vs Kubernetes
+
+**Docker** is a containerization platform that packages applications and their dependencies.
+
+**Kubernetes** orchestrates multiple containers across multiple machines.
+
+Think of Docker as building the shipping containers, and Kubernetes as managing the entire shipping fleet.
+
+Q: How do I optimize Docker image size?
+
+A: To optimize Docker image size:
+
+1. **Use minimal base images**: Alpine Linux or distroless images
+2. **Multi-stage builds**: Separate build and runtime stages
+3. **Combine RUN commands**: Reduce layers
+4. **Remove unnecessary files**: Clean caches and temporary files
+5. **Use .dockerignore**: Exclude unnecessary files from build context
+
+Example optimized Dockerfile:
+```dockerfile
+# Build stage
+FROM golang:1.21-alpine AS builder
+WORKDIR /app
+COPY go.* ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 go build -o app
+
+# Runtime stage
+FROM alpine:3.18
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=builder /app/app .
+CMD ["./app"]
+```
+
+This reduces image size from ~800MB to ~15MB for a Go application.
+
+Example with Resource Limits
+
+```yaml
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "250m"
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+```
+
+Q: How do I debug a Python application running in Docker?
+
+A: To debug a Python application in Docker, you have several options:
+1. Use `docker logs container-name` to view application logs
+2. Execute a shell inside the container: `docker exec -it container-name bash`
+3. Run Python with `-u` flag for unbuffered output
+4. Use remote debugging with ptvsd or debugpy
+5. Mount your source code as a volume for live editing
+
+Example Dockerfile for debugging:
+```dockerfile
+FROM python:3.11
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+RUN pip install debugpy  # Add debugger
+COPY . .
+CMD ["python", "-u", "app.py"]
+```
+
+Q: What is a Kubernetes Ingress and when should I use it?
+
+A: A Kubernetes Ingress is an API object that manages external access to services in a cluster, typically HTTP/HTTPS. Use Ingress when you need:
+
+1. **Host-based routing**: Route traffic based on hostname
+2. **Path-based routing**: Route based on URL paths
+3. **SSL/TLS termination**: Manage certificates centrally
+4. **Load balancing**: Distribute traffic across pods
+
+Example Ingress:
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+spec:
+  rules:
+  - host: myapp.example.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: api-service
+            port:
+              number: 80
+      - path: /web
+        pathType: Prefix
+        backend:
+          service:
+            name: web-service
+            port:
+              number: 80
+```
+
+You'll need an Ingress Controller (like NGINX or Traefik) installed in your cluster.
+
+Key Concepts
+
+**Pods**: The smallest deployable units in Kubernetes. A pod encapsulates one or more containers.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+```
+
+**Deployments**: Manages the desired state of your application.
+
+```bash
+kubectl create deployment nginx --image=nginx:latest
+kubectl scale deployment nginx --replicas=3
+```
+
+**Services**: Expose your pods to network traffic.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+```
+
+Q: What are Terraform modules and how do I use them?
+
+A: Terraform modules are reusable packages of Terraform configurations. They help you organize and reuse infrastructure code. To use a module:
+
+1. Create a module directory with main.tf, variables.tf, outputs.tf
+2. Call the module from your main configuration:
+
+```hcl
+module "vpc" {
+  source = "./modules/vpc"
+  
+  vpc_cidr = "10.0.0.0/16"
+  environment = "production"
+}
+
+# Use module outputs
+resource "aws_instance" "example" {
+  subnet_id = module.vpc.public_subnet_id
+}
+```
+
+Modules can also be sourced from the Terraform Registry or Git repositories.
+
+Common Commands
+
+Deploy an application:
+
+```bash
+$ kubectl apply -f deployment.yaml
+$ kubectl get pods
+$ kubectl logs pod-name
+```
+
+Scale your deployment:
+
+```bash
+$ kubectl scale deployment my-app --replicas=5
+```
+
+Q: How do I troubleshoot a failed Terraform apply?
+
+A: When Terraform apply fails, follow these debugging steps:
+
+1. **Read the error message**: Terraform provides detailed error output
+2. **Check the plan**: Run `terraform plan` to see what will change
+3. **Enable debug logging**: Set `TF_LOG=DEBUG` environment variable
+4. **Verify credentials**: Ensure provider credentials are correct
+5. **Check resource state**: Use `terraform state list` and `terraform state show`
+6. **Validate configuration**: Run `terraform validate`
+
+Common issues:
+- Provider authentication failures
+- Resource naming conflicts
+- Dependency cycles
+- API rate limits
+- Invalid resource configurations
+
+Use `terraform refresh` to sync state with actual infrastructure if there's drift.

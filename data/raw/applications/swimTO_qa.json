@@ -1,0 +1,350 @@
+[
+  {
+    "question": "What is SwimTO?",
+    "answer": "SwimTO is Aggregates and displays indoor community pool drop-in swim schedules for Toronto."
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🏊‍♂️ SwimTO\n\n\n**SwimTO** aggregates and displays indoor community pool drop-in swim schedules for the City of Toronto.\n\n> **⚠️ COMMERCIAL PROJECT:** This is proprietary software. All rights reserved. See [LICENSE](LICENSE) and [PROJECT_STRATEGY.md](PROJECT_STRATEGY.md) for details."
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🎯 Overview\n\n\nSwimTO collects, normalizes, and presents lane swim schedules from Toronto's community pools, helping residents find convenient swimming times near them."
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nFeatures\n\n\n- 🗺️ **Interactive Map View** - Toronto-focused map showing all community centers with lane swim sessions\n- 📅 **Schedule View** - Calendar-style layout with weekday + time slots for lane swim programs\n- 🔄 **Auto-refresh** - Daily updates from City of Toronto Open Data sources\n- 📱 **Mobile-First Design** - Fully responsive with PWA support, tested on iOS and Android\n- 🧪 **Comprehensive Testing** - Automated mobile testing with Playwright across multiple devices\n- 🏗️ **Self-hosted** - Runs on Raspberry Pi k3s cluster"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🏗️ Architecture\n\n\n```\nswimto/\n├── apps/\n│   ├── api/              # FastAPI backend\n│   └── web/              # React + Vite frontend\n├── data-pipeline/        # ETL and data discovery\n├── k8s/                  # Kubernetes manifests\n├── infrastructure/       # Terraform (if needed)\n├── .github/workflows/    # CI/CD\n├── docker-compose.yml    # Local development\n└── docs/                 # Documentation\n```"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nLocal Development\n\n\n**Note:** This is a private repository. Access is restricted to authorized developers only.\n\n```bash"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nIf you have access, clone the repository\n\ngit clone git@github.com:raolivei/swimTO.git\ncd swimTO"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nTrigger data ingestion\n\ncurl -X POST http://localhost:8000/update \\\n  -H \"Authorization: Bearer your-admin-token\"\n```"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n📚 Documentation\n\n\n- [Quickstart](docs/QUICKSTART.md) - Get running in 5 minutes\n- [Mobile Testing Quick Start](MOBILE_TESTING_QUICK_START.md) - Test on mobile devices 📱\n- [Troubleshooting](TROUBLESHOOTING.md) - Fix common issues\n- [Local Development](docs/LOCAL_DEVELOPMENT.md) - Development setup\n- [Mobile Testing Guide](docs/MOBILE_TESTING.md) - Comprehensive mobile testing\n- [Deployment](docs/DEPLOYMENT_PI.md) - Raspberry Pi k3s guide\n- [API Reference](docs/API.md) - Endpoints and usage\n- [Architecture](docs/ARCHITECTURE.md) - System design\n- [Contributing](docs/CONTRIBUTING.md) - Development workflow"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🛠️ Tech Stack\n\n\n**Backend:**\n\n- FastAPI\n- PostgreSQL\n- SQLAlchemy + Alembic\n- Playwright (web scraping)\n- BeautifulSoup4\n\n**Frontend:**\n\n- React 18\n- TypeScript\n- Vite\n- Leaflet (maps)\n- TanStack Query\n- Tailwind CSS\n- PWA Support (installable)\n\n**Infrastructure:**\n\n- Docker\n- Kubernetes (k3s)\n- GitHub Actions\n- Raspberry Pi cluster\n\n**Testing:**\n\n- Vitest (unit tests)\n- Playwright (E2E & mobile testing)\n- Testing Library (React components)"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n📊 Data Sources\n\n\nThis project uses **official data** from the [City of Toronto Open Data Portal](https://open.toronto.ca/):\n\n- **Primary Source:** [Registered Programs and Drop-in Courses](https://open.toronto.ca/dataset/registered-programs-and-drop-in-courses-offering/)\n  - Official API updated daily at 8:00 AM\n  - Same data powering toronto.ca website\n  - 100% accurate swim schedules\n- **Secondary Sources:**\n  - Recreation facilities metadata (facility locations, addresses)\n  - Curated facility list (toronto_pools_data.py)\n\n**Data Update Frequency:** Daily at 3:00 AM via automated CronJob\n\n**License:** Open Government Licence – Toronto"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🤝 Contributing\n\n\nThis is a private commercial project. Contributions are not currently accepted from external developers.\n\nFor authorized developers, see [CONTRIBUTING.md](docs/CONTRIBUTING.md) for development workflow and branching strategy."
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n📄 License\n\n\n**Proprietary License** - All rights reserved. See [LICENSE](LICENSE) and [COPYRIGHT](COPYRIGHT) files for full details.\n\nThis software is commercial and may not be copied, modified, or distributed without explicit written permission from Rafael Oliveira."
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🙏 Acknowledgments\n\n\n- City of Toronto for providing open data\n- Toronto community centers for maintaining accurate schedules\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🚀 Next Steps\n\n\n**New here?** → [Local Development Guide](docs/LOCAL_DEVELOPMENT.md) to get started  \n**Building features?** → [API Reference](docs/API.md) | [Architecture](docs/ARCHITECTURE.md)  \n**Ready to deploy?** → [Deployment Guide](docs/DEPLOYMENT_PI.md)  \n**Contributing?** → [Contributing Guidelines](docs/CONTRIBUTING.md)  \n**Testing mobile?** → [Mobile Testing Guide](docs/MOBILE_TESTING.md)"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🏊‍♂️ SwimTO — MASTER PROMPT (V4.0 for Raspberry Pi k3s)\n\n\nYou are an expert full-stack engineer + open-data integrator building a **commercial product**.\n\nBuild a monorepo called **swimto** that aggregates and displays **indoor community-pool drop-in swim schedules** for the City of Toronto.\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nStrategic Direction\n\n\n**This is now a COMMERCIAL product with a hybrid business approach:**\n\n1. **Repository Status: PRIVATE**\n\n   - GitHub repository must be set to private immediately\n   - Protects intellectual property and future development\n   - Controls access to codebase\n\n2. **Monetization Model**\n\n   - **Price:** $0.99 one-time purchase\n   - **Distribution:** QR code at facilities or via app stores\n   - **Value Proposition:** Convenience, reliability, and supporting local development\n\n3. **Licensing**\n\n   - Fully proprietary from inception (v1.0.0+)\n   - All rights reserved by Rafael Oliveira\n   - Commercial use only with explicit permission\n   - No open-source release planned initially\n\n4. **Future Considerations**\n   - Build user base first\n   - May open-source later for community contributions\n   - Evaluate dual-licensing model (commercial + open source)"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nUser Value Proposition\n\n\nWhat users pay for:\n\n- ✅ Reliable, always-updated schedule data\n- ✅ Fast, mobile-optimized experience\n- ✅ Self-hosted infrastructure (no ads, no tracking)\n- ✅ Support for local developer\n- ✅ Continued maintenance and improvements"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nAction Items\n\n\n**Immediate:**\n\n- [ ] Make GitHub repository private\n- [ ] Update LICENSE file to proprietary license\n- [ ] Remove public references/links to repository\n- [ ] Consider trademark for \"SwimTO\" name\n\n**Short Term:**\n\n- [ ] Set up payment processing (Stripe, Apple Pay, Google Pay)\n- [ ] Create QR code distribution mechanism\n- [ ] Design purchase/download flow\n- [ ] Add privacy-respecting analytics\n\n**Medium Term:**\n\n- [ ] Evaluate app store distribution (Apple App Store, Google Play)\n- [ ] Build marketing materials\n- [ ] Gather user feedback and iterate\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🎯 Technical Goals\n\n\n1. Collect → Normalize → Display drop-in swim schedules for all indoor pools.\n\n2. Prefer official City of Toronto Open Data APIs / datasets before scraping.\n\n3. Run fully self-hosted on Rafael's Raspberry Pi k3s cluster.\n\n4. Deploy automatically via a self-hosted GitHub Actions runner.\n\n5. **Use Helm charts where applicable** - Prefer Helm charts for deployments when suitable charts exist. Keep setup simple and low-maintenance — minimal YAML, update ≈ once per year.\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🔐 Vault: Single Source of Truth\n\n\n**CRITICAL PRINCIPLE: Vault is the single source of truth for ALL secrets and sensitive configuration.**"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nCore Rules\n\n\n1. **Always use Vault** - Any secret, API key, password, token, or sensitive configuration MUST be stored in Vault\n2. **Never hardcode secrets** - No secrets in code, config files, environment variables, or deployment manifests\n3. **Vault first** - When adding new features requiring secrets, store them in Vault first, then reference via External Secrets Operator\n4. **External Secrets Operator** - Automatically syncs secrets from Vault to Kubernetes secrets every 24 hours\n5. **No alternatives** - Do not use Kubernetes secrets directly, ConfigMaps for secrets, or any other secret management solution"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nWhat Goes in Vault\n\n\n- Database passwords and connection strings\n- API keys (OpenAI, Leonardo.ai, external services)\n- OAuth credentials (client IDs, client secrets)\n- Admin tokens and secret keys\n- Service account credentials\n- TLS certificates and keys\n- Any other sensitive configuration values"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nWorkflow\n\n\n1. **Store in Vault** → Use `vault kv put` or scripts like `update-vault-api-keys.sh`\n2. **Sync to Kubernetes** → External Secrets Operator automatically creates Kubernetes secrets\n3. **Reference in Deployments** → Use `secretKeyRef` in deployment manifests\n4. **Never commit secrets** → All secrets live only in Vault"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nWhen in Doubt\n\n\n**If you're unsure whether something should go in Vault:**\n\n- **Ask yourself:** \"Is this sensitive or could it be used maliciously?\"\n- **If yes:** Put it in Vault\n- **If no:** Use ConfigMap for non-sensitive configuration\n\n**Remember:** Vault is the source of truth. All other systems (Kubernetes, applications, CI/CD) consume from Vault, never the other way around.\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🧠 Data Ingestion\n\n\n| Step | Action                                                                           |\n| ---- | -------------------------------------------------------------------------------- |\n| 1    | Query open.toronto.ca for datasets (\"swim\", \"drop-in\", \"recreation\", \"aquatic\"). |\n| 2    | If a dataset with schedule times exists, use it directly.                        |\n| 3    | Always pull facility metadata from pools.xml.                                    |\n| 4    | Crawl facility pages (e.g. Mary McCormick, Norseman, Pam McConnell).             |\n| 5    | Detect hidden JSON / XHR endpoints via Playwright (locationId, weekStart).       |\n| 6    | If none → parse HTML weekly tables (\"For the week of …\") with BeautifulSoup.     |\n| 7    | Normalize → dedupe → store in PostgreSQL (or local SQLite).                      |\n\n**Canonical fields:**\n`facility_id, name, address, postal_code, district, lat, lon, swim_type, date, start_time, end_time, notes, source`\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n⚙️ Backend – FastAPI\n\n\n**Endpoints**\n\n```\nGET  /facilities\nGET  /schedule\nGET  /schedule/today\nPOST /update   (token-protected)\n```\n\n**Stack**\n\n- FastAPI + SQLAlchemy + Alembic\n- PostgreSQL (or local SQLite)\n- Optional Redis cache\n- Cron job or manual /update trigger\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n💻 Frontend – React + Vite + TypeScript\n\n\n- **Map View (state-of-the-art):**\n\n  - Interactive Toronto map (Leaflet / Mapbox).\n  - Shows _only_ community centers offering **LANE SWIM** sessions.\n  - Pins display facility name, next available lane swim, and schedule preview.\n  - Clustered view, filters, and \"open now\" highlights.\n\n- **Schedule View (top-of-the-art):**\n\n  - Modern, calendar-style layout showing weekday + time for all **LANE SWIM** drop-in programs.\n  - Filter by district, day, or time range.\n  - Clicking a facility on the map highlights its schedule in the list.\n  - Responsive mobile design, integrated with map interactions.\n\n- **Facility Card:**\n  - Shows next sessions, address → Google Maps link, alerts, and \"Updated X h ago\".\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🗂️ Repo Layout\n\n\n```\nswimto/\n├─ apps/\n│  ├─ api/          ← FastAPI backend\n│  └─ web/          ← React frontend\n├─ data-pipeline/   ← discovery + ETL\n├─ k8s/             ← bare YAMLs for k3s\n├─ .github/workflows/\n├─ docker-compose.yml\n├─ MASTER_PROMPT.md     ← This file - project guide\n├─ PROJECT_STRATEGY.md  ← Business model & licensing\n├─ COPYRIGHT            ← Proprietary copyright notice\n└─ README.md\n```\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🧩 Data Model\n\n\n```sql\nCREATE TABLE facilities (\n  facility_id TEXT PRIMARY KEY,\n  name TEXT, address TEXT, postal_code TEXT,\n  district TEXT, latitude DOUBLE PRECISION, longitude DOUBLE PRECISION,\n  is_indoor BOOLEAN, source TEXT, raw JSONB,\n  created_at TIMESTAMPTZ DEFAULT now(), updated_at TIMESTAMPTZ DEFAULT now()\n);\n\nCREATE TABLE sessions (\n  id BIGSERIAL PRIMARY KEY,\n  facility_id TEXT REFERENCES facilities(facility_id),\n  swim_type TEXT, date DATE, start_time TIME, end_time TIME,\n  notes TEXT, source TEXT, hash TEXT UNIQUE,\n  created_at TIMESTAMPTZ DEFAULT now(), updated_at TIMESTAMPTZ DEFAULT now()\n);\n```\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🧰 Docker & Local Stack\n\n\n```yaml\nservices:\n  db:\n    image: postgres:16\n    environment:\n      POSTGRES_PASSWORD: postgres\n    ports: [\"5432:5432\"]\n  api:\n    build: ./apps/api\n    environment:\n      DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/pools\n    ports: [\"8000:8000\"]\n  web:\n    build: ./apps/web\n    ports: [\"5173:5173\"]\n```\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n☁️ k3s Deployment (Raspberry Pi) with Vault Secrets"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nOverview\n\n\nSwimTO is deployed to a Raspberry Pi k3s cluster (eldertree) using Kubernetes manifests. **Use Helm charts where applicable** for better maintainability and reusability. When Helm charts are not available or not suitable, use raw YAML manifests. **ALL secrets are managed through Vault** and automatically synced to Kubernetes via External Secrets Operator. This ensures no hardcoded secrets in deployment files and centralized secret management."
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nPrerequisites\n\n\n- k3s cluster running (eldertree control plane)\n- Vault deployed and accessible\n- External Secrets Operator installed and configured\n- ClusterSecretStore configured for Vault\n- kubectl configured with `~/.kube/config-eldertree`"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nVault Secrets Configuration\n\n\n**All SwimTO secrets are stored in Vault at these paths:**\n\n- `secret/swimto/postgres` - PostgreSQL password\n- `secret/swimto/database` - Complete database URL\n- `secret/swimto/redis` - Redis URL\n- `secret/swimto/app` - Admin token and secret key\n- `secret/swimto/api-keys` - OpenAI and Leonardo.ai API keys (optional)\n- `secret/swimto/oauth` - Google OAuth credentials (optional)\n\n**Setting Secrets in Vault:**\n\n```bash"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nGet Vault pod\n\nVAULT_POD=$(kubectl get pods -n vault -l app.kubernetes.io/name=vault -o jsonpath='{.items[0].metadata.name}')"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nSet PostgreSQL password\n\nPOSTGRES_PWD=$(python3 -c 'import secrets; print(secrets.token_urlsafe(16))')\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/postgres password=$POSTGRES_PWD\""
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nSet database URL\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/database url=postgresql+psycopg://postgres:$POSTGRES_PWD@postgres-service:5432/pools\""
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nSet Redis URL\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/redis url=redis://redis-service:6379\""
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nSet admin token and secret key\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/app admin-token=\\$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))') secret-key=\\$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')\""
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nSet API keys (optional - use placeholders if not available)\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/api-keys openai-api-key=placeholder-openai-key leonardo-api-key=placeholder-leonardo-key\""
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nSet OAuth credentials (optional)\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/oauth google-client-id=placeholder-client-id google-client-secret=placeholder-client-secret\"\n```"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nExternalSecret Resource\n\n\nThe ExternalSecret resource automatically syncs secrets from Vault to Kubernetes:\n\n```yaml"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nLocated at: pi-fleet/clusters/eldertree/infrastructure/external-secrets/externalsecrets/swimto-secrets.yaml\n\napiVersion: external-secrets.io/v1beta1\nkind: ExternalSecret\nmetadata:\n  name: swimto-secrets\n  namespace: swimto\nspec:\n  refreshInterval: 24h\n  secretStoreRef:\n    name: vault\n    kind: ClusterSecretStore\n  target:\n    name: swimto-secrets\n    creationPolicy: Owner\n  data:\n    - secretKey: DATABASE_URL\n      remoteRef:\n        key: secret/swimto/database\n        property: url\n    - secretKey: REDIS_URL\n      remoteRef:\n        key: secret/swimto/redis\n        property: url\n    - secretKey: ADMIN_TOKEN\n      remoteRef:\n        key: secret/swimto/app\n        property: admin-token\n    - secretKey: POSTGRES_PASSWORD\n      remoteRef:\n        key: secret/swimto/postgres\n        property: password\n    - secretKey: SECRET_KEY\n      remoteRef:\n        key: secret/swimto/app\n        property: secret-key\n    - secretKey: OPENAI_API_KEY\n      remoteRef:\n        key: secret/swimto/api-keys\n        property: openai-api-key\n    - secretKey: LEONARDO_API_KEY\n      remoteRef:\n        key: secret/swimto/api-keys\n        property: leonardo-api-key\n    - secretKey: GOOGLE_CLIENT_ID\n      remoteRef:\n        key: secret/swimto/oauth\n        property: google-client-id\n    - secretKey: GOOGLE_CLIENT_SECRET\n      remoteRef:\n        key: secret/swimto/oauth\n        property: google-client-secret\n```\n\n**Important:** This ExternalSecret is managed by Flux GitOps in the pi-fleet repository. It automatically syncs secrets every 24 hours."
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nKubernetes Deployment Files\n\n\n**Files in `/k8s` directory:**\n\n- `namespace.yaml` - Namespace definition\n- `api-deployment.yaml` - API deployment and service (2 replicas)\n- `web-deployment.yaml` - Web frontend deployment and service (2 replicas)\n- `postgres-deployment.yaml` - PostgreSQL database\n- `redis-deployment.yaml` - Redis cache\n- `postgres-pvc.yaml` - Persistent volume for PostgreSQL (local-path storage)\n- `configmap.yaml` - Non-sensitive configuration values\n- `cronjob-refresh.yaml` - Daily data refresh job\n- `ingress.yaml` - Ingress configuration for external access\n\n**Key Features:**\n\n- All secrets referenced via `secretKeyRef` from `swimto-secrets`\n- Optional secrets marked with `optional: true` (API keys, OAuth)\n- Resource limits configured for Raspberry Pi constraints\n- Security contexts configured (runAsNonRoot, readOnlyRootFilesystem)\n- Health checks configured for all services"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nDeployment Steps\n\n\n1. **Ensure Vault secrets are set** (see above)\n\n2. **Verify ExternalSecret is syncing:**\n\n```bash\nkubectl get externalsecret swimto-secrets -n swimto\nkubectl get secret swimto-secrets -n swimto\n```\n\n3. **Deploy all components:**\n\n```bash\nexport KUBECONFIG=~/.kube/config-eldertree\nkubectl apply -f k8s/namespace.yaml\nkubectl apply -f k8s/configmap.yaml\nkubectl apply -f k8s/postgres-pvc.yaml\nkubectl apply -f k8s/postgres-deployment.yaml\nkubectl apply -f k8s/redis-deployment.yaml\nkubectl apply -f k8s/api-deployment.yaml\nkubectl apply -f k8s/web-deployment.yaml\nkubectl apply -f k8s/ingress.yaml\nkubectl apply -f k8s/cronjob-refresh.yaml\n```\n\n4. **Verify deployment:**\n\n```bash\nkubectl get pods -n swimto\nkubectl get svc -n swimto\nkubectl get ingress -n swimto\nkubectl logs -f deployment/swimto-api -n swimto\n```"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nIngress Configuration\n\n\n- Host: `swimto.eldertree.local` (or configured domain)\n- TLS: Managed by cert-manager with self-signed certificates\n- Paths:\n  - `/api` → swimto-api-service (port 8000)\n  - `/` → swimto-web-service (port 80)"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nCI/CD with GitHub Actions\n\n\n**Self-hosted runner setup:**\n\n```bash"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nOn Pi cluster\n\ncd ~/actions-runner\n./config.sh --url https://github.com/raolivei/swimTO --token YOUR_TOKEN\nsudo ./svc.sh install\nsudo ./svc.sh start\n```\n\n**Workflow:**\n\n1. Build Docker images (swimto-api:latest, swimto-web:latest)\n2. Load into k3s: `k3s ctr images import <(docker save swimto-api:latest)`\n3. Apply Kubernetes manifests: `kubectl apply -f k8s/`\n\n**Important:** Secrets are NOT managed by CI/CD. They are set manually in Vault and synced automatically by External Secrets Operator."
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nDaily Data Refresh\n\n\nA CronJob runs daily at 3 AM to refresh pool schedule data:\n\n```yaml"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nk8s/cronjob-refresh.yaml\n\napiVersion: batch/v1\nkind: CronJob\nmetadata:\n  name: swimto-data-refresh\n  namespace: swimto\nspec:\n  schedule: \"0 3 * * *\"\n  jobTemplate:\n    spec:\n      template:\n        spec:\n          containers:\n            - name: data-refresh\n              image: swimto-api:latest\n              command: [\"python\", \"/data-pipeline/jobs/daily_refresh.py\"]\n              env:\n                - name: DATABASE_URL\n                  valueFrom:\n                    secretKeyRef:\n                      name: swimto-secrets\n                      key: DATABASE_URL\n```"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nSecurity Best Practices\n\n\n✅ **Vault is the source of truth** - ALL secrets MUST be stored in Vault first (see \"Vault: Single Source of Truth\" section above)  \n✅ **External Secrets Operator** - Automatic sync from Vault to Kubernetes every 24 hours  \n✅ **No hardcoded secrets** - All deployments use `secretKeyRef` from External Secrets Operator  \n✅ **Never commit secrets** - Secrets exist only in Vault, never in git repositories  \n✅ **Optional secrets** - API keys and OAuth marked as optional in deployments  \n✅ **Security contexts** - runAsNonRoot, readOnlyRootFilesystem, capabilities dropped"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nTroubleshooting\n\n\n**Secrets not syncing:**\n\n```bash\nkubectl describe externalsecret swimto-secrets -n swimto\nkubectl logs -n external-secrets deployment/external-secrets\n```\n\n**Pods failing to start:**\n\n```bash\nkubectl logs deployment/swimto-api -n swimto\nkubectl get secret swimto-secrets -n swimto\n```\n\n**Database connection issues:**\n\n```bash\nkubectl get pods -n swimto | grep postgres\nkubectl logs deployment/postgres -n swimto\n```\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🤖 GitHub Actions\n\n\n```yaml\nname: Deploy to Pi k3s\non: [push]\njobs:\n  build-deploy:\n    runs-on: [self-hosted, linux, arm64]\n    steps:\n      - uses: actions/checkout@v4\n      - name: Build images\n        run: |\n          docker build -t swimto-api:latest apps/api\n          docker build -t swimto-web:latest apps/web\n      - name: Load into k3s\n        run: |\n          k3s ctr images import <(docker save swimto-api:latest)\n          k3s ctr images import <(docker save swimto-web:latest)\n      - name: Deploy\n        run: kubectl apply -f k3s/\n```\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🧾 Env Vars\n\n\n```\nDATABASE_URL=postgresql+psycopg://postgres:postgres@db:5432/pools\nADMIN_TOKEN=change-me\nCITY_BASE_URL=https://www.toronto.ca\nOPEN_DATA_BASE_URL=https://open.toronto.ca\nINGEST_WINDOW_DAYS=56\n```\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n📘 Docs to Generate\n\n\n- **README.md** – overview + setup + Open Data license + **commercial notice**\n- **PROJECT_STRATEGY.md** – business model, licensing strategy, roadmap\n- **COPYRIGHT** – proprietary copyright notice\n- **INGESTION.md** – data sources + normalization\n- **DEPLOYMENT_PI.md** – k3s + runner setup\n- **API.md**, **FRONTEND.md**, **OPERATIONS.md**, **SECURITY.md**\n- **LICENSE** – update to proprietary for v2.0.0+\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n✅ Acceptance Checklist\n\n\n**Technical:**\n\n- `docker compose up` runs locally\n- `/schedule/today` returns real data\n- Map + List views render LANE SWIM data correctly\n- `/update` triggers refresh\n- GitHub Actions deploys to Pi cluster\n- Cron keeps data fresh\n\n**Business:**\n\n- Repository is set to private on GitHub\n- LICENSE file updated to proprietary\n- PROJECT_STRATEGY.md documents business model\n- Payment processing mechanism designed\n- Distribution strategy (QR codes / app stores) defined\n- Analytics/telemetry implemented (privacy-respecting)\n- Support/feedback mechanism in place\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🗺️ Enhanced Visualization Goals\n\n\n1. **Interactive Map (Toronto-focused):**\n\n   - Displays all community centers with **LANE SWIM** sessions.\n   - Uses **Leaflet or Mapbox** with clustering, filters, and \"open now\" highlights.\n\n2. **Top-tier Schedule View:**\n   - Calendar-style grid showing **weekday + time slots** for each **LANE SWIM** program.\n   - Integrated with the map — selecting a facility highlights its sessions.\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n💡 Key Principles\n\n\n1. **Vault-First:** Vault is the single source of truth for all secrets and sensitive configuration\n2. **Privacy-First:** No tracking, no ads, no data selling\n3. **Quality-Focused:** Reliable data, fast performance, great UX\n4. **Self-Hosted:** Complete control over infrastructure\n5. **Commercial Viability:** Sustainable through fair pricing\n6. **Local Value:** Supporting Toronto swimmers and local development\n\n---\n\n**Version:** 4.0  \n**Last Updated:** November 5, 2025  \n**Status:** Development → Commercial Launch  \n**License:** Proprietary (all versions)\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🚀 Next Steps\n\n\n1. Switch GitHub repository to private\n2. Create PROJECT_STRATEGY.md document\n3. Update LICENSE and add COPYRIGHT\n4. Plan payment integration\n5. Design QR code distribution system"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🏊‍♂️ SwimTO — Project Strategy & Business Model\n\n\n**Version:** 2.0  \n**Last Updated:** November 5, 2025  \n**Status:** Commercial Product - Private Repository\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n📋 Executive Summary\n\n\nSwimTO is a **commercial mobile application** that provides Toronto residents with reliable, up-to-date indoor pool drop-in swim schedules. The app aggregates data from the City of Toronto Open Data Portal and presents it in an intuitive, mobile-first interface.\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nRevenue Model\n\n\n**Monetization Strategy:**\n- **Price:** $0.99 one-time purchase\n- **No subscriptions:** One-time payment for lifetime access\n- **No ads:** Clean, focused user experience\n- **No tracking:** Privacy-first approach respects user data"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nDistribution Channels\n\n\n1. **QR Codes at Facilities**\n   - Place QR codes at participating Toronto community pools\n   - Direct link to purchase/download page\n   - Simple user journey: Scan → Purchase → Use\n\n2. **App Stores** (Future)\n   - Apple App Store (iOS)\n   - Google Play Store (Android)\n   - Standard app store monetization\n\n3. **Word of Mouth**\n   - Organic growth through user recommendations\n   - Community center partnerships\n   - Local swimming groups and clubs\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nWhat Users Get for $0.99:\n\n\n✅ **Reliable Data**\n- Daily updates from official City of Toronto sources\n- Same data powering toronto.ca website\n- 100% accurate swim schedules\n\n✅ **Superior User Experience**\n- Mobile-first, responsive design\n- Interactive map showing all lane swim locations\n- Calendar view with easy filtering by day/time\n- PWA support (installable on mobile devices)\n\n✅ **Privacy & Trust**\n- Self-hosted infrastructure\n- No user tracking or analytics\n- No ads or third-party integrations\n- Open about data sources\n\n✅ **Local Support**\n- Supporting local Toronto developer\n- Continued maintenance and improvements\n- Direct user support\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nRepository Status\n\n\n**Current:** PRIVATE GitHub repository\n- Protects intellectual property\n- Controls access to codebase\n- Prevents unauthorized distribution\n- Enables commercial development"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nLicensing Approach\n\n\n**Fully Proprietary:**\n\n- All code under proprietary license from inception\n- Commercial use only with explicit permission\n- All rights reserved by Rafael Oliveira\n- No open-source release planned for initial versions\n\n**Rationale:**\n- Built as commercial product from day one\n- Protects intellectual property\n- Enables sustainable business model\n- Provides flexibility for future licensing decisions"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nFuture Open Source Considerations\n\n\n**Possible Future Options:**\n\n1. **Open Source Components**\n   - May open-source specific libraries/tools\n   - Core app remains proprietary\n   - Contribute back to community selectively\n\n2. **Source Available**\n   - Make source code viewable (not forkable)\n   - Transparency without losing IP\n   - Similar to many commercial apps\n\n3. **Remain Fully Proprietary**\n   - Most likely path for sustainability\n   - Standard for commercial mobile apps\n   - Protects competitive advantage\n\n**Decision Point:** Evaluate after establishing user base and revenue (12+ months)\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nTarget Users\n\n\n**Primary:**\n- Toronto residents who swim regularly\n- Fitness enthusiasts seeking lane swim times\n- Adults with flexible schedules (remote workers, retirees)\n\n**Secondary:**\n- Parents coordinating children's activities\n- Tourists visiting Toronto\n- Health professionals recommending swimming"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nMarket Size\n\n\n- Toronto Population: 2.9M+\n- Community Pools with Lane Swim: ~50 facilities\n- Regular Swimmers (estimated): 100K+\n- Addressable Market: 10K-50K users"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nCompetitive Landscape\n\n\n**Current Solutions:**\n1. **toronto.ca website**\n   - Official but clunky interface\n   - Not mobile-optimized\n   - Requires multiple clicks to find schedules\n\n2. **Individual facility websites**\n   - Scattered information\n   - Inconsistent formats\n   - Time-consuming to check multiple pools\n\n3. **Generic calendar apps**\n   - Manual data entry required\n   - No automation\n   - Maintenance burden on users\n\n**SwimTO Advantage:**\n- Aggregates all data in one place\n- Mobile-optimized interface\n- Automatic updates\n- Interactive map visualization\n- Superior UX\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nPhase 1: Soft Launch (Months 1-3)\n\n\n**Goals:**\n- Deploy to production (Raspberry Pi k3s)\n- Test with friends/family (beta testers)\n- Refine user experience based on feedback\n- Set up payment processing infrastructure\n\n**Activities:**\n- [ ] Deploy production infrastructure\n- [ ] Implement payment flow (Stripe/Apple Pay/Google Pay)\n- [ ] Create QR code landing page\n- [ ] Beta test with 10-20 users\n- [ ] Gather feedback and iterate"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nPhase 2: Local Launch (Months 4-6)\n\n\n**Goals:**\n- Launch to Toronto swimming community\n- Place QR codes at 5-10 facilities\n- Reach 100+ paying users\n- Establish positive reviews/word-of-mouth\n\n**Activities:**\n- [ ] Contact community centers for QR code placement\n- [ ] Create marketing materials (flyers, posters)\n- [ ] Engage with local swimming groups on social media\n- [ ] Monitor user feedback and fix issues quickly\n- [ ] Implement basic analytics (privacy-respecting)"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nPhase 3: Growth & Scaling (Months 7-12)\n\n\n**Goals:**\n- Scale to 500+ users\n- Expand QR code presence to all major pools\n- Consider app store distribution\n- Evaluate feature requests\n\n**Activities:**\n- [ ] Expand QR code distribution network\n- [ ] Explore Apple App Store listing\n- [ ] Explore Google Play Store listing\n- [ ] Implement requested features\n- [ ] Consider open-source strategy reassessment\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nRevenue Scenarios (Year 1)\n\n\n**Conservative:**\n- 500 users × $0.99 = $495\n\n**Moderate:**\n- 2,000 users × $0.99 = $1,980\n\n**Optimistic:**\n- 5,000 users × $0.99 = $4,950"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nCost Structure\n\n\n**Infrastructure:**\n- Raspberry Pi hardware: $200 (one-time)\n- Electricity: ~$5/month\n- Domain name: $15/year\n- Total: ~$275/year\n\n**Development:**\n- Self-funded (personal project)\n- Time investment: ~5-10 hours/month maintenance\n- Major updates: As needed\n\n**Distribution:**\n- Payment processing fees: ~3% of revenue\n- QR code printing: $50-100 (one-time)\n- App store fees: $99/year (Apple) + $25 (Google, one-time)\n\n**Net Margin:** ~85-90% after costs\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nData & Privacy\n\n\n**Approach:**\n- No user data collection beyond payment\n- No tracking or analytics (or minimal, privacy-respecting)\n- All data sourced from public City of Toronto resources\n- Compliance with Canadian privacy laws (PIPEDA)\n\n**Data License:**\n- City of Toronto data under Open Government Licence – Toronto\n- Proper attribution in app and documentation"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nIntellectual Property\n\n\n**Protection:**\n- Source code copyright: Rafael Oliveira\n- Consider trademark for \"SwimTO\" name\n- Logo/branding copyright\n- Keep repository private\n\n**User Terms:**\n- Clear terms of service\n- One-time purchase, no refunds\n- No warranty (as-is)\n- Right to discontinue service\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nKey Performance Indicators (KPIs)\n\n\n**Financial:**\n- Number of paying users\n- Revenue (monthly/yearly)\n- Customer acquisition cost\n- Net margin\n\n**Product:**\n- Daily active users\n- User retention rate\n- Data freshness/accuracy\n- App performance metrics\n\n**User Satisfaction:**\n- User feedback/reviews\n- Support requests\n- Feature requests\n- Churn rate\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n🎯 Core Principles\n\n\n**1. Privacy-First**\n- No tracking, no ads, no data selling\n- User privacy is non-negotiable\n- Transparent about data usage\n\n**2. Quality-Focused**\n- Reliable data sources\n- Fast, responsive performance\n- Great user experience\n- Regular maintenance\n\n**3. Self-Hosted**\n- Complete infrastructure control\n- No dependence on cloud providers\n- Cost-effective long-term\n- Educational value\n\n**4. Commercial Viability**\n- Fair pricing for value provided\n- Sustainable business model\n- Support ongoing development\n- Enable future improvements\n\n**5. Local Value**\n- Serving Toronto community\n- Supporting local development\n- Contributing to open data ecosystem\n- Partnership with community centers\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nShort Term (3-6 months)\n\n- [ ] Complete payment integration\n- [ ] QR code distribution network\n- [ ] User feedback mechanism\n- [ ] Basic analytics implementation"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nMedium Term (6-12 months)\n\n- [ ] App store distribution\n- [ ] User accounts (optional)\n- [ ] Favorite facilities feature\n- [ ] Push notifications for schedule changes\n- [ ] Expand to more facility types"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\nLong Term (12+ months)\n\n- [ ] Expand to other cities (Ottawa, Montreal, Vancouver)\n- [ ] Partnerships with swimming organizations\n- [ ] API access for third parties\n- [ ] Community contribution model\n- [ ] Open-source core components\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n📞 Contact & Support\n\n\n**Developer:** Rafael Oliveira  \n**Project:** SwimTO  \n**Repository:** Private (GitHub)  \n**Website:** TBD  \n**Support:** TBD\n\n---"
+  },
+  {
+    "question": "Tell me about SwimTO ",
+    "answer": "SwimTO :\n\n📝 Change Log\n\n\n- **v1.0** (Nov 5, 2025): Initial strategy document - proprietary commercial project\n\n---\n\n**Note:** This document is confidential and intended for internal use and potential investors/partners only."
+  },
+  {
+    "question": "Give me an overview of SwimTO",
+    "answer": "# 🏊‍♂️ SwimTO\n\n**SwimTO** aggregates and displays indoor community pool drop-in swim schedules for the City of Toronto.\n\n> **⚠️ COMMERCIAL PROJECT:** This is proprietary software. All rights reserved. See [LICENSE](LICENSE) and [PROJECT_STRATEGY.md](PROJECT_STRATEGY.md) for details.\n\n## 🎯 Overview\n\nSwimTO collects, normalizes, and presents lane swim schedules from Toronto's community pools, helping residents find convenient swimming times near them."
+  },
+  {
+    "question": "What is the API structure of SwimTO?",
+    "answer": "SwimTO has a FastAPI backend located in apps/api/ that provides endpoints for pool schedules and facilities data."
+  }
+]

@@ -1,0 +1,170 @@
+# Nima Technical Training Configuration
+# Optimized for system engineering and technical documentation
+
+# Model Architecture
+model:
+  type: "gpt" # or "gpt-small", "gpt-medium", "gpt-large"
+  preset: "gpt-tiny" # Use tiny model for quick testing
+
+  # Custom architecture (if not using preset)
+  vocab_size: null # Will be set from tokenizer
+  d_model: 768
+  n_layers: 12
+  n_heads: 12
+  d_ff: 3072
+  max_seq_length: 512
+  dropout: 0.1
+
+  # Positional encoding
+  pos_encoding_type: "learned" # or "sinusoidal"
+
+# Training Configuration
+training:
+  # Basic settings
+  epochs: 10 # Reduced for quick testing on small dataset
+  batch_size: 4 # Small batch for small dataset
+  gradient_accumulation_steps: 2 # Effective batch size = 8
+  max_steps: null # If set, overrides epochs
+
+  # Learning rate
+  learning_rate: 3.0e-4
+  warmup_steps: 2000
+  lr_scheduler: "cosine" # "linear", "cosine", "constant"
+  min_lr: 1.0e-5
+
+  # Optimizer
+  optimizer: "adamw"
+  weight_decay: 0.01
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  adam_epsilon: 1.0e-8
+  max_grad_norm: 1.0
+
+  # Mixed precision
+  use_mixed_precision: true
+  fp16: true
+
+  # Checkpointing
+  save_steps: 500
+  save_total_limit: 5 # Keep only N best checkpoints
+  checkpoint_dir: "experiments/nima_technical"
+
+  # Logging
+  log_steps: 50
+  eval_steps: 500
+  logging_dir: "experiments/nima_technical/logs"
+
+  # Early stopping
+  early_stopping:
+    enabled: true
+    patience: 5 # Stop after N evaluations without improvement
+    min_delta: 0.001 # Minimum change to qualify as improvement
+    metric: "val_loss" # Metric to monitor
+    mode: "min" # "min" for loss, "max" for accuracy
+
+  # Validation
+  eval_batch_size: 32
+  eval_accumulation_steps: null
+
+  # Data
+  dataloader_num_workers: 4
+  dataloader_pin_memory: true
+  shuffle: true
+
+  # Seed for reproducibility
+  seed: 42
+
+# Data Configuration
+data:
+  train_file: "data/processed/technical_example/train.txt"
+  val_file: "data/processed/technical_example/val.txt"
+  test_file: "data/processed/technical_example/test.txt"
+  tokenizer_path: "data/processed/technical_example/tokenizer_bpe.json"
+  tokenizer_type: "bpe"
+
+  # Sequence processing
+  max_length: 512
+  stride: 256 # For sliding window
+  pad_to_max_length: false
+
+  # Data augmentation (optional)
+  augmentation:
+    enabled: false
+    techniques: [] # e.g., ["synonym_replacement", "random_deletion"]
+
+# Monitoring and Logging
+monitoring:
+  # TensorBoard
+  tensorboard:
+    enabled: true
+    log_dir: "experiments/nima_technical/tensorboard"
+    flush_secs: 30
+
+  # Weights & Biases
+  wandb:
+    enabled: false # Set to true to use W&B
+    project: "nima-technical"
+    entity: null # Your W&B username/team
+    name: "nima-technical-run"
+    tags: ["technical", "system-engineering", "gpt"]
+    notes: "Training Nima on technical documentation"
+
+  # Metrics to track
+  metrics:
+    - "train_loss"
+    - "val_loss"
+    - "train_perplexity"
+    - "val_perplexity"
+    - "learning_rate"
+    - "grad_norm"
+
+  # Plot generation
+  plots:
+    enabled: true
+    save_dir: "experiments/nima_technical/plots"
+    plot_every_n_steps: 1000
+    metrics_to_plot:
+      - ["train_loss", "val_loss"]
+      - ["train_perplexity", "val_perplexity"]
+
+# Evaluation Configuration
+evaluation:
+  # Metrics to compute
+  compute_perplexity: true
+  compute_accuracy: true
+  compute_bleu: false # For generation tasks
+
+  # Generation settings for evaluation
+  generation:
+    enabled: true
+    prompts:
+      - "Kubernetes is"
+      - "To deploy an application with Terraform"
+      - "The difference between Docker and Kubernetes"
+      - "How to debug a Python application"
+    max_length: 100
+    temperature: 0.8
+    top_k: 50
+    top_p: 0.95
+    num_samples: 3
+
+# Hardware Configuration
+hardware:
+  device: "auto" # "auto", "cuda", "cpu", "mps"
+  gpu_ids: [0] # For multi-GPU training
+  distributed: false
+  backend: "nccl" # For distributed training
+
+# Resuming Training
+resume:
+  enabled: false
+  checkpoint_path: null
+  resume_optimizer: true
+  resume_scheduler: true
+
+# Debugging
+debug:
+  enabled: false
+  max_train_steps: 100
+  max_eval_steps: 10
+  profile: false

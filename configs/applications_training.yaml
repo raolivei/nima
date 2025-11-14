@@ -1,0 +1,62 @@
+model:
+  preset: tiny
+  d_model: 256
+  n_layers: 4
+  n_heads: 4
+  d_ff: 1024
+  max_seq_length: 512
+  dropout: 0.1
+
+data:
+  tokenizer_type: bpe
+  tokenizer_path: data/processed/applications/tokenizer_bpe.json
+  train_file: data/processed/applications/train.txt
+  val_file: data/processed/applications/val.txt
+  test_file: data/processed/applications/test.txt
+  max_length: 512
+
+training:
+  seed: 42
+  epochs: 10
+  batch_size: 8
+  learning_rate: 0.0001
+  warmup_steps: 100
+  max_grad_norm: 1.0
+  log_steps: 50
+  eval_steps: 200
+  save_steps: 200
+  use_mixed_precision: false
+  gradient_accumulation_steps: 2
+  weight_decay: 0.01
+  lr_scheduler: cosine
+  checkpoint_dir: experiments/nima_applications
+  early_stopping:
+    enabled: true
+    patience: 3
+    min_delta: 0.001
+    metric: val_loss
+    mode: min
+
+monitoring:
+  tensorboard:
+    enabled: true
+    log_dir: experiments/nima_applications/tensorboard
+  wandb:
+    enabled: false
+  plots:
+    save_dir: experiments/nima_applications/plots
+
+evaluation:
+  generation:
+    enabled: true
+    prompts:
+      - "What is Canopy?"
+      - "Tell me about SwimTO"
+      - "What does the US Law Severity Map show?"
+      - "How does Canopy handle CSV imports?"
+    max_length: 150
+    temperature: 0.8
+    top_k: 50
+    top_p: 0.95
+    num_samples: 1
+

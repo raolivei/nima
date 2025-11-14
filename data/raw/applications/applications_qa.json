@@ -1,0 +1,1420 @@
+{
+  "canopy": [
+    {
+      "question": "What is Canopy?",
+      "answer": "Canopy is Self-hosted personal finance, investment, and budgeting dashboard."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCanopy  \n\n\n**Your financial life. Under one canopy.**\n\nCanopy is a self-hosted personal finance, investment, and budgeting dashboard inspired by Monarch Money, Ghostfolio, and Firefly III. It runs fully local on Raspberry Pi k3s clusters with a lean footprint, storing all data locally without cloud dependencies."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nProject Objectives  \n\n- Combine portfolio, budgeting, and net-worth views into a single dashboard.  \n- Store all data locally — no cloud dependencies.  \n- Support multi-currency (CAD, USD, BRL, EUR, GBP) assets.  \n- Allow easy CSV/OFX imports for banks and brokerages.  \n- Run lean — optimized for Raspberry Pi hardware.  \n- Be modular so other developers can fork and extend."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDesign Rationale\n\n\n**Why Single Dashboard?**\nFinancial health requires seeing the big picture. Combining portfolio, budgeting, and transactions in one view helps users understand their complete financial situation without switching between tools.\n\n**Why Local Storage?**\n- **Privacy:** Financial data never leaves your control\n- **Security:** No cloud breaches can expose your data\n- **Control:** You decide when and how to back up\n- **Compliance:** Meets data residency requirements\n\n**Why Multi-Currency?**\nModern users often have assets across currencies. Proper currency support enables accurate net worth calculation and meaningful spending analysis regardless of transaction currency.\n\n**Why CSV/OFX Import?**\nMost banks don't offer APIs. CSV/OFX files are universal formats that allow users to import transaction history from any financial institution, making the tool truly platform-agnostic.\n\n**Why Raspberry Pi Optimized?**\nDemocratizes self-hosting by using affordable, low-power hardware. Enables 24/7 operation without significant electricity costs while maintaining full control over data."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCore Features (MVP - Implemented)  \n\n- ✅ Transaction tracking with categories and types (income, expense, transfer, buy, sell)\n- ✅ Multi-currency FX conversions with display currency toggle\n- ✅ Modern Monarch Money-inspired UI with dark mode support\n- ✅ Dashboard with charts and statistics (cash flow, spending by category)\n- ✅ Transaction CRUD API endpoints\n- ✅ Currency conversion API endpoints\n- ✅ CSV import with smart format detection (Monarch Money, Chase, Bank of America, etc.)\n- ✅ Duplicate detection and validation\n- ✅ Investment transaction tracking with ticker symbols\n- ✅ Rich transaction data (merchant, notes, tags, original statement)\n- 📈 Investment portfolio tracking (stocks, ETFs, crypto, cash) - Planned\n- 💰 Budgeting with categories and goals - Planned\n- 🧾 OFX import - Planned\n- 📤 Local backup to S3-compatible storage (MinIO/B2) - Planned\n- 🔒 Encrypted secrets (no external vault) - Planned"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCurrent Version\n\n\n**v0.2.2-dev** - Development build with MVP features (pre-release, not for production use).\n\nSee [CHANGELOG.md](./CHANGELOG.md) for detailed release notes."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nPrerequisites\n\n- Python 3.11+ with venv\n- Node.js 18+ and npm\n- Docker and Docker Compose (for PostgreSQL and Redis)\n- k3s cluster (optional, for production deployment)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nBackend Setup\n\n```bash\ncd backend\npython3 -m venv venv\nsource venv/bin/activate\npip install -r requirements.txt\nPYTHONPATH=/path/to/canopy python3 -m uvicorn app.server:app --reload --host 0.0.0.0 --port 8000\n```\n\n**Why PYTHONPATH?**\nPython needs to find the `backend` module for absolute imports (`from backend.api import ...`). Setting PYTHONPATH to project root allows imports to work regardless of current directory.\n\n**Why `--reload`?**\nEnables auto-reload on code changes during development, speeding up iteration. Remove in production for better performance.\n\n**Why `0.0.0.0`?**\nBinds to all network interfaces, allowing access from other devices on your network (e.g., testing on mobile). Use `127.0.0.1` for localhost-only access."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nFrontend Setup\n\n```bash\ncd frontend\nnpm install\nnpm run dev\n```\n\n**Why Separate Processes?**\nBackend and frontend are independent services. Separating them allows:\n- Independent scaling\n- Different deployment strategies\n- Team members to work on one without affecting the other\n- Technology choices (Python backend, Node.js frontend)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTesting\n\nRun the test script to verify all functionality:\n```bash\n./test_app.sh\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nAccess\n\n- Frontend: http://localhost:3000\n- Backend API: http://localhost:8000\n- API Docs: http://localhost:8000/docs"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nRepo Structure  \n\n```\ncanopy/  \n ├── backend/  \n │   ├── api/          # API endpoints (transactions, currency, budgets, goals)\n │   ├── models/       # Pydantic models (transaction, budget, goal, holdings)\n │   ├── app/          # FastAPI application\n │   ├── ingest/       # CSV/OFX import handlers + Celery tasks\n │   └── celery/       # Celery config and workers\n ├── frontend/  \n │   ├── components/   # React components (Sidebar, StatCard, Charts, etc.)\n │   ├── pages/        # Next.js pages (dashboard, transactions, budget, goals, etc.)\n │   └── utils/        # Utility functions (currency, formatting, charts)\n ├── k8s/              # Kubernetes manifests for Pi cluster\n ├── .github/workflows/  \n │   └── deploy.yml    # Self-hosted runner CI/CD\n ├── CHANGELOG.md      # Version history\n ├── ARCHITECTURE.md   # Architecture decisions\n └── README.md  \n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCSV Import\n\n\nCanopy now supports importing transactions from CSV files with smart format detection:"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nSupported Formats\n\n- **Monarch Money** - Full support including merchant names, categories, tags, and investment transactions\n- **Chase Bank** - Standard CSV export format\n- **Bank of America** - Checking and credit card statements\n- **Wells Fargo** - Transaction history exports\n- **Capital One** - With debit/credit columns\n- **American Express** - Card statements\n- **TD Bank, RBC, Nubank** - And many more\n- **Generic CSV** - Custom field mapping for any format"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nKey Features\n\n- 🎯 Automatic format detection\n- 🔍 Duplicate transaction detection\n- 💰 Multi-currency support\n- 📊 Import preview before committing\n- 🏷️ Rich data support (merchant, tags, notes, original statement)\n- 📈 Investment transaction tracking (Buy/Sell with ticker symbols)\n- 📝 Import history tracking\n\nSee **[CSV_IMPORT_GUIDE.md](./CSV_IMPORT_GUIDE.md)** for detailed instructions and examples."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDocumentation\n\n\n- **[CHANGELOG.md](./CHANGELOG.md)** - Version history and release notes\n- **[MASTER_PROMPT.md](./MASTER_PROMPT.md)** - Complete application recreation guide\n- **[CSV_IMPORT_GUIDE.md](./CSV_IMPORT_GUIDE.md)** - CSV import documentation and format guide\n- **[test_app.sh](./test_app.sh)** - Test script for verifying functionality\n- **[examples/](./examples/)** - Sample CSV files for different formats"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCanopy Architecture & Design Decisions\n\n\nThis document explains the \"why\" behind key architectural and design decisions in Canopy."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTable of Contents\n\n- [Architecture Overview](#architecture-overview)\n- [Technology Choices](#technology-choices)\n- [API Design](#api-design)\n- [Frontend Architecture](#frontend-architecture)\n- [Data Management](#data-management)\n- [Security Considerations](#security-considerations)\n- [Performance Optimizations](#performance-optimizations)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nMonorepo Structure\n\n\n**Decision:** Single repository for backend and frontend\n\n**Why:**\n- **Simplified Development:** One git repo, one clone, unified versioning\n- **Atomic Commits:** Related frontend/backend changes can be committed together\n- **Shared Types:** Can share TypeScript types between frontend and backend (future)\n- **CI/CD Simplicity:** Single pipeline can build and test both\n- **Team Coordination:** Easier to see full context of changes\n\n**Trade-offs:**\n- Larger repository size\n- Requires discipline to keep concerns separated\n- Alternative: Separate repos (more independence, more complex CI/CD)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nBackend-Frontend Separation\n\n\n**Decision:** Separate FastAPI backend and Next.js frontend processes\n\n**Why:**\n- **Technology Fit:** Python excels at data processing, TypeScript/React for UI\n- **Independent Scaling:** Can scale backend and frontend independently\n- **Team Structure:** Backend and frontend developers can work independently\n- **Deployment Flexibility:** Can deploy to different servers/regions\n- **Testing:** Can test APIs independently of UI\n\n**Trade-offs:**\n- More complex deployment (two services to manage)\n- CORS configuration needed\n- Network latency between services\n- Alternative: Server-side rendering with Python templates (simpler, less flexible)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nFastAPI Over Django/Flask\n\n\n**Decision:** Use FastAPI for backend API\n\n**Why:**\n- **Performance:** Async/await support enables high concurrency\n- **Type Safety:** Built-in Pydantic validation catches errors early\n- **Auto Documentation:** OpenAPI/Swagger docs generated automatically\n- **Modern Python:** Uses Python 3.10+ features (type hints, async)\n- **Fast Development:** Less boilerplate than Django, more features than Flask\n\n**Trade-offs:**\n- Smaller ecosystem than Django\n- Requires Python 3.7+ (not an issue for new projects)\n- Alternative: Django (more batteries included, but heavier)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nNext.js Over Create React App\n\n\n**Decision:** Use Next.js instead of plain React\n\n**Why:**\n- **SSR/SSG:** Better SEO and initial load performance\n- **File-Based Routing:** Simpler than React Router configuration\n- **Built-in Optimizations:** Image optimization, font optimization, code splitting\n- **API Routes:** Can add backend endpoints if needed (not used currently)\n- **Production Ready:** Optimized builds out of the box\n\n**Trade-offs:**\n- More complex than CRA for simple SPAs\n- Requires understanding of SSR concepts\n- Alternative: Vite + React (faster dev server, manual optimization)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTailwind CSS Over CSS Modules/Styled Components\n\n\n**Decision:** Use Tailwind CSS utility-first approach\n\n**Why:**\n- **Rapid Development:** Write styles inline without context switching\n- **Consistency:** Utility classes enforce design system automatically\n- **Bundle Size:** Purged CSS removes unused styles (smaller bundles)\n- **Dark Mode:** Built-in support via class strategy\n- **Maintainability:** No CSS file sprawl, styles co-located with components\n\n**Trade-offs:**\n- Longer class names in JSX\n- Learning curve for utility-first approach\n- Alternative: CSS Modules (more traditional, requires separate files)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nIn-Memory Storage Initially\n\n\n**Decision:** Start with in-memory storage, plan database migration\n\n**Why:**\n- **MVP Speed:** Faster to prototype without database setup\n- **Simplicity:** No migrations, connection pooling, or schema management\n- **Testing:** Easy to reset state for tests\n- **Focus:** Allows focusing on API design and UI first\n\n**Trade-offs:**\n- Data lost on restart (acceptable for MVP)\n- No persistence (will be added)\n- Alternative: Start with database (more complex setup, but persistent)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nRESTful Endpoints\n\n\n**Decision:** Use REST conventions for API design\n\n**Why:**\n- **Standard:** Familiar to most developers\n- **HTTP Semantics:** Leverages HTTP methods (GET, POST, DELETE) naturally\n- **Tooling:** Works with standard HTTP clients and tools\n- **Documentation:** Easy to document and understand\n\n**Alternative Considered:** GraphQL (more flexible queries, but more complex)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nVersioned API (`/v1/`)\n\n\n**Decision:** Version API endpoints from the start\n\n**Why:**\n- **Future-Proofing:** Allows breaking changes in v2 without breaking v1 clients\n- **Best Practice:** Industry standard for API evolution\n- **Client Compatibility:** Multiple client versions can coexist\n- **Clear Migration Path:** Obvious when to deprecate old versions"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nQuery Parameter for Currency Conversion\n\n\n**Decision:** Use query parameter (`?currency=CAD`) instead of separate endpoint\n\n**Why:**\n- **RESTful:** GET requests should be idempotent, query params are filters\n- **Flexibility:** Same endpoint serves multiple use cases\n- **Caching:** Query params allow HTTP caching per currency\n- **Simplicity:** One endpoint instead of `/transactions` and `/transactions/converted`\n\n**Alternative:** Separate endpoint `/transactions/converted?currency=CAD` (more explicit, but violates DRY)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nComponent-Based Structure\n\n\n**Decision:** Organize by feature/component, not by file type\n\n**Why:**\n- **Co-location:** Related files stay together (component, styles, tests)\n- **Discoverability:** Easy to find all code for a feature\n- **Maintainability:** Changes to a feature are localized\n- **Scalability:** Easy to add new features without restructuring\n\n**Structure:**\n```\ncomponents/\n  Sidebar/\n    Sidebar.tsx\n    Sidebar.test.tsx\n  StatCard/\n    StatCard.tsx\n```\n\n**Alternative:** Group by type (all components, all tests separate) - harder to navigate"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nClient-Side State Management\n\n\n**Decision:** Use React useState/useEffect instead of Redux/Zustand initially\n\n**Why:**\n- **Simplicity:** Built-in state management sufficient for MVP scope\n- **No Dependencies:** Reduces bundle size and complexity\n- **Learning Curve:** Easier for developers new to the project\n- **Migration Path:** Can add state management library when needed\n\n**When to Add Redux/Zustand:**\n- Shared state across many components\n- Complex state logic\n- Need for time-travel debugging\n- Large team needing predictable state updates"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDark Mode Implementation\n\n\n**Decision:** Class-based dark mode with localStorage persistence\n\n**Why:**\n- **Performance:** Single DOM manipulation affects all elements\n- **SSR Compatible:** Works with Next.js SSR without hydration issues\n- **User Control:** Respects explicit user choice over system preference\n- **Tailwind Integration:** Works seamlessly with Tailwind's dark mode\n\n**Alternative:** CSS media queries (only respects system, no user control)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nPydantic Models for Validation\n\n\n**Decision:** Use Pydantic for all data validation\n\n**Why:**\n- **Type Safety:** Catches errors at API boundary, not deep in code\n- **Auto Documentation:** FastAPI generates OpenAPI schema from models\n- **Serialization:** Automatic JSON serialization/deserialization\n- **Validation:** Built-in validators (email, URL, custom validators)\n\n**Why Not:** Manual validation (error-prone, verbose, no type hints)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTransaction Currency Storage\n\n\n**Decision:** Store original currency, convert on-demand\n\n**Why:**\n- **Data Integrity:** Original transaction data preserved\n- **Audit Trail:** Can always see original currency\n- **Accuracy:** Avoids rounding errors from multiple conversions\n- **Compliance:** Financial records should preserve original values\n\n**Alternative:** Store in single currency (simpler, but loses original data)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nMock Exchange Rates\n\n\n**Decision:** Use hardcoded exchange rates initially\n\n**Why:**\n- **Development Speed:** No external API setup needed\n- **Testing:** Predictable, reproducible rates\n- **Offline:** Works without internet\n- **Cost:** No API costs during development\n\n**Future:** Integrate with exchange rate API (exchangerate-api.io, Fixer.io)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCORS Configuration\n\n\n**Decision:** Allow localhost:3000 in development\n\n**Why:**\n- **Development Necessity:** Frontend must call backend from different port\n- **Security:** Restricted to specific origins (not `*`)\n- **Future:** Will restrict to production domain in production\n\n**Production Plan:** Replace with specific production domain"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nNo Authentication Initially\n\n\n**Decision:** MVP without authentication\n\n**Why:**\n- **MVP Scope:** Focus on core functionality first\n- **Local-First:** Self-hosted means network access control can provide security\n- **Simplicity:** Faster to develop without auth complexity\n\n**Future:** Add JWT-based authentication, rate limiting, API keys"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nIn-Memory Storage Security\n\n\n**Decision:** Accept in-memory storage security implications for MVP\n\n**Why:**\n- **Temporary:** Will migrate to database with proper security\n- **Local Only:** Self-hosted means data never leaves user's control\n- **MVP Trade-off:** Acceptable risk for prototype\n\n**Future:** Encrypted database, connection pooling, prepared statements"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nClient-Side Currency Conversion\n\n\n**Decision:** Convert currencies in frontend after fetching\n\n**Why:**\n- **Real-Time:** User can change display currency instantly\n- **Reduced Server Load:** Server doesn't recalculate on every currency change\n- **Offline Capable:** Works if backend temporarily unavailable\n- **Flexibility:** Each user can view in their preferred currency\n\n**Trade-off:** Multiple conversions if user changes currency frequently\n\n**Future Optimization:** Cache converted amounts, batch conversions"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nConditional Router Loading\n\n\n**Decision:** Use try/except to conditionally load routers\n\n**Why:**\n- **Flexibility:** App works even if some routers missing\n- **Feature Flags:** Can enable/disable features easily\n- **Development:** Can develop features in isolation\n\n**Alternative:** Always require all routers (simpler, but less flexible)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nRecharts for Charts\n\n\n**Decision:** Use Recharts instead of D3 directly\n\n**Why:**\n- **React Integration:** Declarative, React-friendly API\n- **Responsive:** Built-in responsive behavior\n- **Composability:** Components can be combined easily\n- **Maintenance:** Active maintenance, good documentation\n\n**Alternative:** D3.js (more powerful, but imperative, harder to integrate with React)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDatabase Migration Strategy\n\n\n**Plan:** Migrate from in-memory to PostgreSQL\n\n**Why:**\n- **Persistence:** Data survives server restarts\n- **Concurrency:** Handles multiple users properly\n- **Scalability:** Can scale beyond single server\n- **Features:** Enables complex queries, reporting, analytics\n\n**Migration Path:**\n1. Keep in-memory as fallback\n2. Add database layer behind same API\n3. Migrate data on startup\n4. Remove in-memory storage"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nAuthentication Strategy\n\n\n**Plan:** JWT-based authentication\n\n**Why:**\n- **Stateless:** No server-side session storage needed\n- **Scalable:** Works across multiple servers\n- **Standard:** Industry-standard approach\n- **Flexible:** Can add refresh tokens, roles, permissions"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nReal Exchange Rate Integration\n\n\n**Plan:** Integrate with exchange rate API\n\n**Why:**\n- **Accuracy:** Real-time or daily updated rates\n- **Multiple Sources:** Can fallback if one API fails\n- **Historical:** Can track rate changes over time\n\n**Considerations:**\n- Rate limits and costs\n- Fallback to cached rates if API unavailable\n- Update frequency (daily vs real-time)\n\n---\n\n**Last Updated:** 2025-11-04  \n**Version:** 0.2.2"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nChangelog\n\n\nAll notable changes to this project will be documented in this file."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nChanged\n\n- Updated MASTER_PROMPT.md with project documentation\n- Updated backend configuration (config.py)\n- Updated Kubernetes deployment manifests (k8s/deploy.yaml)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nAdded\n\n- Claude AI settings configuration (.claude/settings.local.json)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nBREAKING CHANGE - Project Rebranded\n\n\n**LedgerLight is now Canopy** - Complete rebrand and vision expansion."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nWhat's New in Canopy\n\n\n**Tagline**: \"Your financial life. Under one canopy.\"\n\n**Vision**: Self-hosted personal finance, investment, and budgeting dashboard inspired by Monarch Money, Ghostfolio, and Firefly III. Fully local on Raspberry Pi k3s clusters."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nChanged\n\n\n- **Project Name**: LedgerLight → Canopy\n- **Branding**: New logo featuring tree canopy forming the letter \"C\"\n- **Description**: Expanded vision to emphasize budgeting, investment tracking, and Monarch-level UX\n- **Documentation**: Updated README, ARCHITECTURE with Canopy vision\n- **Backend**: Renamed API title to \"Canopy API\"\n- **Frontend**: All page titles, meta tags, and OG images updated\n- **Database**: Connection strings updated from ledgerlight to canopy\n- **Package Names**:\n  - `ledgerlight-backend` → `canopy-backend`\n  - `ledgerlight-frontend` → `canopy-frontend`"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nMigration Guide\n\n\nSee [MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md) for complete migration instructions including:\n\n- GitHub repository renaming\n- Local environment updates\n- Brand asset replacement\n- Pi cluster deployment updates"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nPlanned Features (Roadmap)\n\n\n**MVP+** (In Development):\n\n- Budget management (Fixed/Flexible/Non-monthly envelopes)\n- Investment portfolio tracking (stocks, ETFs, crypto)\n- Goals tracking (retirement, savings)\n- Recurring transaction detection\n- Net worth snapshots and charts\n- Cash flow analysis (enhanced)\n- Celery background tasks for price ingestion\n\n**Deployment**:\n\n- K8s manifests for Pi cluster (eldertree control plane)\n- GitHub Actions with self-hosted runner\n- Minimal YAML, yearly maintenance philosophy"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nArchitecture Highlights\n\n\n**Backend**: FastAPI + Celery + Redis + PostgreSQL  \n**Frontend**: Next.js + Tailwind + shadcn  \n**Infra**: k3s on Raspberry Pi (eldertree + fleet-worker nodes)  \n**Deployment**: kubectl apply (no Helm, no ArgoCD)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDesign Philosophy\n\n\n- **Self-hosted**: Full privacy, no cloud dependencies\n- **Offline-friendly**: Works without internet\n- **Multi-currency**: CAD, USD, BRL, EUR, GBP\n- **Monarch-level UX**: Polished, calm, premium design\n- **Pi-optimized**: Lean, efficient, minimal resource usage\n- **Modular**: Easy to fork and extend"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCredits\n\n\nBuilt by Rafael Oliveira (@raolivei) for the Pi fleet homelab.\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nFixed\n\n\n- Fixed currency conversion endpoint returning 500 error\n  - **Why:** Pydantic v2 deprecated `dict()` method in favor of `model_dump()`. The error occurred because code was using deprecated API.\n  - **Solution:** Updated to use `model_dump()` with fallback to `dict()` for backward compatibility.\n- Updated to use `model_dump()` for Pydantic v2 compatibility in transaction currency conversion\n- Added fallback to `dict()` for Pydantic v1 support\n- Currency conversion query parameter now works correctly (`/v1/transactions/?currency=CAD`)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nAdded\n\n\n- Comprehensive architecture documentation (ARCHITECTURE.md)\n  - **Why:** Document design decisions and rationale to help future developers understand the \"why\" behind technical choices\n  - **Contents:** Architecture overview, technology choices, API design, frontend architecture, data management, security considerations, performance optimizations\n- Enhanced documentation with \"why\" explanations\n  - **Why:** Understanding rationale helps maintainability and prevents regression of design decisions\n  - **Updated:** MASTER_PROMPT.md, README.md, CHANGELOG.md with design rationale sections"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nFixed\n\n\n- Integrated transaction and currency routers into server.py\n  - **Why:** Feature branches created routers separately. Integration ensures all endpoints are accessible.\n  - **Solution:** Conditional import pattern allows routers to work even if some are missing.\n- Added CORS middleware for frontend-backend communication\n  - **Why:** Browser Same-Origin Policy blocks cross-origin requests. Frontend (port 3000) needs to call backend (port 8000).\n  - **Solution:** CORS middleware explicitly allows frontend origin.\n- Added missing transaction model to dev branch\n  - **Why:** Transaction API requires Transaction model but it was only in feature branch.\n  - **Solution:** Added model to dev branch to ensure complete functionality.\n- Verified all API endpoints working correctly\n- Stable application state with full functionality"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nAdded\n\n\n- **Backend API Setup** (`feature/backend-api-setup`):\n\n  - FastAPI application with CORS middleware configuration\n  - Transaction models (Transaction, TransactionCreate, TransactionType enum)\n  - Transaction CRUD API endpoints (GET all, GET by ID, POST, DELETE)\n  - Health check endpoint at `/v1/health`\n  - Python requirements.txt with FastAPI, Uvicorn, SQLAlchemy, Pydantic dependencies\n  - In-memory transaction storage (ready for database migration)\n\n- **UI Redesign** (`feature/ui-redesign-monarch-style`):\n\n  - Modern Monarch Money-inspired UI design\n  - Sidebar navigation component with active state highlighting\n  - Reusable StatCard component for dashboard metrics\n  - Redesigned dashboard with:\n    - Cash flow area chart (income vs expenses over time)\n    - Spending by category pie chart\n    - Recent transactions list\n    - Summary stat cards (Total Income, Expenses, Net Cash Flow, Spending)\n  - Redesigned transactions page with improved layout and card-based summaries\n  - Custom Tailwind CSS components (card, card-hover, btn-primary, btn-secondary, input-modern)\n  - Tailwind configuration with primary color palette and Inter font family\n  - Responsive grid layouts and modern card designs\n\n- **Currency Support** (`feature/currency-support`):\n\n  - Multi-currency support (USD, CAD, BRL, EUR, GBP)\n  - Currency API endpoints (`/v1/currency/supported`, `/v1/currency/rates`, `/v1/currency/convert`)\n  - Currency conversion logic with mock exchange rates\n  - CurrencySelector component for frontend\n  - Currency formatting utilities (formatCurrency, convertCurrency, formatCurrencyCompact)\n  - Transactions API support for optional currency conversion\n  - Display currency toggle in UI\n  - Show both original and converted amounts when currencies differ\n\n- **Dark Mode** (`feature/dark-mode`):\n\n  - DarkModeToggle component with localStorage persistence\n  - System preference detection for automatic dark mode\n  - Dark mode styles throughout all UI components\n  - Integrati"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nFixed\n\n\n- **SSR and State Fixes** (`bugfix/ssr-and-state-fixes`):\n  - Fixed missing `showConverted` and `convertedAmounts` state variables in transactions page\n  - Fixed SSR error with `document` access in chart tooltips\n  - Added `isDarkMode` state tracking for client-side dark mode detection\n  - Prevented hydration mismatches in dark mode toggle component"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nAdded\n\n\n- README with detailed objectives, architecture, and onboarding workflows.\n- FastAPI backend scaffold featuring:\n  - Application factory, configuration via `pydantic-settings`, and cached settings loader.\n  - Versioned API routing (`/v1/health`, `/v1/summary`) plus smoke tests.\n  - Celery ingest task stub and domain models for portfolio data.\n  - Backend-specific Dockerfile, requirements, and `.env` example.\n- Next.js 14 + Tailwind frontend setup:\n  - KPI dashboard page, reusable layout components, Tailwind theme extension.\n  - Static export workflow and Dockerfile for NGINX runtime.\n- Infra and delivery tooling:\n  - Kubernetes namespace, deployments (API, worker, frontend), services, ingress, and secrets example.\n  - Aggregated `ledgerlight.yaml` for single-command deployment.\n  - GitHub Actions workflow to build/push container images to GHCR and deploy via `kubectl`."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCanopy - Master Prompt for Recreation\n\n\nThis document provides a comprehensive guide to recreate the Canopy application from scratch. Use this as a master prompt for AI assistants or developers."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nProject Overview\n\n\n**Canopy** is a self-hosted personal finance & investment dashboard that merges portfolio analytics, budgeting, and transaction tracking into one unified platform. It is designed to run on a Raspberry Pi cluster with a lean footprint, storing all data locally without cloud dependencies."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCore Objectives\n\n- Combine portfolio, budgeting, and net-worth views into a single dashboard\n- Store all data locally — no cloud dependencies\n- Support multi-currency (CAD, USD, BRL, EUR, GBP) assets\n- Allow easy CSV/OFX imports for banks and brokerages\n- Run lean — optimized for Raspberry Pi hardware\n- Be modular so other developers can fork and extend"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDesign Philosophy & Rationale\n\n\n**Why Self-Hosted?**\n- **Privacy First:** Financial data is sensitive. Self-hosting ensures complete control over where data is stored and who has access.\n- **No Vendor Lock-in:** Avoid dependency on third-party services that may change pricing, features, or discontinue service.\n- **Cost Efficiency:** Run on existing hardware (Raspberry Pi) without subscription fees.\n- **Data Ownership:** Users own their data completely, enabling export and migration at any time.\n\n**Why Raspberry Pi Optimized?**\n- **Accessibility:** Raspberry Pi is affordable and widely available, making self-hosting accessible to more users.\n- **Low Power Consumption:** Can run 24/7 without significant electricity costs.\n- **Educational Value:** Encourages learning about self-hosting, Linux, and system administration.\n- **Edge Computing:** Data processing happens locally, reducing latency and bandwidth usage.\n\n**Why Multi-Currency Support?**\n- **Global Users:** Many users have assets and transactions in multiple currencies.\n- **Accurate Reporting:** Convert all transactions to a single display currency for meaningful analysis.\n- **Investment Tracking:** Portfolio assets are often denominated in different currencies.\n- **Future-Proofing:** Supports international expansion and diverse user bases.\n\n**Why Modular Architecture?**\n- **Extensibility:** Easy to add new features without breaking existing functionality.\n- **Maintainability:** Clear separation of concerns makes code easier to understand and modify.\n- **Community Contribution:** Modular design allows community members to contribute specific features.\n- **Testing:** Isolated modules are easier to test independently."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nMVP Features Implemented\n\n- 💰 Transaction tracking with categories\n- 🔄 Multi-currency FX conversions with display currency toggle\n- 📊 Dashboard with charts and statistics\n- 🌙 Dark mode support\n- 🎨 Modern Monarch Money-inspired UI\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nBackend\n\n- **Framework**: FastAPI 0.104.1\n  - **Why FastAPI?** Async/await support for high performance, automatic OpenAPI/Swagger docs, type hints for better code quality, and excellent Python 3.10+ support. Perfect for building modern APIs quickly.\n- **ASGI Server**: Uvicorn[standard] 0.24.0\n  - **Why Uvicorn?** Fast ASGI server built on uvloop for better performance than traditional WSGI servers. The `[standard]` extras include better performance and websocket support.\n- **Database**: PostgreSQL (via SQLAlchemy 2.0.23, psycopg[binary] 3.1.18)\n  - **Why PostgreSQL?** Robust, ACID-compliant, excellent JSON support, and strong performance. Industry standard for financial applications.\n  - **Why SQLAlchemy?** Powerful ORM with async support, database-agnostic abstractions, and excellent migration tools.\n  - **Why psycopg[binary]?** Pre-compiled binaries avoid compilation issues on various platforms, faster setup.\n- **Migrations**: Alembic 1.12.1\n  - **Why Alembic?** SQLAlchemy's official migration tool, integrates seamlessly, supports version control for schema changes.\n- **Validation**: Pydantic 2.5.0, pydantic-settings 2.1.0\n  - **Why Pydantic v2?** Performance improvements, better type validation, and integration with FastAPI. Used for both request/response validation and settings management.\n- **Auth**: python-jose[cryptography] 3.3.0, passlib[bcrypt] 1.7.4\n  - **Why JOSE?** Industry-standard JWT implementation for secure token-based authentication.\n  - **Why bcrypt?** Strong password hashing algorithm resistant to brute-force attacks.\n- **Task Queue**: Celery 5.3.4\n  - **Why Celery?** Handles background tasks (CSV imports, report generation) without blocking the API. Essential for long-running operations.\n- **Cache**: Redis 5.0.1\n  - **Why Redis?** Fast in-memory cache for frequently accessed data (exchange rates, user sessions). Also used as Celery broker.\n- **HTTP Client**: httpx 0.25.2\n  - **Why httpx?** Modern async HTTP client, better than requests for asyn"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nFrontend\n\n- **Framework**: Next.js 14.0.4\n  - **Why Next.js?** Server-side rendering for better SEO and performance, file-based routing for simplicity, built-in optimizations (image, font, script), and excellent developer experience. Perfect for dashboard applications.\n- **UI Library**: React 18.2.0\n  - **Why React?** Most popular UI library, excellent ecosystem, component reusability, and strong TypeScript support.\n- **Styling**: Tailwind CSS 3.3.6\n  - **Why Tailwind?** Utility-first CSS enables rapid UI development without context switching, consistent design system, smaller bundle sizes through purging, and excellent dark mode support via class strategy.\n- **Charts**: Recharts 2.10.3\n  - **Why Recharts?** React-native charting library, declarative API, responsive by default, and composable components. Better than D3 for React applications.\n- **Icons**: Lucide React 0.294.0\n  - **Why Lucide?** Clean, consistent icon set, tree-shakeable (only import used icons), TypeScript support, and good variety for financial apps.\n- **Date Utils**: date-fns 2.30.0\n  - **Why date-fns?** Immutable, functional API, tree-shakeable, better than Moment.js (smaller bundle), and excellent TypeScript support.\n- **Language**: TypeScript 5.3.3\n  - **Why TypeScript?** Type safety catches errors at compile time, better IDE support, self-documenting code, and reduces runtime errors. Essential for maintainable frontend code."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nInfrastructure\n\n- **Containerization**: Docker & Docker Compose\n- **Orchestration**: Kubernetes (k8s manifests included, **use Helm charts where applicable**)\n- **Database**: PostgreSQL\n- **Cache**: Redis\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nProject Structure\n\n\n```\ncanopy/\n├── backend/\n│   ├── api/\n│   │   ├── __init__.py\n│   │   ├── transactions.py      # Transaction CRUD endpoints\n│   │   └── currency.py          # Currency conversion endpoints\n│   ├── app/\n│   │   ├── __init__.py\n│   │   └── server.py            # FastAPI app entry point\n│   ├── models/\n│   │   ├── __init__.py\n│   │   ├── transaction.py        # Transaction Pydantic models\n│   │   └── currency.py          # Currency models & conversion logic\n│   ├── ingest/                  # CSV/OFX import handlers (future)\n│   └── requirements.txt\n├── frontend/\n│   ├── components/\n│   │   ├── Sidebar.tsx          # Navigation sidebar\n│   │   ├── StatCard.tsx        # Reusable stat card component\n│   │   ├── CurrencySelector.tsx # Currency dropdown selector\n│   │   └── DarkModeToggle.tsx  # Dark mode toggle button\n│   ├── pages/\n│   │   ├── _app.tsx            # Next.js app wrapper\n│   │   ├── index.tsx           # Dashboard page\n│   │   ├── transactions.tsx    # Transactions management page\n│   │   ├── portfolio.tsx       # Portfolio page (placeholder)\n│   │   ├── accounts.tsx       # Accounts page (placeholder)\n│   │   └── settings.tsx       # Settings page\n│   ├── styles/\n│   │   └── globals.css         # Global styles & Tailwind components\n│   ├── utils/\n│   │   └── currency.ts         # Currency formatting & conversion utilities\n│   ├── package.json\n│   ├── tailwind.config.js\n│   ├── tsconfig.json\n│   └── next.config.js\n├── k8s/\n│   ├── deploy.yaml\n│   ├── service.yaml\n│   └── ingress.yaml\n└── README.md\n```\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n1. FastAPI Server Setup (`backend/app/server.py`)\n\n\n```python\nfrom fastapi import FastAPI\nfrom fastapi.middleware.cors import CORSMiddleware\nfrom dotenv import load_dotenv\nimport os\nimport sys"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nAdd backend directory to path for imports\n\nsys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))\n\nfrom backend.api import transactions, currency\n\nload_dotenv()\n\napp = FastAPI(\n    title=\"Canopy API\",\n    description=\"Privacy-first personal finance and investment cockpit\",\n    version=\"0.1.0\",\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"http://localhost:3000\", \"http://127.0.0.1:3000\"],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nInclude routers\n\napp.include_router(transactions.router)\napp.include_router(currency.router)\n\n@app.get(\"/v1/health\")\nasync def health_check():\n    return {\n        \"status\": \"healthy\",\n        \"environment\": os.getenv(\"ENVIRONMENT\", \"development\"),\n    }\n\n@app.get(\"/\")\nasync def root():\n    return {\"message\": \"Canopy API\", \"version\": \"0.1.0\"}\n```\n\n**Key Points:**\n- CORS enabled for frontend (localhost:3000)\n- Path manipulation to allow imports from backend directory\n- Health check endpoint for monitoring\n- Router inclusion pattern for modular API\n\n**Design Rationale:**\n\n**Why CORS Middleware?**\n- **Browser Security:** Browsers enforce Same-Origin Policy. Without CORS, the frontend (localhost:3000) cannot call the backend API (localhost:8000) due to different ports.\n- **Development vs Production:** Currently allows localhost origins. In production, this should be restricted to specific domains for security.\n- **Credentials:** `allow_credentials=True` enables cookies/auth headers to be sent cross-origin when authentication is added.\n\n**Why Path Manipulation?**\n- **Import Resolution:** Python needs to find the `backend` module. Adding parent directory to `sys.path` allows absolute imports (`from backend.api import ...`) to work regardless of where uvicorn is run from.\n- **Alternative Approaches:** Could use relative imports or PYTHONPATH environment variable, but explicit path manipulation is more predictable.\n\n**Why Health Check Endpoint?**\n- **Monitoring:** Kubernetes, load balancers, and monitoring tools can check `/v1/health` to determine if the service is running.\n- **Status Verification:** Returns environment info for debugging and deployment verification.\n- **Best Practice:** Standard pattern for microservices and containerized applications.\n\n**Why Router Pattern?**\n- **Separation of Concerns:** Each router handles a specific domain (transactions, currency) making code easier to maintain.\n- **Scalability:** Easy to add new routers without modifying main server f"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n2. Transaction Models (`backend/models/transaction.py`)\n\n\n```python\nfrom pydantic import BaseModel\nfrom datetime import datetime\nfrom typing import Optional\nfrom enum import Enum\n\nclass TransactionType(str, Enum):\n    INCOME = \"income\"\n    EXPENSE = \"expense\"\n    TRANSFER = \"transfer\"\n\nclass Transaction(BaseModel):\n    id: Optional[int] = None\n    description: str\n    amount: float\n    currency: str = \"USD\"\n    type: TransactionType\n    category: Optional[str] = None\n    date: datetime\n    account: Optional[str] = None\n\nclass TransactionCreate(BaseModel):\n    description: str\n    amount: float\n    currency: str = \"USD\"\n    type: TransactionType\n    category: Optional[str] = None\n    date: Optional[datetime] = None\n    account: Optional[str] = None\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n3. Transaction API (`backend/api/transactions.py`)\n\n\n**Endpoints:**\n- `GET /v1/transactions/` - List all transactions (optional `currency` query param for conversion)\n- `GET /v1/transactions/{transaction_id}` - Get specific transaction\n- `POST /v1/transactions/` - Create new transaction\n- `DELETE /v1/transactions/{transaction_id}` - Delete transaction\n\n**Current Implementation:**\n- Uses in-memory storage (List[Transaction])\n- Global `next_id` counter for ID generation\n- Optional currency conversion on GET all\n\n**Why In-Memory Storage Initially?**\n- **Rapid Prototyping:** MVP doesn't require persistence. Allows fast iteration without database setup.\n- **Simplicity:** No database migrations, connection pooling, or schema management needed initially.\n- **Testing:** Easy to reset state by restarting the server.\n- **Migration Path:** Code structure supports easy migration to database later (models are already Pydantic models compatible with SQLAlchemy).\n\n**Why Global Counter for IDs?**\n- **Simplicity:** No need for database sequences or UUID generation in MVP.\n- **Migration-Friendly:** When moving to database, can use auto-incrementing primary keys or UUIDs.\n- **Temporary Solution:** Will be replaced with proper database primary keys.\n\n**Why Optional Currency Conversion?**\n- **Performance:** Don't convert if not needed (user viewing in original currency).\n- **Flexibility:** Client can request specific currency when needed.\n- **API Design:** Query parameter pattern allows same endpoint to serve multiple use cases.\n\n**Key Logic:**\n```python"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCurrency conversion example\n\nif currency:\n    converted_transactions = []\n    for tx in transactions_db:\n        converted_amount = convert_currency(tx.amount, tx.currency, currency.upper())\n        # Use model_dump() for Pydantic v2, fallback to dict() for v1\n        tx_dict = tx.model_dump() if hasattr(tx, 'model_dump') else tx.dict()\n        converted_tx = Transaction(**tx_dict, amount=converted_amount, currency=currency.upper())\n        converted_transactions.append(converted_tx)\n    return converted_transactions\n```\n\n**Why model_dump() with Fallback?**\n- **Pydantic v2 Compatibility:** `dict()` was deprecated in Pydantic v2, replaced with `model_dump()`.\n- **Backward Compatibility:** Fallback ensures code works with both Pydantic v1 and v2.\n- **Future-Proofing:** Code will work as Pydantic evolves.\n- **Best Practice:** Check for method existence rather than version checking."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n4. Currency Models (`backend/models/currency.py`)\n\n\n**Features:**\n- Mock exchange rates for USD, CAD, BRL, EUR, GBP\n- Currency conversion function\n- Supported currencies list\n\n**Exchange Rates Structure:**\n```python\nDEFAULT_EXCHANGE_RATES = {\n    \"USD\": {\"USD\": 1.0, \"CAD\": 1.35, \"BRL\": 5.10, \"EUR\": 0.92, \"GBP\": 0.79},\n    \"CAD\": {\"USD\": 0.74, \"CAD\": 1.0, \"BRL\": 3.78, \"EUR\": 0.68, \"GBP\": 0.59},\n    # ... etc\n}\n```\n\n**Conversion Function:**\n```python\ndef convert_currency(amount: float, from_currency: str, to_currency: str) -> float:\n    if from_currency == to_currency:\n        return amount\n    rates = DEFAULT_EXCHANGE_RATES.get(from_currency, {})\n    rate = rates.get(to_currency, 1.0)\n    return amount * rate\n```\n\n**Why Mock Exchange Rates Initially?**\n- **Development Speed:** No external API dependencies during development.\n- **Testing:** Predictable rates make testing easier and reproducible.\n- **Offline Development:** Works without internet connection.\n- **Cost:** Avoids API rate limits and costs during development.\n- **Migration Path:** Structure supports easy swap to real API (exchangerate-api.io, Fixer.io, etc.) later.\n\n**Why USD as Base Currency?**\n- **Common Standard:** USD is widely used as base currency in financial markets.\n- **User Base:** Many users think in USD terms.\n- **Flexibility:** Can easily add more base currencies or use EUR/CAD as base if needed."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n5. Currency API (`backend/api/currency.py`)\n\n\n**Endpoints:**\n- `GET /v1/currency/supported` - Get list of supported currencies\n- `GET /v1/currency/rates?base_currency=USD` - Get exchange rates\n- `GET /v1/currency/convert?amount=100&from_currency=USD&to_currency=CAD` - Convert amount\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n1. Next.js Configuration\n\n\n**`frontend/next.config.js`:**\n```javascript\n/** @type {import('next').NextConfig} */\nconst nextConfig = {\n  reactStrictMode: true,\n}\n\nmodule.exports = nextConfig\n```\n\n**`frontend/tsconfig.json`:**\nStandard Next.js TypeScript configuration with path aliases:\n```json\n{\n  \"compilerOptions\": {\n    \"target\": \"es5\",\n    \"lib\": [\"dom\", \"dom.iterable\", \"esnext\"],\n    \"allowJs\": true,\n    \"skipLibCheck\": true,\n    \"strict\": true,\n    \"forceConsistentCasingInFileNames\": true,\n    \"noEmit\": true,\n    \"esModuleInterop\": true,\n    \"module\": \"esnext\",\n    \"moduleResolution\": \"bundler\",\n    \"resolveJsonModule\": true,\n    \"isolatedModules\": true,\n    \"jsx\": \"preserve\",\n    \"incremental\": true,\n    \"plugins\": [\n      {\n        \"name\": \"next\"\n      }\n    ],\n    \"paths\": {\n      \"@/*\": [\"./*\"]\n    }\n  },\n  \"include\": [\"next-env.d.ts\", \"**/*.ts\", \"**/*.tsx\", \".next/types/**/*.ts\"],\n  \"exclude\": [\"node_modules\"]\n}\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n2. Tailwind Configuration (`frontend/tailwind.config.js`)\n\n\n**Key Features:**\n- Dark mode: `class` strategy\n- Custom primary color palette (blue scale)\n- Inter font family\n- Content paths for JIT compilation\n\n```javascript\nmodule.exports = {\n  darkMode: 'class',\n  content: [\n    './pages/**/*.{js,ts,jsx,tsx,mdx}',\n    './components/**/*.{js,ts,jsx,tsx,mdx}',\n  ],\n  theme: {\n    extend: {\n      colors: {\n        primary: {\n          50: '#f0f9ff',\n          100: '#e0f2fe',\n          // ... through 900\n        },\n      },\n      fontFamily: {\n        sans: ['Inter', 'system-ui', 'sans-serif'],\n      },\n    },\n  },\n  plugins: [],\n}\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n3. Global Styles (`frontend/styles/globals.css`)\n\n\n**Custom Components:**\n- `.card` - Card container with dark mode support\n- `.card-hover` - Hover effects for cards\n- `.btn-primary` - Primary button with gradient\n- `.btn-secondary` - Secondary button\n- `.input-modern` - Modern input styling\n\n```css\n@layer components {\n  .card {\n    @apply bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700;\n  }\n  \n  .btn-primary {\n    @apply bg-gradient-to-r from-primary-600 to-primary-700 text-white font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-200;\n  }\n  \n  .input-modern {\n    @apply w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-800;\n  }\n}\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nSidebar (`frontend/components/Sidebar.tsx`)\n\n\n**Features:**\n- Fixed left sidebar (64 width, `w-64`)\n- Navigation links with active state highlighting\n- Dark mode toggle integration\n- Gradient branding header\n- Privacy footer message\n\n**Navigation Items:**\n- Dashboard (`/`)\n- Transactions (`/transactions`)\n- Portfolio (`/portfolio`)\n- Accounts (`/accounts`)\n- Settings (`/settings`)\n\n**Active State Logic:**\n```typescript\nconst isActive = router.pathname === item.href\n// Apply active styles: bg-primary-600 text-white shadow-lg\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDarkModeToggle (`frontend/components/DarkModeToggle.tsx`)\n\n\n**Features:**\n- localStorage persistence\n- System preference detection\n- Prevents hydration mismatch\n- Toggles `dark` class on `document.documentElement`\n\n**Why localStorage Persistence?**\n- **User Experience:** Remembers user preference across sessions.\n- **Consistency:** Same theme on every visit unless user changes it.\n- **Respects Choice:** User's explicit selection takes precedence over system preference.\n\n**Why System Preference Detection?**\n- **First Visit:** New users get sensible default based on their OS setting.\n- **Accessibility:** Users with light sensitivity get appropriate default.\n- **Modern UX:** Expected behavior in modern applications.\n\n**Why Prevent Hydration Mismatch?**\n- **SSR Issue:** Server doesn't know user's preference, would render different HTML than client.\n- **React Error:** Mismatches cause React warnings and potential UI glitches.\n- **Solution:** Render placeholder until client-side JavaScript loads, then apply preference.\n\n**Why Document.documentElement?**\n- **Global Scope:** Dark mode affects entire page, not just React components.\n- **Tailwind Integration:** Tailwind's `dark:` variants check for `dark` class on `<html>` element.\n- **Performance:** Single DOM manipulation affects all elements, more efficient than per-component checks.\n\n**Key Implementation:**\n```typescript\nuseEffect(() => {\n  setMounted(true)\n  const stored = localStorage.getItem('darkMode')\n  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches\n  const isDark = stored !== null ? stored === 'true' : prefersDark\n  \n  setDarkMode(isDark)\n  if (isDark) {\n    document.documentElement.classList.add('dark')\n  }\n}, [])\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nStatCard (`frontend/components/StatCard.tsx`)\n\n\n**Props:**\n- `title`: Stat label\n- `value`: Stat value (formatted string)\n- `change`: Optional change indicator\n- `changeType`: 'positive' | 'negative' | 'neutral'\n- `icon`: Lucide icon component\n- `gradient`: Tailwind gradient class\n\n**Visual Features:**\n- Gradient background decoration\n- Icon badge\n- Change indicator badge with color coding"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCurrencySelector (`frontend/components/CurrencySelector.tsx`)\n\n\n**Features:**\n- Dropdown with supported currencies\n- Currency code and symbol display\n- Dark mode styling\n- Callback on change\n\n**Supported Currencies:**\n- USD ($), CAD (C$), BRL (R$), EUR (€), GBP (£)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n5. Utility Functions (`frontend/utils/currency.ts`)\n\n\n**Functions:**\n- `formatCurrency(amount, currencyCode)` - Format with Intl.NumberFormat\n- `formatCurrencyCompact(amount, currencyCode)` - Compact notation\n- `getCurrencySymbol(currencyCode)` - Get currency symbol\n- `convertCurrency(amount, fromCurrency, toCurrency)` - API call for conversion\n\n**Implementation:**\n```typescript\nexport async function convertCurrency(\n  amount: number,\n  fromCurrency: string,\n  toCurrency: string\n): Promise<number> {\n  if (fromCurrency === toCurrency) return amount\n  \n  const response = await fetch(\n    `http://localhost:8000/v1/currency/convert?amount=${amount}&from_currency=${fromCurrency}&to_currency=${toCurrency}`\n  )\n  const data = await response.json()\n  return data.converted_amount\n}\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDashboard (`frontend/pages/index.tsx`)\n\n\n**Features:**\n- Stat cards (Total Income, Total Expenses, Net Cash Flow, Spending)\n- Cash flow area chart (income vs expenses over time)\n- Spending by category pie chart\n- Recent transactions list\n- Currency selector and conversion toggle\n- Dark mode support\n\n**State Management:**\n- `transactions`: Transaction list\n- `displayCurrency`: Selected display currency\n- `showConverted`: Toggle to show/hide converted amounts\n- `convertedAmounts`: Map of transaction ID to converted amount\n- `isDarkMode`: Dark mode state (for chart tooltips)\n\n**Key Logic:**\n```typescript\n// Convert all amounts when currency changes\nuseEffect(() => {\n  if (transactions.length > 0 && showConverted) {\n    convertAllAmounts()\n  }\n}, [transactions, displayCurrency, showConverted])\n\n// Display logic: show original + converted if different currency\nconst converted = getConvertedAmount(tx)\nconst displayAmount = converted ?? tx.amount\n```\n\n**Charts:**\n- AreaChart: Income (green) vs Expenses (red) over time\n- PieChart: Spending breakdown by category with color coding"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTransactions Page (`frontend/pages/transactions.tsx`)\n\n\n**Features:**\n- Transaction list with filtering\n- Add transaction form (collapsible)\n- Delete transaction functionality\n- Currency conversion display\n- Transaction type icons (TrendingUp, TrendingDown, ArrowLeftRight)\n- Summary cards (Total Income, Total Expenses, Net)\n\n**Form Fields:**\n- Description (text)\n- Amount (number)\n- Currency (dropdown)\n- Type (income/expense/transfer)\n- Category (text, optional)\n- Account (text, optional)\n- Date (date picker)\n\n**Transaction Display:**\n- Shows original amount in original currency\n- Shows converted amount in display currency (if different)\n- Format: \"$100.00 (from USD: $135.00 CAD)\" when converted"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nPortfolio Page (`frontend/pages/portfolio.tsx`)\n\n\n**Status:** Placeholder page\n\n**Features:**\n- Stat cards for portfolio metrics\n- Coming soon message\n- Dark mode support"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nAccounts Page (`frontend/pages/accounts.tsx`)\n\n\n**Status:** Placeholder page\n\n**Features:**\n- Account cards (Checking, Credit Card, Savings)\n- Add Account button (disabled)\n- Coming soon message\n- Dark mode support"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nSettings Page (`frontend/pages/settings.tsx`)\n\n\n**Features:**\n- Currency selector\n- Dark mode toggle\n- Profile settings (placeholder, disabled)\n- Notification settings (placeholder, disabled)\n- Privacy & Security settings (placeholder)\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDesign Inspiration\n\nMonarch Money-style modern, clean interface"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nColor Palette\n\n\n**Primary Colors:**\n- Primary 50-900: Blue scale (#f0f9ff to #0c4a9e)\n- Used for buttons, accents, active states\n\n**Semantic Colors:**\n- Green: Income, positive changes (#10b981)\n- Red: Expenses, negative changes (#ef4444)\n- Gray: Neutral elements, backgrounds\n\n**Dark Mode:**\n- Background: gray-950\n- Cards: gray-800\n- Text: gray-100/gray-300\n- Borders: gray-700"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTypography\n\n- Font: Inter (Google Fonts)\n- Weights: 300, 400, 500, 600, 700, 800\n- Headings: Bold, larger sizes\n- Body: Regular weight"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nSpacing & Layout\n\n- Sidebar: Fixed, 64 width units (`w-64` = 256px)\n- Main content: `ml-64` to account for sidebar\n- Card padding: `p-6` (24px)\n- Border radius: `rounded-xl` (12px) or `rounded-2xl` (16px)\n- Gap between elements: `gap-4`, `gap-6`"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nComponents Style Guide\n\n\n**Cards:**\n- White background (dark: gray-800)\n- Rounded corners (rounded-2xl)\n- Subtle shadow (shadow-sm)\n- Border (gray-100/gray-700)\n\n**Buttons:**\n- Primary: Gradient background, white text, rounded-xl\n- Secondary: White/gray background, border, rounded-xl\n- Hover effects: Shadow increase, slight scale\n\n**Inputs:**\n- Rounded-xl\n- Border focus ring (primary-500)\n- Dark mode compatible\n\n**Icons:**\n- Lucide React icons\n- Size: 20px standard, 16px small, 24px large\n- Color matches text color\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nPrerequisites\n\n- Python 3.10+ (with pyenv recommended)\n- Node.js 18+ and npm\n- Docker and Docker Compose\n- PostgreSQL (via Docker)\n- Redis (via Docker)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nBackend Setup\n\n\n1. **Create Python virtual environment:**\n```bash\ncd backend\npython3 -m venv venv\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nOR with pyenv:\n\npyenv local canopy\npyenv virtualenv canopy\npyenv activate canopy\n```\n\n2. **Install dependencies:**\n```bash\npip install -r requirements.txt\n```\n\n3. **Create `.env` file:**\n```env\nDATABASE_URL=postgresql://user:password@localhost:5432/canopy\nREDIS_URL=redis://localhost:6379/0\nSECRET_KEY=your-secret-key-here\nDEBUG=True\nENVIRONMENT=development\nALLOWED_HOSTS=localhost,127.0.0.1\nAPI_V1_PREFIX=/v1\n```\n\n4. **Start Docker services:**\n```bash\ndocker compose up -d postgres redis\n```\n\n5. **Run migrations (when database is set up):**\n```bash\nalembic upgrade head\n```\n\n6. **Start backend server:**\n```bash\ncd backend\nPYTHONPATH=/path/to/canopy/backend python3 -m uvicorn app.server:app --reload --host 0.0.0.0 --port 8000\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nFrontend Setup\n\n\n1. **Install dependencies:**\n```bash\ncd frontend\nnpm install\n```\n\n2. **Start development server:**\n```bash\nnpm run dev\n```\n\n3. **Access application:**\n- Frontend: http://localhost:3000\n- Backend API: http://localhost:8000\n- API Docs: http://localhost:8000/docs"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nQuick Start Script\n\n\nCreate `run-local.sh`:\n```bash\n#!/bin/bash\nset -e"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nBackend setup\n\ncd backend\nif [ ! -d \"venv\" ]; then\n    python3 -m venv venv\nfi\nsource venv/bin/activate\npip install -r requirements.txt"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCreate .env if it doesn't exist\n\nif [ ! -f \".env\" ]; then\n    cp .env.example .env\nfi"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nFrontend setup\n\ncd ../frontend\nnpm install\n\necho \"Setup complete! Start services:\"\necho \"Backend: cd backend && source venv/bin/activate && PYTHONPATH=.. python3 -m uvicorn app.server:app --reload\"\necho \"Frontend: cd frontend && npm run dev\"\n```\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nKubernetes Deployment with Vault Secrets Management"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nOverview\n\n\nCanopy is deployed to a Raspberry Pi k3s cluster (eldertree) using Kubernetes manifests. **Use Helm charts where applicable** for better maintainability and reusability. When Helm charts are not available or not suitable, use raw YAML manifests. **ALL secrets are managed through Vault** and automatically synced to Kubernetes via External Secrets Operator. This ensures no hardcoded secrets in deployment files and centralized secret management."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nPrerequisites\n\n\n- k3s cluster running (eldertree control plane)\n- Vault deployed and accessible\n- External Secrets Operator installed and configured\n- ClusterSecretStore configured for Vault\n- kubectl configured with `~/.kube/config-eldertree`"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nVault Secrets Configuration\n\n\n**All Canopy secrets are stored in Vault at these paths:**\n\n- `secret/canopy/postgres` - PostgreSQL password\n- `secret/canopy/app` - Application secret key\n- `secret/canopy/database` - Complete database URL\n\n**Setting Secrets in Vault:**\n\n```bash"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nGet Vault pod\n\nVAULT_POD=$(kubectl get pods -n vault -l app.kubernetes.io/name=vault -o jsonpath='{.items[0].metadata.name}')"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nSet PostgreSQL password\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/canopy/postgres password=\\$(python3 -c 'import secrets; print(secrets.token_urlsafe(16))')\""
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nSet application secret key\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/canopy/app secret-key=\\$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')\""
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nSet database URL (use password from postgres secret)\n\nPOSTGRES_PWD=$(kubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv get -field=password secret/canopy/postgres\")\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/canopy/database url=postgresql+psycopg://canopy:$POSTGRES_PWD@canopy-postgres:5432/canopy\"\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nExternalSecret Resource\n\n\nThe ExternalSecret resource automatically syncs secrets from Vault to Kubernetes:\n\n```yaml"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nLocated at: pi-fleet/clusters/eldertree/infrastructure/external-secrets/externalsecrets/canopy-secrets.yaml\n\napiVersion: external-secrets.io/v1beta1\nkind: ExternalSecret\nmetadata:\n  name: canopy-secrets\n  namespace: canopy\nspec:\n  refreshInterval: 24h\n  secretStoreRef:\n    name: vault\n    kind: ClusterSecretStore\n  target:\n    name: canopy-secrets\n    creationPolicy: Owner\n  data:\n    - secretKey: postgres-password\n      remoteRef:\n        key: secret/canopy/postgres\n        property: password\n    - secretKey: secret-key\n      remoteRef:\n        key: secret/canopy/app\n        property: secret-key\n    - secretKey: database-url\n      remoteRef:\n        key: secret/canopy/database\n        property: url\n```\n\n**Important:** This ExternalSecret is managed by Flux GitOps in the pi-fleet repository. It automatically syncs secrets every 24 hours."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nKubernetes Deployment Configuration\n\n\n**Deployment File:** `k8s/deploy.yaml`\n\n**Key Features:**\n- API deployment with 2 replicas\n- Frontend deployment with 2 replicas\n- PostgreSQL StatefulSet with persistent storage (10Gi)\n- Redis deployment for caching\n- All secrets referenced via `secretKeyRef` from `canopy-secrets`\n- Resource limits configured for Raspberry Pi constraints\n\n**Environment Variables from Secrets:**\n\n```yaml\nenv:\n  - name: DATABASE_URL\n    valueFrom:\n      secretKeyRef:\n        name: canopy-secrets\n        key: database-url\n  - name: SECRET_KEY\n    valueFrom:\n      secretKeyRef:\n        name: canopy-secrets\n        key: secret-key\n  - name: POSTGRES_PASSWORD  # For PostgreSQL container\n    valueFrom:\n      secretKeyRef:\n        name: canopy-secrets\n        key: postgres-password\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDeployment Steps\n\n\n1. **Ensure Vault secrets are set** (see above)\n\n2. **Verify ExternalSecret is syncing:**\n```bash\nkubectl get externalsecret canopy-secrets -n canopy\nkubectl get secret canopy-secrets -n canopy\n```\n\n3. **Deploy application:**\n```bash\nexport KUBECONFIG=~/.kube/config-eldertree\nkubectl apply -f k8s/deploy.yaml\nkubectl apply -f k8s/service.yaml\nkubectl apply -f k8s/ingress.yaml\n```\n\n4. **Verify deployment:**\n```bash\nkubectl get pods -n canopy\nkubectl get svc -n canopy\nkubectl get ingress -n canopy\nkubectl logs -f deployment/canopy-api -n canopy\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nIngress Configuration\n\n\n**File:** `k8s/ingress.yaml`\n\n- Host: `canopy.eldertree.local`\n- TLS: Managed by cert-manager with self-signed certificates\n- Paths:\n  - `/api` → canopy-api service (port 8000)\n  - `/` → canopy-frontend service (port 3000)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nResource Requirements\n\n\n**Per Replica:**\n- API: 256Mi RAM, 250m CPU (limits: 512Mi, 500m)\n- Frontend: 128Mi RAM, 100m CPU (limits: 256Mi, 200m)\n- Redis: 64Mi RAM, 50m CPU (limits: 128Mi, 100m)\n- PostgreSQL: 256Mi RAM, 250m CPU (limits: 512Mi, 500m)\n\n**Total (2 API + 2 Frontend):**\n- ~1.2Gi RAM\n- ~1 CPU"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nSecurity Best Practices\n\n\n✅ **All secrets in Vault** - Single source of truth  \n✅ **External Secrets Operator** - Automatic sync every 24 hours  \n✅ **No hardcoded secrets** - All deployments use `secretKeyRef`  \n✅ **Safe defaults** - Config files have development defaults only  \n✅ **Production overrides** - Environment variables from secrets override defaults"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCheck ExternalSecret status\n\nkubectl describe externalsecret canopy-secrets -n canopy"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCheck External Secrets Operator logs\n\nkubectl logs -n external-secrets deployment/external-secrets"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nVerify secrets exist in Vault\n\nVAULT_POD=$(kubectl get pods -n vault -l app.kubernetes.io/name=vault -o jsonpath='{.items[0].metadata.name}')\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv list secret/canopy/\"\n```\n\n**Pods failing to start:**\n```bash"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCheck pod logs\n\nkubectl logs deployment/canopy-api -n canopy"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCheck if secrets exist\n\nkubectl get secret canopy-secrets -n canopy -o yaml"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nVerify environment variables\n\nkubectl exec deployment/canopy-api -n canopy -- env | grep -E \"DATABASE_URL|SECRET_KEY\"\n```\n\n**Database connection issues:**\n```bash"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nVerify PostgreSQL is running\n\nkubectl get pods -n canopy | grep postgres"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCheck PostgreSQL logs\n\nkubectl logs statefulset/canopy-postgres -n canopy"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTest database connection from API pod\n\nkubectl exec deployment/canopy-api -n canopy -- python3 -c \"import os; print(os.getenv('DATABASE_URL'))\"\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCI/CD Integration\n\n\nCanopy uses GitHub Actions with a self-hosted runner on the Pi cluster. The workflow:\n1. Builds Docker images\n2. Pushes to GHCR (ghcr.io/raolivei/canopy-api:v1.0.0)\n3. Applies Kubernetes manifests\n4. Restarts deployments to pull latest images\n\n**Important:** Secrets are NOT managed by CI/CD. They are set manually in Vault and synced automatically by External Secrets Operator.\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nBase URL\n\n- Development: `http://localhost:8000`\n- API Prefix: `/v1`"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nHealth Check\n\n- `GET /v1/health`\n- Response: `{\"status\": \"healthy\", \"environment\": \"development\"}`"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTransactions\n\n\n**List Transactions**\n- `GET /v1/transactions/`\n- Query Params:\n  - `currency` (optional): Convert all amounts to this currency\n- Response: `Transaction[]`\n\n**Get Transaction**\n- `GET /v1/transactions/{transaction_id}`\n- Response: `Transaction`\n\n**Create Transaction**\n- `POST /v1/transactions/`\n- Body: `TransactionCreate`\n- Response: `Transaction`\n\n**Delete Transaction**\n- `DELETE /v1/transactions/{transaction_id}`\n- Response: `{\"message\": \"Transaction deleted\"}`"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCurrency\n\n\n**Get Supported Currencies**\n- `GET /v1/currency/supported`\n- Response: `{\"currencies\": [\"USD\", \"CAD\", ...], \"default\": \"USD\"}`\n\n**Get Exchange Rates**\n- `GET /v1/currency/rates?base_currency=USD`\n- Response: `{\"base_currency\": \"USD\", \"rates\": {...}, \"date\": \"...\"}`\n\n**Convert Amount**\n- `GET /v1/currency/convert?amount=100&from_currency=USD&to_currency=CAD`\n- Response: `{\"original_amount\": 100, \"original_currency\": \"USD\", \"converted_amount\": 135, \"converted_currency\": \"CAD\", \"exchange_rate\": 1.35}`"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nData Models\n\n\n**Transaction:**\n```json\n{\n  \"id\": 1,\n  \"description\": \"Groceries\",\n  \"amount\": 150.50,\n  \"currency\": \"USD\",\n  \"type\": \"expense\",\n  \"category\": \"Food\",\n  \"date\": \"2024-01-15T10:30:00\",\n  \"account\": \"Checking\"\n}\n```\n\n**TransactionCreate:**\n```json\n{\n  \"description\": \"Salary\",\n  \"amount\": 5000.00,\n  \"currency\": \"USD\",\n  \"type\": \"income\",\n  \"category\": \"Salary\",\n  \"date\": \"2024-01-15T10:30:00\",\n  \"account\": \"Checking\"\n}\n```\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCurrency Conversion Flow\n\n\n1. **Backend:** Stores transactions in original currency\n2. **Frontend:** Fetches transactions, optionally requests conversion\n3. **Display Logic:**\n   - If `showConverted` is true and currency differs from `displayCurrency`:\n     - Show original amount in original currency\n     - Show converted amount in display currency\n     - Format: \"$100.00 (from USD: $135.00 CAD)\"\n   - If same currency or `showConverted` is false:\n     - Show only original amount\n\n**Why Store Original Currency?**\n- **Data Integrity:** Preserves original transaction data without modification.\n- **Audit Trail:** Can always see what currency was actually used.\n- **Accuracy:** Avoids rounding errors from multiple conversions.\n- **Compliance:** Financial records should preserve original values.\n\n**Why Client-Side Conversion?**\n- **Real-Time Updates:** User can change display currency without server round-trip.\n- **Performance:** Conversion is fast, no need to fetch from server.\n- **Offline Capability:** Works even if backend is temporarily unavailable.\n- **Flexibility:** User can toggle conversion on/off without affecting others.\n\n**Why Show Both Original and Converted?**\n- **Transparency:** Users understand the conversion is happening.\n- **Trust:** Shows original value so users can verify conversion is correct.\n- **Clarity:** Prevents confusion about which currency is being displayed.\n- **Compliance:** Financial regulations often require showing original currency."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDark Mode Implementation\n\n\n1. **Toggle:** `DarkModeToggle` component\n2. **Persistence:** localStorage key `darkMode`\n3. **Detection:** Checks system preference if no stored value\n4. **Application:** Adds/removes `dark` class on `document.documentElement`\n5. **Styling:** Tailwind `dark:` variants throughout\n6. **Charts:** Uses `isDarkMode` state for tooltip styling (avoids SSR issues)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nState Management\n\n\n**Dashboard (`index.tsx`):**\n- Fetches transactions on mount\n- Converts amounts when currency changes or `showConverted` toggles\n- Tracks dark mode for chart tooltips (prevents SSR errors)\n\n**Why useState Instead of Global State?**\n- **Simplicity:** No need for Redux/Zustand for MVP scope.\n- **Performance:** React's built-in state management is sufficient.\n- **Maintainability:** Easier to understand and debug than global state.\n- **Migration Path:** Can add state management library later if needed.\n\n**Why Multiple useEffect Hooks?**\n- **Separation of Concerns:** Each effect handles one responsibility.\n- **Performance:** Effects only run when their dependencies change.\n- **Debugging:** Easier to identify which effect is causing issues.\n\n**Transactions (`transactions.tsx`):**\n- Similar currency conversion logic\n- Form state management\n- Loading states\n\n**Why Separate State for Form?**\n- **Isolation:** Form state doesn't affect display until submitted.\n- **UX:** Can reset form without affecting displayed transactions.\n- **Validation:** Can validate form data before submission."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nError Handling\n\n\n- API calls wrapped in try-catch\n- Console error logging\n- Graceful fallbacks (e.g., currency conversion fails → show original amount)\n\n**Why Try-Catch on API Calls?**\n- **Resilience:** App continues working even if API fails.\n- **User Experience:** Show meaningful errors instead of crashing.\n- **Debugging:** Console logs help identify issues during development.\n\n**Why Graceful Fallbacks?**\n- **User Experience:** App degrades gracefully rather than breaking completely.\n- **Reliability:** Core functionality (viewing transactions) works even if advanced features fail.\n- **Progressive Enhancement:** Basic features work, enhanced features add value when available.\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nRunning Locally\n\n\n1. **Start infrastructure:**\n```bash\ndocker compose up -d\n```\n\n2. **Start backend (terminal 1):**\n```bash\ncd backend\nsource venv/bin/activate\nPYTHONPATH=/path/to/canopy/backend python3 -m uvicorn app.server:app --reload --host 0.0.0.0 --port 8000\n```\n\n3. **Start frontend (terminal 2):**\n```bash\ncd frontend\nnpm run dev\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTesting\n\n\n**Backend:**\n```bash\ncd backend\npytest\n```\n\n**Frontend:**\n```bash\ncd frontend\nnpm run lint\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nNo build step needed, but ensure dependencies are installed\n\npip install -r requirements.txt\n```\n\n**Frontend:**\n```bash\ncd frontend\nnpm run build\nnpm start\n```\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nComplete Feature Roadmap\n\n\nCanopy is designed to be a comprehensive personal finance management application. The following is the complete list of functionalities that Canopy supports or will support:"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCore Features (MVP - Partially Implemented)\n\n- ✅ **Dashboard**: View an overall summary of finances, insights, and activity reports\n- ✅ **Transactions**: See, edit, categorize transactions; manual entries (export, rules, recurring - planned)\n- 🔄 **Accounts**: Track and manage financial accounts (placeholder page created)\n- 🔄 **Cash Flow**: Analyze income and expenses by category, merchant, and timeframe (basic charts implemented)\n- 🔄 **Reports**: Generate detailed reports on spending, cash flow, and income analytics (basic implementation)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nBudgeting & Planning\n\n- **Budget/Plan**: Set and monitor budgets, allocate funds, track actuals, and forecast expenses\n- **Recurring Payments**: Manage subscriptions and regular payments\n- **Goals/Objectives**: Create, track, and manage savings goals (e.g., retirement, travel)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nInvestment Management\n\n- **Investments**: Monitor investment holdings, allocation, performance, and portfolio details (placeholder page created)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nFinancial Intelligence\n\n- **Advice**: Receive financial recommendations, guidance, and tips\n- **Assistant**: Get automated help or perform tasks within the app"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nUser Management\n\n- **Profile**: Edit personal data, household info, display, and notifications (settings page created)\n- **Security**: Manage sign-in security and password controls\n- **Members**: Add/manage household or family member access"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nConfiguration & Preferences\n\n- ✅ **Preferences**: Set language, currency, and display options (currency selector implemented)\n- **Institutions**: Link/manage bank/financial connections\n- **Categories**: Organize transactions and budgets by categories (basic support implemented)\n- **Merchants**: Manage merchant data and group transactions\n- **Rules**: Set up automation for categorization and alerts\n- **Tags**: Tag and organize financial data"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nData Management\n\n- **Data**: Import/export options and integrations (CSV/OFX import planned)\n- **Billing**: Monitor subscription/payment details\n- **Referrals**: Manage and track referral rewards"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTechnical Enhancements Needed\n\n- Database persistence (currently in-memory)\n- User authentication and authorization\n- CSV/OFX import functionality\n- Real-time exchange rate fetching\n- Backup to S3-compatible storage\n- Advanced reporting engine\n- Notification system\n- Search and filtering capabilities\n- Bulk operations support"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nExample Usage Scenarios\n\n\n**Example 1:** \"Show my investment performance and generate a cash flow report, then categorize recent transactions and update my budget forecast for November. Also, review security settings and add a new household member with access.\"\n\n**Example 2:** \"Import transactions from my bank CSV, apply categorization rules, create a budget for groceries and dining, set up a recurring payment reminder for my mortgage, and track progress toward my vacation savings goal.\"\n\n**Example 3:** \"Generate a spending report by category for the last quarter, identify top merchants, set up alerts for large transactions, and show me recommendations for reducing expenses.\""
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nImplementation Priority\n\n\n**Phase 1 (Current MVP):**\n- ✅ Dashboard with basic stats and charts\n- ✅ Transaction CRUD operations\n- ✅ Multi-currency support\n- ✅ Dark mode\n- 🔄 Basic account management\n\n**Phase 2 (Near-term):**\n- Database persistence\n- User authentication\n- Category management\n- Basic budgeting\n- CSV import\n\n**Phase 3 (Mid-term):**\n- Investment tracking\n- Advanced reporting\n- Recurring transactions\n- Goals tracking\n- Rules engine\n\n**Phase 4 (Long-term):**\n- Financial advice engine\n- Automated assistant\n- Advanced analytics\n- Bank integrations\n- Mobile app\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nImportant Notes\n\n\n1. **Current Storage:** Transactions are stored in-memory and will be lost on server restart. Database integration is planned.\n\n2. **Exchange Rates:** Currently using mock exchange rates. Real API integration (e.g., exchangerate-api.io) should be added.\n\n3. **CORS:** Currently allows all origins on localhost:3000. Should be restricted in production.\n\n4. **Error Handling:** Basic error handling implemented. Should be enhanced with proper error responses and logging.\n\n5. **Testing:** Unit tests not yet implemented. Should add pytest tests for backend and Jest/React Testing Library for frontend.\n\n6. **Type Safety:** Frontend uses TypeScript, backend uses Pydantic for validation. Both should be strictly enforced.\n\n7. **Performance:** Currency conversion happens client-side per transaction. Consider batching or server-side conversion for large datasets.\n\n8. **Pydantic Version Compatibility:** The code uses `model_dump()` for Pydantic v2 compatibility with a fallback to `dict()` for Pydantic v1. Ensure you're using Pydantic v2 (`pydantic>=2.6.0`) for best compatibility.\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nBackend won't start\n\n- Check Python version (3.10+)\n- Verify virtual environment is activated\n- Check PYTHONPATH is set correctly\n- Ensure port 8000 is not in use"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nFrontend won't start\n\n- Check Node.js version (18+)\n- Delete `node_modules` and `package-lock.json`, then `npm install`\n- Check port 3000 is not in use"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCurrency conversion not working\n\n- Verify backend is running on port 8000\n- Check browser console for CORS errors\n- Verify API endpoint responds: `curl http://localhost:8000/v1/currency/supported`"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDark mode not persisting\n\n- Check browser localStorage is enabled\n- Verify `DarkModeToggle` component is mounted\n- Check browser console for errors\n\n---"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nContact & Contribution\n\n\nThis master prompt should provide everything needed to recreate Canopy. For questions or contributions, refer to the main README.md.\n\n---\n\n**Last Updated:** 2024-01-15\n**Version:** 0.1.0"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCSV Import Guide\n\n\nCanopy provides comprehensive CSV import functionality to help you import transactions from various financial institutions and apps like Monarch Money, Chase, Bank of America, and more."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nQuick Start\n\n\n1. Navigate to the **Import** page from the sidebar\n2. Select your bank format from the dropdown (or use Generic for custom CSVs)\n3. Drag and drop your CSV file or click to browse\n4. Review the import preview\n5. Click \"Import\" to add transactions to your account"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nMonarch Money\n\nFull support for Monarch Money CSV exports including:\n- Clean merchant names\n- Original statement text\n- Categories and tags\n- Investment transactions (Buy/Sell)\n- Multiple account tracking\n- Notes\n\n**Required Columns:** Date, Merchant, Category, Account, Amount"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nChase Bank\n\n- **Columns:** Posting Date, Description, Amount, Type, Category, Balance\n- **Date Format:** MM/DD/YYYY"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nBank of America\n\n- **Columns:** Date, Description, Amount, Running Bal.\n- **Date Format:** MM/DD/YYYY"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nWells Fargo\n\n- **Columns:** Date, Description, Amount\n- **Date Format:** MM/DD/YYYY"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCapital One\n\n- **Columns:** Transaction Date, Description, Debit, Credit, Category\n- **Date Format:** YYYY-MM-DD"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nAmerican Express\n\n- **Columns:** Date, Description, Amount\n- **Date Format:** MM/DD/YYYY"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTD Bank\n\n- **Columns:** Date, Description, Debit, Credit\n- **Date Format:** MM/DD/YYYY"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nRBC (Royal Bank of Canada)\n\n- **Columns:** Transaction Date, Description, Debit, Credit, Account Number\n- **Date Format:** MM/DD/YYYY"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nNubank\n\n- **Columns:** date, title, amount, category\n- **Date Format:** YYYY-MM-DD"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nGeneric CSV\n\nUse this option for any CSV file and manually map columns using the custom mapping feature."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n🎯 Smart Format Detection\n\nCanopy automatically detects your bank's CSV format based on column headers."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n🔍 Duplicate Detection\n\nThe system checks for duplicate transactions based on:\n- Transaction date\n- Amount\n- Description\n\nDuplicates are flagged in the preview and can be skipped during import."
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n💰 Multi-Currency Support\n\nImport transactions in any of these currencies:\n- USD (US Dollar)\n- CAD (Canadian Dollar)\n- BRL (Brazilian Real)\n- EUR (Euro)\n- GBP (British Pound)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n📊 Import Preview\n\nBefore importing, you'll see:\n- Total rows detected\n- Valid transactions\n- Number of duplicates\n- Any errors or issues\n- Transaction details preview"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n🏷️ Rich Transaction Data\n\nWhen importing from Monarch Money or using custom mapping, you get:\n- **Merchant** - Clean merchant name (e.g., \"Apple\", \"Starbucks\")\n- **Original Statement** - Raw bank statement text\n- **Category** - Transaction category\n- **Account** - Source account\n- **Notes** - Transaction notes\n- **Tags** - Transaction tags\n- **Ticker** - Stock ticker for investment transactions"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n📈 Investment Tracking\n\nImport investment transactions with automatic detection of:\n- Buy/Sell transactions\n- Ticker symbols (e.g., VTI, AAPL, ZJPN.F)\n- Transaction amounts"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nCustom Field Mapping\n\n\nIf your bank's CSV format isn't in the presets, you can use custom mapping:\n\n1. Select \"Custom\" from the Bank Format dropdown\n2. Upload your CSV\n3. Map the columns:\n   - **Date Column** (required)\n   - **Description Column** (required)\n   - **Amount Column** OR **Debit/Credit Columns** (required)\n   - Category Column (optional)\n   - Account Column (optional)\n   - Merchant Column (optional)\n   - Notes Column (optional)\n   - Tags Column (optional)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nExample CSV Formats\n\n\nSee the `examples/` directory for sample CSV files:\n- `monarch_transactions.csv` - Full Monarch Money export\n- `chase_transactions.csv` - Chase Bank format\n- `generic_transactions.csv` - Simple generic format"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nMinimum Requirements\n\nYour CSV must have at least:\n1. A date column\n2. A description column\n3. An amount column (or separate debit/credit columns)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nDate Formats\n\nSupported date formats include:\n- YYYY-MM-DD (2025-01-15)\n- MM/DD/YYYY (01/15/2025)\n- DD/MM/YYYY (15/01/2025)\n- YYYY/MM/DD (2025/01/15)"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nAmount Formats\n\nSupported amount formats:\n- Decimal: `123.45`\n- With currency symbol: `$123.45`, `€123.45`, `R$123.45`\n- With commas: `1,234.56`\n- Negative: `-123.45`\n- Accounting format: `(123.45)` = negative"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTransaction Types\n\nThe system automatically infers transaction types:\n- **Income** - Positive amounts, deposits, payments received\n- **Expense** - Negative amounts, purchases, withdrawals\n- **Transfer** - Account transfers\n- **Buy** - Investment purchases\n- **Sell** - Investment sales"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nImport History\n\n\nView your import history to track:\n- Import date and time\n- File name\n- Number of transactions imported\n- Number skipped (duplicates)\n- Any errors encountered"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n\"Failed to parse date\"\n\n- Check that your CSV uses one of the supported date formats\n- Try manually specifying the date format in custom mapping"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n\"No transactions detected\"\n\n- Verify your CSV has data rows (not just headers)\n- Check that columns are properly separated by commas\n- Try opening the CSV in a text editor to verify format"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n\"Duplicate transactions\"\n\n- This means transactions with the same date, amount, and description already exist\n- You can choose to skip duplicates (recommended) or import them anyway"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\n\"Failed to detect bank format\"\n\n- Use the \"Generic\" or \"Custom\" format option\n- Manually map your CSV columns"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nPreview Import\n\n```bash\ncurl -X POST http://localhost:8000/v1/csv-import/preview \\\n  -F \"file=@transactions.csv\" \\\n  -F \"bank_format=monarch\" \\\n  -F \"default_currency=USD\"\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nImport Transactions\n\n```bash\ncurl -X POST http://localhost:8000/v1/csv-import/import \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"import_id\": \"uuid-here\",\n    \"skip_duplicates\": true,\n    \"skip_errors\": true\n  }'\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nGet Import History\n\n```bash\ncurl http://localhost:8000/v1/csv-import/history\n```"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nBest Practices\n\n\n1. **Always preview before importing** - Check for errors and duplicates\n2. **Keep original CSV files** - Store backups of your bank exports\n3. **Import regularly** - Weekly or monthly imports are easier to manage\n4. **Review categories** - Monarch Money has excellent categorization; other banks may need manual category assignment\n5. **Use tags** - Tag transactions for better organization\n6. **Check for duplicates** - Enable duplicate detection to avoid double-counting"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nTips for Monarch Money Users\n\n\nMonarch Money exports contain rich data. To get the most out of it:\n- Export from Monarch regularly to keep LedgerLight in sync\n- The \"Original Statement\" field preserves raw bank data for reference\n- Investment transactions automatically extract ticker symbols\n- Categories are preserved exactly as in Monarch\n- Use the Account field to track which credit card or bank account was used"
+    },
+    {
+      "question": "Tell me about Canopy ",
+      "answer": "Canopy :\n\nSupport\n\n\nFor additional help or to report issues with CSV imports:\n- Check the main README.md\n- Review ARCHITECTURE.md for technical details\n- Open an issue on GitHub"
+    },
+    {
+      "question": "Give me an overview of Canopy",
+      "answer": "# Canopy\n\n**Your financial life. Under one canopy.**\n\nCanopy is a self-hosted personal finance, investment, and budgeting dashboard inspired by Monarch Money, Ghostfolio, and Firefly III. It runs fully local on Raspberry Pi k3s clusters with a lean footprint, storing all data locally without cloud dependencies.\n\n## Project Objectives  \n- Combine portfolio, budgeting, and net-worth views into a single dashboard.  \n- Store all data locally — no cloud dependencies.  \n- Support multi-currency (CAD, USD, BRL, EUR, GBP) assets.  \n- Allow easy CSV/OFX imports for banks and brokerages.  \n- Run lean — optimized for Raspberry Pi hardware.  \n- Be modular so other developers can fork and extend.\n\n### Design Rationale"
+    }
+  ],
+  "swimTO": [
+    {
+      "question": "What is SwimTO?",
+      "answer": "SwimTO is Aggregates and displays indoor community pool drop-in swim schedules for Toronto."
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🏊‍♂️ SwimTO\n\n\n**SwimTO** aggregates and displays indoor community pool drop-in swim schedules for the City of Toronto.\n\n> **⚠️ COMMERCIAL PROJECT:** This is proprietary software. All rights reserved. See [LICENSE](LICENSE) and [PROJECT_STRATEGY.md](PROJECT_STRATEGY.md) for details."
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🎯 Overview\n\n\nSwimTO collects, normalizes, and presents lane swim schedules from Toronto's community pools, helping residents find convenient swimming times near them."
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nFeatures\n\n\n- 🗺️ **Interactive Map View** - Toronto-focused map showing all community centers with lane swim sessions\n- 📅 **Schedule View** - Calendar-style layout with weekday + time slots for lane swim programs\n- 🔄 **Auto-refresh** - Daily updates from City of Toronto Open Data sources\n- 📱 **Mobile-First Design** - Fully responsive with PWA support, tested on iOS and Android\n- 🧪 **Comprehensive Testing** - Automated mobile testing with Playwright across multiple devices\n- 🏗️ **Self-hosted** - Runs on Raspberry Pi k3s cluster"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🏗️ Architecture\n\n\n```\nswimto/\n├── apps/\n│   ├── api/              # FastAPI backend\n│   └── web/              # React + Vite frontend\n├── data-pipeline/        # ETL and data discovery\n├── k8s/                  # Kubernetes manifests\n├── infrastructure/       # Terraform (if needed)\n├── .github/workflows/    # CI/CD\n├── docker-compose.yml    # Local development\n└── docs/                 # Documentation\n```"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nLocal Development\n\n\n**Note:** This is a private repository. Access is restricted to authorized developers only.\n\n```bash"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nIf you have access, clone the repository\n\ngit clone git@github.com:raolivei/swimTO.git\ncd swimTO"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nTrigger data ingestion\n\ncurl -X POST http://localhost:8000/update \\\n  -H \"Authorization: Bearer your-admin-token\"\n```"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n📚 Documentation\n\n\n- [Quickstart](docs/QUICKSTART.md) - Get running in 5 minutes\n- [Mobile Testing Quick Start](MOBILE_TESTING_QUICK_START.md) - Test on mobile devices 📱\n- [Troubleshooting](TROUBLESHOOTING.md) - Fix common issues\n- [Local Development](docs/LOCAL_DEVELOPMENT.md) - Development setup\n- [Mobile Testing Guide](docs/MOBILE_TESTING.md) - Comprehensive mobile testing\n- [Deployment](docs/DEPLOYMENT_PI.md) - Raspberry Pi k3s guide\n- [API Reference](docs/API.md) - Endpoints and usage\n- [Architecture](docs/ARCHITECTURE.md) - System design\n- [Contributing](docs/CONTRIBUTING.md) - Development workflow"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🛠️ Tech Stack\n\n\n**Backend:**\n\n- FastAPI\n- PostgreSQL\n- SQLAlchemy + Alembic\n- Playwright (web scraping)\n- BeautifulSoup4\n\n**Frontend:**\n\n- React 18\n- TypeScript\n- Vite\n- Leaflet (maps)\n- TanStack Query\n- Tailwind CSS\n- PWA Support (installable)\n\n**Infrastructure:**\n\n- Docker\n- Kubernetes (k3s)\n- GitHub Actions\n- Raspberry Pi cluster\n\n**Testing:**\n\n- Vitest (unit tests)\n- Playwright (E2E & mobile testing)\n- Testing Library (React components)"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n📊 Data Sources\n\n\nThis project uses **official data** from the [City of Toronto Open Data Portal](https://open.toronto.ca/):\n\n- **Primary Source:** [Registered Programs and Drop-in Courses](https://open.toronto.ca/dataset/registered-programs-and-drop-in-courses-offering/)\n  - Official API updated daily at 8:00 AM\n  - Same data powering toronto.ca website\n  - 100% accurate swim schedules\n- **Secondary Sources:**\n  - Recreation facilities metadata (facility locations, addresses)\n  - Curated facility list (toronto_pools_data.py)\n\n**Data Update Frequency:** Daily at 3:00 AM via automated CronJob\n\n**License:** Open Government Licence – Toronto"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🤝 Contributing\n\n\nThis is a private commercial project. Contributions are not currently accepted from external developers.\n\nFor authorized developers, see [CONTRIBUTING.md](docs/CONTRIBUTING.md) for development workflow and branching strategy."
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n📄 License\n\n\n**Proprietary License** - All rights reserved. See [LICENSE](LICENSE) and [COPYRIGHT](COPYRIGHT) files for full details.\n\nThis software is commercial and may not be copied, modified, or distributed without explicit written permission from Rafael Oliveira."
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🙏 Acknowledgments\n\n\n- City of Toronto for providing open data\n- Toronto community centers for maintaining accurate schedules\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🚀 Next Steps\n\n\n**New here?** → [Local Development Guide](docs/LOCAL_DEVELOPMENT.md) to get started  \n**Building features?** → [API Reference](docs/API.md) | [Architecture](docs/ARCHITECTURE.md)  \n**Ready to deploy?** → [Deployment Guide](docs/DEPLOYMENT_PI.md)  \n**Contributing?** → [Contributing Guidelines](docs/CONTRIBUTING.md)  \n**Testing mobile?** → [Mobile Testing Guide](docs/MOBILE_TESTING.md)"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🏊‍♂️ SwimTO — MASTER PROMPT (V4.0 for Raspberry Pi k3s)\n\n\nYou are an expert full-stack engineer + open-data integrator building a **commercial product**.\n\nBuild a monorepo called **swimto** that aggregates and displays **indoor community-pool drop-in swim schedules** for the City of Toronto.\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nStrategic Direction\n\n\n**This is now a COMMERCIAL product with a hybrid business approach:**\n\n1. **Repository Status: PRIVATE**\n\n   - GitHub repository must be set to private immediately\n   - Protects intellectual property and future development\n   - Controls access to codebase\n\n2. **Monetization Model**\n\n   - **Price:** $0.99 one-time purchase\n   - **Distribution:** QR code at facilities or via app stores\n   - **Value Proposition:** Convenience, reliability, and supporting local development\n\n3. **Licensing**\n\n   - Fully proprietary from inception (v1.0.0+)\n   - All rights reserved by Rafael Oliveira\n   - Commercial use only with explicit permission\n   - No open-source release planned initially\n\n4. **Future Considerations**\n   - Build user base first\n   - May open-source later for community contributions\n   - Evaluate dual-licensing model (commercial + open source)"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nUser Value Proposition\n\n\nWhat users pay for:\n\n- ✅ Reliable, always-updated schedule data\n- ✅ Fast, mobile-optimized experience\n- ✅ Self-hosted infrastructure (no ads, no tracking)\n- ✅ Support for local developer\n- ✅ Continued maintenance and improvements"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nAction Items\n\n\n**Immediate:**\n\n- [ ] Make GitHub repository private\n- [ ] Update LICENSE file to proprietary license\n- [ ] Remove public references/links to repository\n- [ ] Consider trademark for \"SwimTO\" name\n\n**Short Term:**\n\n- [ ] Set up payment processing (Stripe, Apple Pay, Google Pay)\n- [ ] Create QR code distribution mechanism\n- [ ] Design purchase/download flow\n- [ ] Add privacy-respecting analytics\n\n**Medium Term:**\n\n- [ ] Evaluate app store distribution (Apple App Store, Google Play)\n- [ ] Build marketing materials\n- [ ] Gather user feedback and iterate\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🎯 Technical Goals\n\n\n1. Collect → Normalize → Display drop-in swim schedules for all indoor pools.\n\n2. Prefer official City of Toronto Open Data APIs / datasets before scraping.\n\n3. Run fully self-hosted on Rafael's Raspberry Pi k3s cluster.\n\n4. Deploy automatically via a self-hosted GitHub Actions runner.\n\n5. **Use Helm charts where applicable** - Prefer Helm charts for deployments when suitable charts exist. Keep setup simple and low-maintenance — minimal YAML, update ≈ once per year.\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🔐 Vault: Single Source of Truth\n\n\n**CRITICAL PRINCIPLE: Vault is the single source of truth for ALL secrets and sensitive configuration.**"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nCore Rules\n\n\n1. **Always use Vault** - Any secret, API key, password, token, or sensitive configuration MUST be stored in Vault\n2. **Never hardcode secrets** - No secrets in code, config files, environment variables, or deployment manifests\n3. **Vault first** - When adding new features requiring secrets, store them in Vault first, then reference via External Secrets Operator\n4. **External Secrets Operator** - Automatically syncs secrets from Vault to Kubernetes secrets every 24 hours\n5. **No alternatives** - Do not use Kubernetes secrets directly, ConfigMaps for secrets, or any other secret management solution"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nWhat Goes in Vault\n\n\n- Database passwords and connection strings\n- API keys (OpenAI, Leonardo.ai, external services)\n- OAuth credentials (client IDs, client secrets)\n- Admin tokens and secret keys\n- Service account credentials\n- TLS certificates and keys\n- Any other sensitive configuration values"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nWorkflow\n\n\n1. **Store in Vault** → Use `vault kv put` or scripts like `update-vault-api-keys.sh`\n2. **Sync to Kubernetes** → External Secrets Operator automatically creates Kubernetes secrets\n3. **Reference in Deployments** → Use `secretKeyRef` in deployment manifests\n4. **Never commit secrets** → All secrets live only in Vault"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nWhen in Doubt\n\n\n**If you're unsure whether something should go in Vault:**\n\n- **Ask yourself:** \"Is this sensitive or could it be used maliciously?\"\n- **If yes:** Put it in Vault\n- **If no:** Use ConfigMap for non-sensitive configuration\n\n**Remember:** Vault is the source of truth. All other systems (Kubernetes, applications, CI/CD) consume from Vault, never the other way around.\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🧠 Data Ingestion\n\n\n| Step | Action                                                                           |\n| ---- | -------------------------------------------------------------------------------- |\n| 1    | Query open.toronto.ca for datasets (\"swim\", \"drop-in\", \"recreation\", \"aquatic\"). |\n| 2    | If a dataset with schedule times exists, use it directly.                        |\n| 3    | Always pull facility metadata from pools.xml.                                    |\n| 4    | Crawl facility pages (e.g. Mary McCormick, Norseman, Pam McConnell).             |\n| 5    | Detect hidden JSON / XHR endpoints via Playwright (locationId, weekStart).       |\n| 6    | If none → parse HTML weekly tables (\"For the week of …\") with BeautifulSoup.     |\n| 7    | Normalize → dedupe → store in PostgreSQL (or local SQLite).                      |\n\n**Canonical fields:**\n`facility_id, name, address, postal_code, district, lat, lon, swim_type, date, start_time, end_time, notes, source`\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n⚙️ Backend – FastAPI\n\n\n**Endpoints**\n\n```\nGET  /facilities\nGET  /schedule\nGET  /schedule/today\nPOST /update   (token-protected)\n```\n\n**Stack**\n\n- FastAPI + SQLAlchemy + Alembic\n- PostgreSQL (or local SQLite)\n- Optional Redis cache\n- Cron job or manual /update trigger\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n💻 Frontend – React + Vite + TypeScript\n\n\n- **Map View (state-of-the-art):**\n\n  - Interactive Toronto map (Leaflet / Mapbox).\n  - Shows _only_ community centers offering **LANE SWIM** sessions.\n  - Pins display facility name, next available lane swim, and schedule preview.\n  - Clustered view, filters, and \"open now\" highlights.\n\n- **Schedule View (top-of-the-art):**\n\n  - Modern, calendar-style layout showing weekday + time for all **LANE SWIM** drop-in programs.\n  - Filter by district, day, or time range.\n  - Clicking a facility on the map highlights its schedule in the list.\n  - Responsive mobile design, integrated with map interactions.\n\n- **Facility Card:**\n  - Shows next sessions, address → Google Maps link, alerts, and \"Updated X h ago\".\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🗂️ Repo Layout\n\n\n```\nswimto/\n├─ apps/\n│  ├─ api/          ← FastAPI backend\n│  └─ web/          ← React frontend\n├─ data-pipeline/   ← discovery + ETL\n├─ k8s/             ← bare YAMLs for k3s\n├─ .github/workflows/\n├─ docker-compose.yml\n├─ MASTER_PROMPT.md     ← This file - project guide\n├─ PROJECT_STRATEGY.md  ← Business model & licensing\n├─ COPYRIGHT            ← Proprietary copyright notice\n└─ README.md\n```\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🧩 Data Model\n\n\n```sql\nCREATE TABLE facilities (\n  facility_id TEXT PRIMARY KEY,\n  name TEXT, address TEXT, postal_code TEXT,\n  district TEXT, latitude DOUBLE PRECISION, longitude DOUBLE PRECISION,\n  is_indoor BOOLEAN, source TEXT, raw JSONB,\n  created_at TIMESTAMPTZ DEFAULT now(), updated_at TIMESTAMPTZ DEFAULT now()\n);\n\nCREATE TABLE sessions (\n  id BIGSERIAL PRIMARY KEY,\n  facility_id TEXT REFERENCES facilities(facility_id),\n  swim_type TEXT, date DATE, start_time TIME, end_time TIME,\n  notes TEXT, source TEXT, hash TEXT UNIQUE,\n  created_at TIMESTAMPTZ DEFAULT now(), updated_at TIMESTAMPTZ DEFAULT now()\n);\n```\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🧰 Docker & Local Stack\n\n\n```yaml\nservices:\n  db:\n    image: postgres:16\n    environment:\n      POSTGRES_PASSWORD: postgres\n    ports: [\"5432:5432\"]\n  api:\n    build: ./apps/api\n    environment:\n      DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/pools\n    ports: [\"8000:8000\"]\n  web:\n    build: ./apps/web\n    ports: [\"5173:5173\"]\n```\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n☁️ k3s Deployment (Raspberry Pi) with Vault Secrets"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nOverview\n\n\nSwimTO is deployed to a Raspberry Pi k3s cluster (eldertree) using Kubernetes manifests. **Use Helm charts where applicable** for better maintainability and reusability. When Helm charts are not available or not suitable, use raw YAML manifests. **ALL secrets are managed through Vault** and automatically synced to Kubernetes via External Secrets Operator. This ensures no hardcoded secrets in deployment files and centralized secret management."
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nPrerequisites\n\n\n- k3s cluster running (eldertree control plane)\n- Vault deployed and accessible\n- External Secrets Operator installed and configured\n- ClusterSecretStore configured for Vault\n- kubectl configured with `~/.kube/config-eldertree`"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nVault Secrets Configuration\n\n\n**All SwimTO secrets are stored in Vault at these paths:**\n\n- `secret/swimto/postgres` - PostgreSQL password\n- `secret/swimto/database` - Complete database URL\n- `secret/swimto/redis` - Redis URL\n- `secret/swimto/app` - Admin token and secret key\n- `secret/swimto/api-keys` - OpenAI and Leonardo.ai API keys (optional)\n- `secret/swimto/oauth` - Google OAuth credentials (optional)\n\n**Setting Secrets in Vault:**\n\n```bash"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nGet Vault pod\n\nVAULT_POD=$(kubectl get pods -n vault -l app.kubernetes.io/name=vault -o jsonpath='{.items[0].metadata.name}')"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nSet PostgreSQL password\n\nPOSTGRES_PWD=$(python3 -c 'import secrets; print(secrets.token_urlsafe(16))')\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/postgres password=$POSTGRES_PWD\""
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nSet database URL\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/database url=postgresql+psycopg://postgres:$POSTGRES_PWD@postgres-service:5432/pools\""
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nSet Redis URL\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/redis url=redis://redis-service:6379\""
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nSet admin token and secret key\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/app admin-token=\\$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))') secret-key=\\$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')\""
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nSet API keys (optional - use placeholders if not available)\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/api-keys openai-api-key=placeholder-openai-key leonardo-api-key=placeholder-leonardo-key\""
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nSet OAuth credentials (optional)\n\nkubectl exec -n vault $VAULT_POD -- sh -c \"export VAULT_ADDR=http://127.0.0.1:8200 && export VAULT_TOKEN=root && vault kv put secret/swimto/oauth google-client-id=placeholder-client-id google-client-secret=placeholder-client-secret\"\n```"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nExternalSecret Resource\n\n\nThe ExternalSecret resource automatically syncs secrets from Vault to Kubernetes:\n\n```yaml"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nLocated at: pi-fleet/clusters/eldertree/infrastructure/external-secrets/externalsecrets/swimto-secrets.yaml\n\napiVersion: external-secrets.io/v1beta1\nkind: ExternalSecret\nmetadata:\n  name: swimto-secrets\n  namespace: swimto\nspec:\n  refreshInterval: 24h\n  secretStoreRef:\n    name: vault\n    kind: ClusterSecretStore\n  target:\n    name: swimto-secrets\n    creationPolicy: Owner\n  data:\n    - secretKey: DATABASE_URL\n      remoteRef:\n        key: secret/swimto/database\n        property: url\n    - secretKey: REDIS_URL\n      remoteRef:\n        key: secret/swimto/redis\n        property: url\n    - secretKey: ADMIN_TOKEN\n      remoteRef:\n        key: secret/swimto/app\n        property: admin-token\n    - secretKey: POSTGRES_PASSWORD\n      remoteRef:\n        key: secret/swimto/postgres\n        property: password\n    - secretKey: SECRET_KEY\n      remoteRef:\n        key: secret/swimto/app\n        property: secret-key\n    - secretKey: OPENAI_API_KEY\n      remoteRef:\n        key: secret/swimto/api-keys\n        property: openai-api-key\n    - secretKey: LEONARDO_API_KEY\n      remoteRef:\n        key: secret/swimto/api-keys\n        property: leonardo-api-key\n    - secretKey: GOOGLE_CLIENT_ID\n      remoteRef:\n        key: secret/swimto/oauth\n        property: google-client-id\n    - secretKey: GOOGLE_CLIENT_SECRET\n      remoteRef:\n        key: secret/swimto/oauth\n        property: google-client-secret\n```\n\n**Important:** This ExternalSecret is managed by Flux GitOps in the pi-fleet repository. It automatically syncs secrets every 24 hours."
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nKubernetes Deployment Files\n\n\n**Files in `/k8s` directory:**\n\n- `namespace.yaml` - Namespace definition\n- `api-deployment.yaml` - API deployment and service (2 replicas)\n- `web-deployment.yaml` - Web frontend deployment and service (2 replicas)\n- `postgres-deployment.yaml` - PostgreSQL database\n- `redis-deployment.yaml` - Redis cache\n- `postgres-pvc.yaml` - Persistent volume for PostgreSQL (local-path storage)\n- `configmap.yaml` - Non-sensitive configuration values\n- `cronjob-refresh.yaml` - Daily data refresh job\n- `ingress.yaml` - Ingress configuration for external access\n\n**Key Features:**\n\n- All secrets referenced via `secretKeyRef` from `swimto-secrets`\n- Optional secrets marked with `optional: true` (API keys, OAuth)\n- Resource limits configured for Raspberry Pi constraints\n- Security contexts configured (runAsNonRoot, readOnlyRootFilesystem)\n- Health checks configured for all services"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nDeployment Steps\n\n\n1. **Ensure Vault secrets are set** (see above)\n\n2. **Verify ExternalSecret is syncing:**\n\n```bash\nkubectl get externalsecret swimto-secrets -n swimto\nkubectl get secret swimto-secrets -n swimto\n```\n\n3. **Deploy all components:**\n\n```bash\nexport KUBECONFIG=~/.kube/config-eldertree\nkubectl apply -f k8s/namespace.yaml\nkubectl apply -f k8s/configmap.yaml\nkubectl apply -f k8s/postgres-pvc.yaml\nkubectl apply -f k8s/postgres-deployment.yaml\nkubectl apply -f k8s/redis-deployment.yaml\nkubectl apply -f k8s/api-deployment.yaml\nkubectl apply -f k8s/web-deployment.yaml\nkubectl apply -f k8s/ingress.yaml\nkubectl apply -f k8s/cronjob-refresh.yaml\n```\n\n4. **Verify deployment:**\n\n```bash\nkubectl get pods -n swimto\nkubectl get svc -n swimto\nkubectl get ingress -n swimto\nkubectl logs -f deployment/swimto-api -n swimto\n```"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nIngress Configuration\n\n\n- Host: `swimto.eldertree.local` (or configured domain)\n- TLS: Managed by cert-manager with self-signed certificates\n- Paths:\n  - `/api` → swimto-api-service (port 8000)\n  - `/` → swimto-web-service (port 80)"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nCI/CD with GitHub Actions\n\n\n**Self-hosted runner setup:**\n\n```bash"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nOn Pi cluster\n\ncd ~/actions-runner\n./config.sh --url https://github.com/raolivei/swimTO --token YOUR_TOKEN\nsudo ./svc.sh install\nsudo ./svc.sh start\n```\n\n**Workflow:**\n\n1. Build Docker images (swimto-api:latest, swimto-web:latest)\n2. Load into k3s: `k3s ctr images import <(docker save swimto-api:latest)`\n3. Apply Kubernetes manifests: `kubectl apply -f k8s/`\n\n**Important:** Secrets are NOT managed by CI/CD. They are set manually in Vault and synced automatically by External Secrets Operator."
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nDaily Data Refresh\n\n\nA CronJob runs daily at 3 AM to refresh pool schedule data:\n\n```yaml"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nk8s/cronjob-refresh.yaml\n\napiVersion: batch/v1\nkind: CronJob\nmetadata:\n  name: swimto-data-refresh\n  namespace: swimto\nspec:\n  schedule: \"0 3 * * *\"\n  jobTemplate:\n    spec:\n      template:\n        spec:\n          containers:\n            - name: data-refresh\n              image: swimto-api:latest\n              command: [\"python\", \"/data-pipeline/jobs/daily_refresh.py\"]\n              env:\n                - name: DATABASE_URL\n                  valueFrom:\n                    secretKeyRef:\n                      name: swimto-secrets\n                      key: DATABASE_URL\n```"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nSecurity Best Practices\n\n\n✅ **Vault is the source of truth** - ALL secrets MUST be stored in Vault first (see \"Vault: Single Source of Truth\" section above)  \n✅ **External Secrets Operator** - Automatic sync from Vault to Kubernetes every 24 hours  \n✅ **No hardcoded secrets** - All deployments use `secretKeyRef` from External Secrets Operator  \n✅ **Never commit secrets** - Secrets exist only in Vault, never in git repositories  \n✅ **Optional secrets** - API keys and OAuth marked as optional in deployments  \n✅ **Security contexts** - runAsNonRoot, readOnlyRootFilesystem, capabilities dropped"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nTroubleshooting\n\n\n**Secrets not syncing:**\n\n```bash\nkubectl describe externalsecret swimto-secrets -n swimto\nkubectl logs -n external-secrets deployment/external-secrets\n```\n\n**Pods failing to start:**\n\n```bash\nkubectl logs deployment/swimto-api -n swimto\nkubectl get secret swimto-secrets -n swimto\n```\n\n**Database connection issues:**\n\n```bash\nkubectl get pods -n swimto | grep postgres\nkubectl logs deployment/postgres -n swimto\n```\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🤖 GitHub Actions\n\n\n```yaml\nname: Deploy to Pi k3s\non: [push]\njobs:\n  build-deploy:\n    runs-on: [self-hosted, linux, arm64]\n    steps:\n      - uses: actions/checkout@v4\n      - name: Build images\n        run: |\n          docker build -t swimto-api:latest apps/api\n          docker build -t swimto-web:latest apps/web\n      - name: Load into k3s\n        run: |\n          k3s ctr images import <(docker save swimto-api:latest)\n          k3s ctr images import <(docker save swimto-web:latest)\n      - name: Deploy\n        run: kubectl apply -f k3s/\n```\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🧾 Env Vars\n\n\n```\nDATABASE_URL=postgresql+psycopg://postgres:postgres@db:5432/pools\nADMIN_TOKEN=change-me\nCITY_BASE_URL=https://www.toronto.ca\nOPEN_DATA_BASE_URL=https://open.toronto.ca\nINGEST_WINDOW_DAYS=56\n```\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n📘 Docs to Generate\n\n\n- **README.md** – overview + setup + Open Data license + **commercial notice**\n- **PROJECT_STRATEGY.md** – business model, licensing strategy, roadmap\n- **COPYRIGHT** – proprietary copyright notice\n- **INGESTION.md** – data sources + normalization\n- **DEPLOYMENT_PI.md** – k3s + runner setup\n- **API.md**, **FRONTEND.md**, **OPERATIONS.md**, **SECURITY.md**\n- **LICENSE** – update to proprietary for v2.0.0+\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n✅ Acceptance Checklist\n\n\n**Technical:**\n\n- `docker compose up` runs locally\n- `/schedule/today` returns real data\n- Map + List views render LANE SWIM data correctly\n- `/update` triggers refresh\n- GitHub Actions deploys to Pi cluster\n- Cron keeps data fresh\n\n**Business:**\n\n- Repository is set to private on GitHub\n- LICENSE file updated to proprietary\n- PROJECT_STRATEGY.md documents business model\n- Payment processing mechanism designed\n- Distribution strategy (QR codes / app stores) defined\n- Analytics/telemetry implemented (privacy-respecting)\n- Support/feedback mechanism in place\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🗺️ Enhanced Visualization Goals\n\n\n1. **Interactive Map (Toronto-focused):**\n\n   - Displays all community centers with **LANE SWIM** sessions.\n   - Uses **Leaflet or Mapbox** with clustering, filters, and \"open now\" highlights.\n\n2. **Top-tier Schedule View:**\n   - Calendar-style grid showing **weekday + time slots** for each **LANE SWIM** program.\n   - Integrated with the map — selecting a facility highlights its sessions.\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n💡 Key Principles\n\n\n1. **Vault-First:** Vault is the single source of truth for all secrets and sensitive configuration\n2. **Privacy-First:** No tracking, no ads, no data selling\n3. **Quality-Focused:** Reliable data, fast performance, great UX\n4. **Self-Hosted:** Complete control over infrastructure\n5. **Commercial Viability:** Sustainable through fair pricing\n6. **Local Value:** Supporting Toronto swimmers and local development\n\n---\n\n**Version:** 4.0  \n**Last Updated:** November 5, 2025  \n**Status:** Development → Commercial Launch  \n**License:** Proprietary (all versions)\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🚀 Next Steps\n\n\n1. Switch GitHub repository to private\n2. Create PROJECT_STRATEGY.md document\n3. Update LICENSE and add COPYRIGHT\n4. Plan payment integration\n5. Design QR code distribution system"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🏊‍♂️ SwimTO — Project Strategy & Business Model\n\n\n**Version:** 2.0  \n**Last Updated:** November 5, 2025  \n**Status:** Commercial Product - Private Repository\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n📋 Executive Summary\n\n\nSwimTO is a **commercial mobile application** that provides Toronto residents with reliable, up-to-date indoor pool drop-in swim schedules. The app aggregates data from the City of Toronto Open Data Portal and presents it in an intuitive, mobile-first interface.\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nRevenue Model\n\n\n**Monetization Strategy:**\n- **Price:** $0.99 one-time purchase\n- **No subscriptions:** One-time payment for lifetime access\n- **No ads:** Clean, focused user experience\n- **No tracking:** Privacy-first approach respects user data"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nDistribution Channels\n\n\n1. **QR Codes at Facilities**\n   - Place QR codes at participating Toronto community pools\n   - Direct link to purchase/download page\n   - Simple user journey: Scan → Purchase → Use\n\n2. **App Stores** (Future)\n   - Apple App Store (iOS)\n   - Google Play Store (Android)\n   - Standard app store monetization\n\n3. **Word of Mouth**\n   - Organic growth through user recommendations\n   - Community center partnerships\n   - Local swimming groups and clubs\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nWhat Users Get for $0.99:\n\n\n✅ **Reliable Data**\n- Daily updates from official City of Toronto sources\n- Same data powering toronto.ca website\n- 100% accurate swim schedules\n\n✅ **Superior User Experience**\n- Mobile-first, responsive design\n- Interactive map showing all lane swim locations\n- Calendar view with easy filtering by day/time\n- PWA support (installable on mobile devices)\n\n✅ **Privacy & Trust**\n- Self-hosted infrastructure\n- No user tracking or analytics\n- No ads or third-party integrations\n- Open about data sources\n\n✅ **Local Support**\n- Supporting local Toronto developer\n- Continued maintenance and improvements\n- Direct user support\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nRepository Status\n\n\n**Current:** PRIVATE GitHub repository\n- Protects intellectual property\n- Controls access to codebase\n- Prevents unauthorized distribution\n- Enables commercial development"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nLicensing Approach\n\n\n**Fully Proprietary:**\n\n- All code under proprietary license from inception\n- Commercial use only with explicit permission\n- All rights reserved by Rafael Oliveira\n- No open-source release planned for initial versions\n\n**Rationale:**\n- Built as commercial product from day one\n- Protects intellectual property\n- Enables sustainable business model\n- Provides flexibility for future licensing decisions"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nFuture Open Source Considerations\n\n\n**Possible Future Options:**\n\n1. **Open Source Components**\n   - May open-source specific libraries/tools\n   - Core app remains proprietary\n   - Contribute back to community selectively\n\n2. **Source Available**\n   - Make source code viewable (not forkable)\n   - Transparency without losing IP\n   - Similar to many commercial apps\n\n3. **Remain Fully Proprietary**\n   - Most likely path for sustainability\n   - Standard for commercial mobile apps\n   - Protects competitive advantage\n\n**Decision Point:** Evaluate after establishing user base and revenue (12+ months)\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nTarget Users\n\n\n**Primary:**\n- Toronto residents who swim regularly\n- Fitness enthusiasts seeking lane swim times\n- Adults with flexible schedules (remote workers, retirees)\n\n**Secondary:**\n- Parents coordinating children's activities\n- Tourists visiting Toronto\n- Health professionals recommending swimming"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nMarket Size\n\n\n- Toronto Population: 2.9M+\n- Community Pools with Lane Swim: ~50 facilities\n- Regular Swimmers (estimated): 100K+\n- Addressable Market: 10K-50K users"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nCompetitive Landscape\n\n\n**Current Solutions:**\n1. **toronto.ca website**\n   - Official but clunky interface\n   - Not mobile-optimized\n   - Requires multiple clicks to find schedules\n\n2. **Individual facility websites**\n   - Scattered information\n   - Inconsistent formats\n   - Time-consuming to check multiple pools\n\n3. **Generic calendar apps**\n   - Manual data entry required\n   - No automation\n   - Maintenance burden on users\n\n**SwimTO Advantage:**\n- Aggregates all data in one place\n- Mobile-optimized interface\n- Automatic updates\n- Interactive map visualization\n- Superior UX\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nPhase 1: Soft Launch (Months 1-3)\n\n\n**Goals:**\n- Deploy to production (Raspberry Pi k3s)\n- Test with friends/family (beta testers)\n- Refine user experience based on feedback\n- Set up payment processing infrastructure\n\n**Activities:**\n- [ ] Deploy production infrastructure\n- [ ] Implement payment flow (Stripe/Apple Pay/Google Pay)\n- [ ] Create QR code landing page\n- [ ] Beta test with 10-20 users\n- [ ] Gather feedback and iterate"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nPhase 2: Local Launch (Months 4-6)\n\n\n**Goals:**\n- Launch to Toronto swimming community\n- Place QR codes at 5-10 facilities\n- Reach 100+ paying users\n- Establish positive reviews/word-of-mouth\n\n**Activities:**\n- [ ] Contact community centers for QR code placement\n- [ ] Create marketing materials (flyers, posters)\n- [ ] Engage with local swimming groups on social media\n- [ ] Monitor user feedback and fix issues quickly\n- [ ] Implement basic analytics (privacy-respecting)"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nPhase 3: Growth & Scaling (Months 7-12)\n\n\n**Goals:**\n- Scale to 500+ users\n- Expand QR code presence to all major pools\n- Consider app store distribution\n- Evaluate feature requests\n\n**Activities:**\n- [ ] Expand QR code distribution network\n- [ ] Explore Apple App Store listing\n- [ ] Explore Google Play Store listing\n- [ ] Implement requested features\n- [ ] Consider open-source strategy reassessment\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nRevenue Scenarios (Year 1)\n\n\n**Conservative:**\n- 500 users × $0.99 = $495\n\n**Moderate:**\n- 2,000 users × $0.99 = $1,980\n\n**Optimistic:**\n- 5,000 users × $0.99 = $4,950"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nCost Structure\n\n\n**Infrastructure:**\n- Raspberry Pi hardware: $200 (one-time)\n- Electricity: ~$5/month\n- Domain name: $15/year\n- Total: ~$275/year\n\n**Development:**\n- Self-funded (personal project)\n- Time investment: ~5-10 hours/month maintenance\n- Major updates: As needed\n\n**Distribution:**\n- Payment processing fees: ~3% of revenue\n- QR code printing: $50-100 (one-time)\n- App store fees: $99/year (Apple) + $25 (Google, one-time)\n\n**Net Margin:** ~85-90% after costs\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nData & Privacy\n\n\n**Approach:**\n- No user data collection beyond payment\n- No tracking or analytics (or minimal, privacy-respecting)\n- All data sourced from public City of Toronto resources\n- Compliance with Canadian privacy laws (PIPEDA)\n\n**Data License:**\n- City of Toronto data under Open Government Licence – Toronto\n- Proper attribution in app and documentation"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nIntellectual Property\n\n\n**Protection:**\n- Source code copyright: Rafael Oliveira\n- Consider trademark for \"SwimTO\" name\n- Logo/branding copyright\n- Keep repository private\n\n**User Terms:**\n- Clear terms of service\n- One-time purchase, no refunds\n- No warranty (as-is)\n- Right to discontinue service\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nKey Performance Indicators (KPIs)\n\n\n**Financial:**\n- Number of paying users\n- Revenue (monthly/yearly)\n- Customer acquisition cost\n- Net margin\n\n**Product:**\n- Daily active users\n- User retention rate\n- Data freshness/accuracy\n- App performance metrics\n\n**User Satisfaction:**\n- User feedback/reviews\n- Support requests\n- Feature requests\n- Churn rate\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n🎯 Core Principles\n\n\n**1. Privacy-First**\n- No tracking, no ads, no data selling\n- User privacy is non-negotiable\n- Transparent about data usage\n\n**2. Quality-Focused**\n- Reliable data sources\n- Fast, responsive performance\n- Great user experience\n- Regular maintenance\n\n**3. Self-Hosted**\n- Complete infrastructure control\n- No dependence on cloud providers\n- Cost-effective long-term\n- Educational value\n\n**4. Commercial Viability**\n- Fair pricing for value provided\n- Sustainable business model\n- Support ongoing development\n- Enable future improvements\n\n**5. Local Value**\n- Serving Toronto community\n- Supporting local development\n- Contributing to open data ecosystem\n- Partnership with community centers\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nShort Term (3-6 months)\n\n- [ ] Complete payment integration\n- [ ] QR code distribution network\n- [ ] User feedback mechanism\n- [ ] Basic analytics implementation"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nMedium Term (6-12 months)\n\n- [ ] App store distribution\n- [ ] User accounts (optional)\n- [ ] Favorite facilities feature\n- [ ] Push notifications for schedule changes\n- [ ] Expand to more facility types"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\nLong Term (12+ months)\n\n- [ ] Expand to other cities (Ottawa, Montreal, Vancouver)\n- [ ] Partnerships with swimming organizations\n- [ ] API access for third parties\n- [ ] Community contribution model\n- [ ] Open-source core components\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n📞 Contact & Support\n\n\n**Developer:** Rafael Oliveira  \n**Project:** SwimTO  \n**Repository:** Private (GitHub)  \n**Website:** TBD  \n**Support:** TBD\n\n---"
+    },
+    {
+      "question": "Tell me about SwimTO ",
+      "answer": "SwimTO :\n\n📝 Change Log\n\n\n- **v1.0** (Nov 5, 2025): Initial strategy document - proprietary commercial project\n\n---\n\n**Note:** This document is confidential and intended for internal use and potential investors/partners only."
+    },
+    {
+      "question": "Give me an overview of SwimTO",
+      "answer": "# 🏊‍♂️ SwimTO\n\n**SwimTO** aggregates and displays indoor community pool drop-in swim schedules for the City of Toronto.\n\n> **⚠️ COMMERCIAL PROJECT:** This is proprietary software. All rights reserved. See [LICENSE](LICENSE) and [PROJECT_STRATEGY.md](PROJECT_STRATEGY.md) for details.\n\n## 🎯 Overview\n\nSwimTO collects, normalizes, and presents lane swim schedules from Toronto's community pools, helping residents find convenient swimming times near them."
+    },
+    {
+      "question": "What is the API structure of SwimTO?",
+      "answer": "SwimTO has a FastAPI backend located in apps/api/ that provides endpoints for pool schedules and facilities data."
+    }
+  ],
+  "us-law-severity-map": [
+    {
+      "question": "What is US Law Severity Map?",
+      "answer": "US Law Severity Map is Interactive choropleth map showing law severity scores and crime statistics for US states."
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n🇺🇸 US Law Severity & Crime Statistics Map\n\n\nAn advanced, interactive data visualization project that generates a comprehensive choropleth map of the United States showing law severity scores alongside detailed crime statistics for all 50 states. Click any state to zoom in and view detailed statistics in a dynamic panel.\n\n![US Law Severity Map](screenshot.png)\n_Interactive map with click-to-zoom functionality and comprehensive state statistics_"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n🗺️ **Advanced Interactive Map**\n\n\n- **Click-to-View**: Click any state to zoom in AND display comprehensive statistics panel\n- **Smooth Pan & Zoom**: Scroll to zoom, drag to navigate\n- **Simple Hover**: State names appear on hover (statistics shown only on click)\n- **Responsive Design**: Modern, professional interface optimized for any screen size"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n📊 **Comprehensive Statistics**\n\n\nFor each state, the map displays:\n\n- **Law Severity Score** (0-100 scale)\n- **Death Penalty Status** (Active/Abolished/Moratorium)\n- **Murder Rate** (per 100,000 population)\n- **Gun Death Rate** (per 100,000 population)\n- **Traffic Fatality Rate** (per 100,000 population)\n- **Total Population** (2023 estimates)\n- **Incarceration Rate** (prisoners per 100,000)\n- **Contextual Notes** (historical information, notable policies)"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n🎨 **Modern Visualization**\n\n\n- Professional color gradient from green (lenient) to red (severe)\n- Clean, high-contrast design\n- Informative legends and guides\n- US average comparisons for context"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n💾 **Export Capabilities**\n\n\n- Automatically saves as standalone HTML file\n- Share-friendly format (works offline)\n- Fully interactive in any modern browser"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n100 - Very Severe (Death Penalty Active)\n\n\nStates with active death penalty statutes:\n\n- **TX** (National leader in executions)\n- **FL, AL, GA, MO, AZ, OK, MS, SC, AR** (High execution rates)\n- **OH, TN, SD, ID, WY, MT, KS, NE, KY, IN** (Active but varying usage)"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n80-95 - Severe\n\n\nStates with strict sentencing:\n\n- **LA** (95) - Highest incarceration rate in nation\n- **VA** (92) - Recently abolished death penalty (2021)\n- **NC** (88) - De facto moratorium\n- **UT** (90), **NV** (85), **ND** (85), **IA** (80)"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n40-60 - Moderate\n\n\nStates with balanced approaches:\n\n- **WV** (60), **DE, PA** (58), **MI, MD** (55)\n- **CO** (52), **NH, WI** (50), **NM** (48), **MN** (45)"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n20-40 - Lenient (Rehabilitation-Focused)\n\n\nStates emphasizing rehabilitation:\n\n- **HI** (20) - Most progressive, lowest crime\n- **VT** (22) - Lowest incarceration rate\n- **ME, RI** (25), **MA** (28), **CT** (30)\n- **AK** (30), **NJ, OR** (32), **NY, WA** (35), **CA, IL** (38)"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nPrerequisites\n\n\n- Python 3.8 or higher\n- pip package manager\n- Modern web browser (for viewing interactive map)"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nSetup Instructions\n\n\n1. **Clone the repository:**\n\n   ```bash\n   git clone https://github.com/yourusername/us-law-severity-map.git\n   cd us-law-severity-map\n   ```\n\n2. **Create a virtual environment (recommended):**\n\n   ```bash\n   python -m venv us-law-severity-map\n\n   # On macOS/Linux:\n   source us-law-severity-map/bin/activate\n\n   # On Windows:\n   us-law-severity-map\\Scripts\\activate\n   ```\n\n3. **Install dependencies:**\n   ```bash\n   pip install -r requirements.txt\n   ```"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nLocal Development\n\n\nRun the main script:\n\n```bash\npython main.py\n```"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nWhat Happens:\n\n\n1. ✓ Downloads US Census Bureau shapefile (if not cached)\n2. 🗺️ Loads geographic data for all 50 states\n3. 📊 Enriches data with comprehensive statistics\n4. 🎨 Generates interactive visualization\n5. 🌐 Opens map in your default browser\n6. 💾 Saves as `us_law_severity_map_interactive.html`"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nInteraction Guide:\n\n\n- **Click any state** → Auto-zoom + display detailed statistics panel\n- **Double-click** → Reset to full US view (clears statistics panel)\n- **Hover over state** → See state name only\n- **Scroll wheel** → Zoom in/out\n- **Click and drag** → Pan the map\n- **Use toolbar** → Additional controls (screenshot, reset axes, etc.)\n\n---"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n🎯 Recommended Workflow (Safest)\n\n\n**Manual Apply** - Full control, zero risk:\n\n```bash"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n1. Create PR with infrastructure changes\n\ngit checkout -b feat/my-changes"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n... make changes to terraform/ ...\n\ngit push origin feat/my-changes"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nGo to: Actions → \"Terraform Apply (Manual)\" → Run workflow"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nIf failed → Fix code and retry\n\n```\n\n**Why this approach?**\n- ✅ Test infrastructure before merging\n- ✅ Can't merge until apply succeeds (branch protection)\n- ✅ Complete control over when changes happen\n- ✅ Easy rollback (just close PR)\n\nSee [Manual Workflow Guide](docs/MANUAL_TERRAFORM_WORKFLOW.md) for step-by-step instructions."
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n1. Install Terraform\n\nbrew install terraform  # macOS"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n2. Configure AWS credentials\n\nexport AWS_ACCESS_KEY_ID=\"your-key\"\nexport AWS_SECRET_ACCESS_KEY=\"your-secret\""
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n3. Deploy infrastructure\n\ncd terraform/s3-cloudfront\nterraform init\nterraform apply"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n4. Generate and upload map\n\ncd ../..\npython main.py\naws s3 cp us_law_severity_map_interactive.html s3://us-law-severity-map/index.html\naws cloudfront create-invalidation --distribution-id YOUR_ID --paths \"/*\"\n```\n\n**Cost**: $1-5/month for 5-50 daily visitors (see [Cost Analysis](docs/AWS_COST_ANALYSIS.md))"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n🤖 GitHub Actions Workflows\n\n\n| Workflow | Trigger | Purpose |\n|----------|---------|---------|\n| **Terraform Plan** | Automatic on PR | Shows infrastructure changes |\n| **Terraform Apply** | Manual (you trigger) | Applies infrastructure changes |\n| **Deploy to S3** | Manual | Deploys website HTML |\n| **Terraform Destroy** | Manual with confirmation | Tears down infrastructure |\n\n**Branch Protection**: The `main` branch requires successful Terraform Apply before merge!"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n🏗️ Infrastructure Stack\n\n\n- **Hosting**: Amazon S3 (static website)\n- **CDN**: CloudFront (global edge caching)\n- **State Management**: S3 + DynamoDB (locking)\n- **CI/CD**: GitHub Actions\n- **IaC**: Terraform\n- **Cost**: ~$1-5/month (mostly CloudFront)"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n📚 Complete Documentation\n\n\n- 📘 [Manual Workflow Guide](docs/MANUAL_TERRAFORM_WORKFLOW.md) - **Recommended reading!**\n- 🔀 [Workflow Comparison](docs/WORKFLOW_COMPARISON.md) - Compare 3 approaches\n- 📖 [Workflows README](.github/workflows/README.md) - Quick reference\n- 💰 [Cost Analysis](docs/AWS_COST_ANALYSIS.md) - Detailed pricing\n- 🚀 [Deployment Guide](docs/DEPLOYMENT_QUICKSTART.md) - Step-by-step\n- ☁️ [AWS Strategies](docs/AWS_DEPLOYMENT.md) - Architecture options"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nGeographic Data\n\n\n- **US Census Bureau TIGER/Line Shapefiles**\n- Dataset: `cb_2022_us_state_20m` (20m resolution)\n- Source: https://www.census.gov/geographies/mapping-files/"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nCrime Statistics (2022-2023 estimates)\n\n\n- **Murder Rates**: FBI Uniform Crime Reporting (UCR) Program\n- **Gun Death Rates**: CDC WONDER Database\n- **Traffic Fatalities**: NHTSA Fatality Analysis Reporting System (FARS)\n- **Incarceration**: Bureau of Justice Statistics (BJS)\n- **Population**: US Census Bureau population estimates"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n📁 Project Structure\n\n\n```\nus-law-severity-map/\n├── main.py                                    # Main visualization script\n├── requirements.txt                           # Python dependencies\n├── README.md                                  # This file\n├── CHANGELOG.md                               # Version history\n├── LICENSE                                    # MIT License\n├── PROMPT.md                                  # AI recreation prompt\n├── .github/\n│   └── workflows/                             # GitHub Actions\n│       ├── README.md                          # Workflows documentation\n│       ├── terraform-pr-plan.yml              # Automatic plan on PR\n│       ├── terraform-pr-apply.yml             # Manual apply workflow\n│       ├── deploy-to-s3.yml                   # Deploy website to S3\n│       └── terraform-destroy.yml              # Infrastructure teardown\n├── terraform/\n│   └── s3-cloudfront/                         # AWS infrastructure\n│       ├── main.tf                            # Main Terraform config\n│       ├── variables.tf                       # Input variables\n│       ├── outputs.tf                         # Output values\n│       ├── backend.tf                         # S3 state backend\n│       └── README.md                          # Terraform docs\n├── docs/                                      # Documentation\n│   ├── MANUAL_TERRAFORM_WORKFLOW.md           # Recommended workflow guide\n│   ├── WORKFLOW_COMPARISON.md                 # Compare workflow options\n│   ├── AWS_DEPLOYMENT.md                      # Deployment strategies\n│   ├── AWS_COST_ANALYSIS.md                   # Cost breakdown\n│   └── DEPLOYMENT_QUICKSTART.md               # Quick start guide\n├── github/                                    # GitHub configuration\n│   ├── setup-branch-protection.sh             # Branch protection script\n│   └── branch-protection-config.json          # Protection rules config\n├── data/                                      # Auto-generated shapefiles\n│"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n📦 Dependencies\n\n\nCore Libraries:\n\n- **geopandas** (≥0.14.0) - Geographic data manipulation\n- **plotly** (≥5.18.0) - Interactive visualizations\n- **requests** (≥2.31.0) - HTTP downloads\n- **matplotlib** (≥3.8.0) - Plotting support\n- **kaleido** (≥0.2.1) - Static image export\n\nGeospatial Stack:\n\n- **pandas**, **shapely**, **fiona**, **pyproj** (required by geopandas)\n\nSee `requirements.txt` for complete list with version constraints."
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nUS National Averages (per 100,000 population):\n\n\n- **Murder Rate**: ~7.2\n- **Gun Death Rate**: ~14.8\n- **Traffic Fatality Rate**: ~12.3\n- **Incarceration Rate**: ~639"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nNotable State Comparisons:\n\n\n**Highest Murder Rates:**\n\n- Mississippi (20.5), Louisiana (15.8), Alabama (12.9)\n\n**Lowest Murder Rates:**\n\n- New Hampshire (1.3), Maine (1.8), Vermont (2.2)\n\n**Highest Gun Death Rates:**\n\n- Mississippi (28.6), Louisiana (26.3), Alabama (26.4)\n\n**Lowest Gun Death Rates:**\n\n- Massachusetts (3.7), New York (5.4), New Jersey (5.2)\n\n**Highest Incarceration Rates:**\n\n- Louisiana (1,090), Oklahoma (1,050), Mississippi (1,030)\n\n**Lowest Incarceration Rates:**\n\n- Vermont (320), Massachusetts (340), Minnesota (370)"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n⚠️ Methodology & Disclaimer\n\n\n**Severity scores are subjective estimates** based on comprehensive analysis of:\n\n- Death penalty status, history, and execution statistics\n- Sentencing guidelines and mandatory minimums\n- Three strikes laws and habitual offender statutes\n- Criminal justice reform initiatives\n- Incarceration rates and prison populations\n- Parole/probation policies\n- Focus on punishment vs. rehabilitation\n\n**Important Notes:**\n\n- This project is for **educational and visualization purposes only**\n- Scores are simplified representations of complex legal systems\n- Crime statistics are estimates based on most recent available data\n- Not all states report data uniformly or consistently\n- Consult official state resources for legal information"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nPerformance Optimizations:\n\n\n- Efficient shapefile caching\n- Optimized GeoJSON conversion\n- Lazy loading of geographic data\n- CDN-based Plotly library (fast HTML loading)"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nModern Web Technologies:\n\n\n- Plotly.js for interactive graphics\n- Responsive mapbox integration\n- HTML5 for standalone deployment\n- CSS-based styling for professional appearance"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nCompleted ✅\n\n\n**Version 3.0.0 - AWS Deployment & Infrastructure:**\n- [x] Complete AWS deployment with S3 + CloudFront\n- [x] Terraform infrastructure as code\n- [x] GitHub Actions CI/CD workflows\n- [x] Manual apply workflow (safest approach)\n- [x] Branch protection rules\n- [x] Comprehensive deployment documentation\n- [x] Cost analysis and optimization guides\n\n**Version 2.0.0 - Interactive Visualization:**\n- [x] Interactive choropleth map with Plotly\n- [x] Click-to-zoom with statistics panel\n- [x] Comprehensive state statistics display on click\n- [x] Simplified hover (state names only)\n- [x] Crime data integration (murder, gun, traffic)\n- [x] Population and incarceration rates\n- [x] Professional color scheme and design\n- [x] HTML export with embedded JavaScript\n- [x] Dynamic statistics panel updates\n\n**Version 1.0.0 - Initial Release:**\n- [x] Static choropleth map\n- [x] Law severity scoring system\n- [x] Death penalty data for all states"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nPotential Future Enhancements 🚀\n\n\n**Data & Analytics:**\n- [ ] Time-series data showing changes over years\n- [ ] Additional metrics (recidivism, prison conditions, reform index)\n- [ ] County-level granularity\n- [ ] Comparison mode (side-by-side states)\n- [ ] Data export functionality (CSV, JSON)\n\n**Infrastructure & DevOps:**\n- [ ] Custom domain with Route53\n- [ ] Automated testing for Terraform\n- [ ] Multi-environment setup (dev/staging/prod)\n- [ ] CloudWatch monitoring and alerts\n- [ ] Automated cost reporting\n\n**Features:**\n- [ ] API integration for real-time data updates\n- [ ] Mobile-optimized version\n- [ ] Embed code for websites/blogs\n- [ ] PDF report generation\n- [ ] Share functionality (social media)"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n🤝 Contributing\n\n\nContributions are welcome! Areas where you can help:"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nData Improvements:\n\n\n- More accurate or recent statistics\n- Additional metrics and data sources\n- Validation of existing scores\n- Historical data for time-series analysis"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nFeatures:\n\n\n- New visualization types\n- Enhanced interactivity\n- Performance optimizations\n- Mobile improvements"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nDocumentation:\n\n\n- Methodology explanations\n- Data source citations\n- Tutorial videos\n- Translation to other languages\n\n**To contribute:**\n\n1. Fork the repository\n2. Create a feature branch (`git checkout -b feature/amazing-feature`)\n3. Commit your changes (`git commit -m 'Add amazing feature'`)\n4. Push to the branch (`git push origin feature/amazing-feature`)\n5. Open a Pull Request"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n📄 License\n\n\nThis project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details."
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n🙏 Acknowledgments\n\n\n- **US Census Bureau** - Geographic boundary data\n- **FBI UCR Program** - Crime statistics\n- **CDC WONDER** - Public health data\n- **NHTSA** - Traffic safety data\n- **Bureau of Justice Statistics** - Incarceration data\n- **Plotly** - Interactive visualization framework\n- **GeoPandas community** - Geospatial tools\n- Criminal justice reform researchers and data journalists"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n📞 Contact & Support\n\n\n- **Issues**: Use GitHub Issues for bug reports and feature requests\n- **Discussions**: Start a discussion for questions or ideas\n- **Security**: Report security vulnerabilities privately\n\n---\n\n**Disclaimer:** This map represents a simplified view of highly complex legal and social systems. The data is provided for educational and informational purposes. For authoritative legal information, always consult official state resources or qualified legal professionals.\n\n**Made with ❤️ and Python** | Data-driven insights into the US criminal justice system"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nAI Prompt: Recreate US Law Severity Map Project\n\n\nThis prompt can be used with AI assistants (Claude, ChatGPT, etc.) to recreate this entire project from scratch.\n\n---"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nMain Prompt\n\n\n```\nCreate a complete, professional data visualization project that displays US law severity\nby state with comprehensive crime statistics. The project should be production-ready\nwith AWS deployment infrastructure.\n\nPROJECT SPECIFICATIONS:\n\n1. INTERACTIVE MAP FEATURES:\n   - Choropleth map of all 50 US states\n   - Click-to-zoom functionality with state-specific centering\n   - Hover shows state name only\n   - Click displays detailed statistics panel (squared box overlay on right side)\n   - Double-click resets view and clears panel\n   - Color gradient: green (lenient) → yellow → orange → red (severe)\n   - Professional UI with smooth animations\n\n2. DATA TO DISPLAY:\n\n   Law Severity Metrics:\n   - Severity score (0-100 scale):\n     * 100: Very Severe (death penalty active)\n     * 80-95: Severe (long sentences)\n     * 40-60: Moderate (balanced approach)\n     * 20-40: Lenient (rehabilitation focus)\n   - Death penalty status (Active/Abolished/Moratorium)\n\n   Crime Statistics (per 100,000 population):\n   - Murder rate (with US average comparison)\n   - Gun death rate (with US average comparison)\n   - Traffic fatality rate (with US average comparison)\n\n   Demographics:\n   - Population (2023 estimates)\n   - Incarceration rate (per 100k)\n\n   Contextual Information:\n   - Historical notes for each state\n   - Notable policies and facts\n\n3. TECHNICAL STACK:\n   - Python 3.8+ with virtual environment\n   - Plotly for interactive visualizations (NOT matplotlib)\n   - GeoPandas for geographic data handling\n   - US Census Bureau shapefiles (automatic download)\n   - HTML/CSS/JavaScript for overlay panel\n   - All text in English\n\n4. USER INTERFACE:\n   - Statistics panel as HTML overlay (not Plotly annotation)\n   - Fixed position on right side, vertically centered\n   - Width: 380px, scrollable if needed\n   - Red border (3px), rounded corners (12px)\n   - Drop shadow for depth\n   - Close button (×) in top right\n   - Organized sections with icons:\n     * ⚖️ Law Severity\n     * 📊 Crim"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nWith Claude (Anthropic)\n\n\n```\nCopy the entire \"Main Prompt\" section above and paste it into a new Claude conversation.\nClaude has excellent code generation and can handle complex multi-file projects.\n```"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nWith ChatGPT (OpenAI)\n\n\n```\nCopy the prompt and paste into ChatGPT-4 or ChatGPT-4 Turbo.\nMay need to break into smaller parts for very long conversations.\nUse Code Interpreter for testing the Python code.\n```"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nWith Cursor AI\n\n\n```\nOpen Cursor IDE and use Composer mode.\nPaste the prompt to generate all files in your workspace.\nCursor can directly create the file structure and edit multiple files.\n```"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nTips for Best Results\n\n\n1. **Start Fresh**: Use a new conversation to avoid context confusion\n\n2. **Specify Environment**:\n\n   ```\n   Additional context: I'm on macOS with Python 3.11 installed.\n   AWS CLI is configured. I want to use Terraform for deployment.\n   ```\n\n3. **Request Step-by-Step**:\n\n   ```\n   After generating the code, walk me through:\n   1. Local setup and testing\n   2. Terraform deployment\n   3. GitHub Actions configuration\n   ```\n\n4. **Ask for Clarifications**:\n\n   ```\n   Before starting, confirm:\n   - What Python version do you recommend?\n   - Should I create a virtual environment?\n   - What AWS region should I use?\n   ```\n\n5. **Iterate on Design**:\n   ```\n   The statistics panel looks good, but can you:\n   - Make the border thicker\n   - Add more spacing between sections\n   - Change the color scheme to blue\n   ```\n\n---"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n✅ Must Have\n\n\n- Plotly for interactivity (NOT matplotlib static map)\n- HTML overlay for statistics panel (NOT Plotly annotation)\n- State-specific zoom coordinates for all 50 states\n- Click shows stats + zooms simultaneously\n- Double-click resets + hides stats\n- All text in English\n- Complete AWS infrastructure\n- GitHub Actions CI/CD\n- Comprehensive documentation"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\n❌ Common Mistakes to Avoid\n\n\n- Using matplotlib instead of Plotly\n- Using Plotly annotations instead of HTML overlay\n- Generic zoom that doesn't center properly\n- Missing state data\n- Incomplete documentation\n- No cost analysis\n- Portuguese text in code/docs\n- Missing Terraform files\n- No CI/CD pipeline\n\n---"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nCustomization Options\n\n\nAfter generating the base project, you can request:"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nVisual Enhancements\n\n\n```\nMake the map more visually appealing by:\n- Adding a gradient background\n- Improving the color scheme\n- Adding drop shadows to states\n- Better typography\n```"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nAdditional Features\n\n\n```\nAdd these features:\n- Search bar to find states\n- Filter by severity category\n- Export data as CSV\n- Time-series animation\n- Comparison mode (2 states side-by-side)\n```"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nInfrastructure Improvements\n\n\n```\nEnhance the AWS setup:\n- Add custom domain with Route53\n- Enable CloudWatch monitoring\n- Set up cost alerts\n- Add staging environment\n- Implement blue-green deployment\n```\n\n---"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nVersion Information\n\n\n- **Current Version**: 2.0.0\n- **Created**: October 29, 2025\n- **Last Updated**: October 29, 2025\n- **Tested With**: Claude 3.5 Sonnet, Python 3.11, Terraform 1.0+\n\n---"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nExpected Outcomes\n\n\nAfter using this prompt, you should have:\n\n1. ✅ **Functional Project**\n\n   - Interactive map working locally\n   - All 50 states with complete data\n   - Professional UI with animations\n\n2. ✅ **AWS Infrastructure**\n\n   - Terraform files ready to deploy\n   - GitHub Actions workflow configured\n   - Estimated cost: $0.00-$0.50/month\n\n3. ✅ **Complete Documentation**\n\n   - README with instructions\n   - Deployment guides\n   - Cost analysis\n   - Changelog\n\n4. ✅ **Production Ready**\n   - No linter errors\n   - Cross-browser compatible\n   - Mobile responsive\n   - Proper error handling\n\n---"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nTroubleshooting\n\n\nIf the AI generates incorrect code:\n\n1. **Re-iterate Requirements**:\n\n   ```\n   The map needs to use Plotly, not matplotlib.\n   Please regenerate using plotly.graph_objects.Choroplethmapbox\n   ```\n\n2. **Request Specific Fixes**:\n\n   ```\n   The statistics panel is not showing. The issue is that it should be\n   an HTML div element, not a Plotly annotation. Please fix.\n   ```\n\n3. **Ask for Explanations**:\n   ```\n   Why did you choose this approach for state centering?\n   Can you explain the zoom level calculation?\n   ```\n\n---"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nMaintenance\n\n\nTo keep this prompt updated:\n\n1. **After Major Changes**: Update the specifications\n2. **New Features**: Add to \"Customization Options\"\n3. **Version Bumps**: Update version information\n4. **Lessons Learned**: Add to \"Common Mistakes to Avoid\"\n\n---"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nLicense\n\n\nThis prompt is part of the US Law Severity Map project and is licensed under MIT.\nFeel free to modify and use for your own projects.\n\n---\n\n**Repository**: https://github.com/raolivei/us-law-severity-map  \n**Contact**: Open an issue on GitHub for questions or improvements"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nChangelog\n\n\nAll notable changes to this project will be documented in this file."
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nAdded\n\n- Kubernetes deployment manifests (deploy.yaml, service.yaml, ingress.yaml, namespace.yaml)\n- Dockerfile for containerized deployment\n- Project conventions documentation (.cursorrules)"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nFixed\n\n- Major UX issues identified in user testing\n- React app errors and functionality improvements\n- Added local US states GeoJSON to avoid 403 errors"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nChanged\n\n- Removed Tailwind @apply directives - use pure CSS\n- Updated PROMPT.md with project documentation"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nAdded - AWS Deployment & Infrastructure\n\n\n- **AWS Infrastructure**: Complete S3 + CloudFront deployment with Terraform\n- **GitHub Actions Workflows**:\n  - `terraform-pr-plan.yml` - Automatic plan on pull requests\n  - `terraform-pr-apply.yml` - Manual apply with full control\n  - `deploy-to-s3.yml` - Website deployment automation\n  - `terraform-destroy.yml` - Safe infrastructure teardown\n- **Branch Protection**: Requires successful Terraform Apply before merge\n- **State Management**: S3 backend with DynamoDB locking\n- **Documentation**:\n  - Complete workflow guides and comparisons\n  - AWS cost analysis (~$1-5/month)\n  - Step-by-step deployment instructions\n  - Branch protection setup script"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nChanged\n\n\n- Consolidated workflows: Removed duplicate/unsafe workflows (7 → 4)\n- Simplified documentation: 3 separate docs → 2 comprehensive guides\n- Updated README with complete AWS deployment section"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nSecurity\n\n\n- Manual apply workflow prevents accidental infrastructure changes\n- Branch protection blocks merge without successful apply\n- Complete audit trail of all infrastructure changes\n- Terraform state locking prevents concurrent modifications"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nAdded - Interactive Visualization\n\n\n- Interactive click-to-zoom functionality for all 50 states\n- Professional statistics panel with comprehensive data overlay\n- Crime statistics: murder rates, gun deaths, traffic fatalities (per 100k)\n- Population and incarceration rate data for each state\n- Plotly-based interactive visualization with smooth animations\n- US average comparisons for crime statistics\n- Close button and double-click reset functionality\n- Standalone HTML export with offline functionality"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nChanged\n\n\n- Migrated from matplotlib to Plotly for advanced interactivity\n- Hover now shows only state names; detailed stats appear on click\n- Converted all text from Portuguese to English\n- Improved zoom centering with state-specific coordinates\n- Enhanced color gradient and visual design"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nFixed\n\n\n- JSON parsing errors in JavaScript\n- Event handling for click interactions\n- Map centering when zooming to states"
+    },
+    {
+      "question": "Tell me about US Law Severity Map ",
+      "answer": "US Law Severity Map :\n\nAdded\n\n\n- Initial release with static choropleth map\n- Law severity scoring system (0-100 scale)\n- Death penalty status for all 50 states\n- Automatic US Census Bureau shapefile download\n- Basic matplotlib visualization\n- Documentation and README\n\n---\n\n**Current Version**: 2.0.0  \n**Repository**: https://github.com/raolivei/us-law-severity-map"
+    },
+    {
+      "question": "Give me an overview of US Law Severity Map",
+      "answer": "# 🇺🇸 US Law Severity & Crime Statistics Map\n\nAn advanced, interactive data visualization project that generates a comprehensive choropleth map of the United States showing law severity scores alongside detailed crime statistics for all 50 states. Click any state to zoom in and view detailed statistics in a dynamic panel.\n\n![US Law Severity Map](screenshot.png)\n_Interactive map with click-to-zoom functionality and comprehensive state statistics_\n\n## ✨ Features\n\n### 🗺️ **Advanced Interactive Map**"
+    }
+  ]
+}

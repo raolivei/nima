@@ -1,0 +1,37 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: populate-nima-data
+  namespace: nima
+spec:
+  template:
+    spec:
+      containers:
+        - name: populate
+          image: busybox:latest
+          command:
+            - sh
+            - -c
+            - |
+              echo "Creating directories..."
+              mkdir -p /data/experiments/nima_technical
+              mkdir -p /data/processed/technical_example
+
+              echo "Waiting for files to be copied..."
+              # This job will be used with kubectl cp to copy files
+              # Keep container running so we can exec into it
+              sleep 3600
+          volumeMounts:
+            - name: model-data
+              mountPath: /data/experiments
+            - name: tokenizer-data
+              mountPath: /data/processed
+      volumes:
+        - name: model-data
+          persistentVolumeClaim:
+            claimName: nima-model-pvc
+        - name: tokenizer-data
+          persistentVolumeClaim:
+            claimName: nima-tokenizer-pvc
+      restartPolicy: Never
