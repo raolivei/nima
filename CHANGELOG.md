@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.4.0] - 2025-11-14
 
 ### Added
+
 - React frontend application with Vite build system
 - Dark/light mode toggle with persistent theme storage
 - Elegant, modern, arty robot aesthetic design
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Smooth animations and transitions throughout
 
 ### Changed
+
 - Complete UI redesign with minimal monochrome aesthetic
 - Updated ingress configuration to use `nima.eldertree.local` domain
 - Improved alignment and borders for all screen sizes
@@ -25,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sharp, angular design language throughout
 
 ### Fixed
+
 - Responsive layout issues on mobile devices
 - Border and alignment inconsistencies across screen sizes
 - Container padding and spacing optimizations
@@ -32,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.1] - 2025-01-XX
 
 ### Added
+
 - Dockerfile for containerized deployment
 - FastAPI application (api/main.py) for serving the model
 - Kubernetes deployment manifests:
