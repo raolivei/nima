@@ -5,6 +5,30 @@ All notable changes to the NIMA LLM project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2025-11-14
+
+### Added
+- React frontend application with Vite build system
+- Dark/light mode toggle with persistent theme storage
+- Elegant, modern, arty robot aesthetic design
+- Geometric robot logo with animated pulsing eyes
+- Comprehensive responsive design for mobile, tablet, and desktop
+- API URL configuration input
+- Real-time status messages and error handling
+- Smooth animations and transitions throughout
+
+### Changed
+- Complete UI redesign with minimal monochrome aesthetic
+- Updated ingress configuration to use `nima.eldertree.local` domain
+- Improved alignment and borders for all screen sizes
+- Enhanced typography with generous letter spacing
+- Sharp, angular design language throughout
+
+### Fixed
+- Responsive layout issues on mobile devices
+- Border and alignment inconsistencies across screen sizes
+- Container padding and spacing optimizations
+
 ## [0.3.1] - 2025-01-XX
 
 ### Added
