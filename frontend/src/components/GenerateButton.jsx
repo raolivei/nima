@@ -8,17 +8,13 @@ function GenerateButton({ onClick, isLoading, theme }) {
       {isLoading ? (
         <>
           <span className="loading"></span>
-          Generating...
+          Generating
         </>
       ) : (
-        <>
-          <span className="btn-icon">⚡</span>
-          Generate Text
-        </>
+        <>Generate</>
       )}
     </button>
-  )
+  );
 }
 
-export default GenerateButton
-
+export default GenerateButton;
