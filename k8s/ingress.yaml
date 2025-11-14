@@ -14,10 +14,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - nima.local
+        - nima.eldertree.local
       secretName: nima-tls
   rules:
-    - host: nima.local
+    - host: nima.eldertree.local
       http:
         paths:
           - path: /
