@@ -8,7 +8,7 @@ metadata:
     app: nima
     component: api
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: nima
@@ -19,9 +19,11 @@ spec:
         app: nima
         component: api
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
         - name: api
-          image: ghcr.io/raolivei/nima-api:v1.0.0
+          image: ghcr.io/raolivei/nima-api:v0.3.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
@@ -33,11 +35,11 @@ spec:
               value: "/app/data/processed/technical_example/tokenizer_bpe.json"
           resources:
             requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
               memory: "512Mi"
               cpu: "250m"
-            limits:
-              memory: "1Gi"
-              cpu: "500m"
           livenessProbe:
             httpGet:
               path: /health
@@ -62,4 +64,3 @@ spec:
         - name: tokenizer-data
           persistentVolumeClaim:
             claimName: nima-tokenizer-pvc
-

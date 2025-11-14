@@ -1,9 +1,11 @@
 # Nima - Cursor Rules
 
 ## Project Overview
+
 Educational project for learning AI by building language models from scratch using PyTorch. Beginner-friendly transformer implementation.
 
 ## Project Structure
+
 ```
 nima/
 ├── src/                    # Core AI model code
@@ -20,6 +22,7 @@ nima/
 ## Code Conventions
 
 ### Python Style
+
 - Follow PEP 8
 - Use type hints for clarity
 - Docstrings for functions/classes
@@ -27,6 +30,7 @@ nima/
 - Comment complex math/ML concepts
 
 ### File Organization
+
 - `src/models/` - Core transformer architecture
 - `src/training/` - Training loops and utilities
 - `src/inference/` - Text generation logic
@@ -34,29 +38,35 @@ nima/
 - `configs/` - YAML configs for different training runs
 
 ### Git Workflow
+
 - Use conventional commits: `feat:`, `fix:`, `docs:`, `chore:`
 - Feature branches: `feature/<name>`
 - Keep experiments in `experiments/` (gitignored)
+- **Version Consistency**: Git tag versions must match Docker image tag versions. When creating a release, ensure the git tag (e.g., `v1.2.3`) matches the Docker image tag used in deployment manifests
 
 ## Common Tasks
 
 ### Training a Model
+
 1. Prepare data in `data/raw/` or `data/processed/`
 2. Create/update config in `configs/`
 3. Run: `python scripts/train.py --config configs/base_model.yaml`
 4. Monitor with TensorBoard: `tensorboard --logdir experiments/logs`
 
 ### Testing Inference
+
 1. Use trained checkpoint: `python scripts/ask_nima.py --checkpoint <path> --prompt "text"`
 2. Checkpoint location: `experiments/<experiment_name>/checkpoint_best.pt`
 
 ### Adding New Dataset
+
 1. Add raw data to `data/raw/`
 2. Create processing script in `src/data/`
 3. Process: `python scripts/prepare_data.py`
 4. Update config to point to processed data
 
 ### Modifying Architecture
+
 1. Edit files in `src/models/`
 2. Update config if needed
 3. Test with small dataset first
@@ -65,11 +75,13 @@ nima/
 ## Development Setup
 
 ### Installation
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### Training Example
+
 ```bash
 # Base model on Shakespeare
 python scripts/train.py --config configs/base_model.yaml
@@ -79,6 +91,7 @@ python scripts/train_technical.py --config configs/technical_training.yaml
 ```
 
 ### Monitoring
+
 ```bash
 tensorboard --logdir experiments/logs
 # Open http://localhost:6006
@@ -87,6 +100,7 @@ tensorboard --logdir experiments/logs
 ## Key Concepts
 
 ### Transformer Architecture
+
 - Attention mechanism
 - Positional encoding
 - Multi-head attention
@@ -94,6 +108,7 @@ tensorboard --logdir experiments/logs
 - Layer normalization
 
 ### Training Process
+
 - Loss function (cross-entropy)
 - Optimizer (Adam)
 - Learning rate scheduling
@@ -101,11 +116,13 @@ tensorboard --logdir experiments/logs
 - Checkpointing
 
 ### Evaluation Metrics
+
 - Loss (lower is better)
 - Perplexity (lower is better)
 - Generated text quality
 
 ## Important Notes
+
 - **Educational focus** - Code should be readable and well-commented
 - **Small scale** - Designed for learning, not production
 - **Experiments** - Keep in `experiments/` directory (gitignored)
@@ -113,13 +130,14 @@ tensorboard --logdir experiments/logs
 - **TensorBoard** - Use for monitoring training progress
 
 ## Documentation
+
 - `README.md` - Quick start and overview
 - `docs/training.md` - Training guide
 - `docs/architecture.md` - Model architecture
 - `docs/getting_started.md` - Beginner guide
 
 ## Learning Path
+
 1. **Beginner**: Run Shakespeare example, watch TensorBoard
 2. **Intermediate**: Train on own data, experiment with configs
 3. **Advanced**: Modify architecture, implement new features
-
