@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nima
+  namespace: nima
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  labels:
+    app: nima
+spec:
+  tls:
+  - hosts:
+    - nima.local
+    secretName: nima-tls
+  rules:
+  - host: nima.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nima-api
+            port:
+              number: 8000
+
