@@ -23,8 +23,8 @@ spec:
         - name: ghcr-secret
       containers:
         - name: api
-          image: ghcr.io/raolivei/nima-api:v0.3.1
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/raolivei/nima-api:v0.3.2
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
               name: http

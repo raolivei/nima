@@ -11,7 +11,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # Default tag
-TAG="${1:-v0.3.1}"
+TAG="${1:-v0.3.2}"
 IMAGE_NAME="ghcr.io/raolivei/nima-api"
 
 echo -e "${GREEN}🐳 Building and pushing nima-api Docker image${NC}"
