@@ -35,4 +35,7 @@ spec:
           persistentVolumeClaim:
             claimName: nima-tokenizer-pvc
       restartPolicy: Never
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main

@@ -2,10 +2,13 @@
 torch>=2.0.0
 numpy>=1.24.0
 
+<<<<<<< HEAD
 # API
 fastapi>=0.104.0
 uvicorn[standard]>=0.24.0
 
+=======
+>>>>>>> origin/main
 # NLP and data processing
 transformers>=4.30.0
 datasets>=2.12.0

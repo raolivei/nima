@@ -20,13 +20,18 @@ spec:
     - host: nima.eldertree.local
       http:
         paths:
+<<<<<<< HEAD
           - path: /api
+=======
+          - path: /
+>>>>>>> origin/main
             pathType: Prefix
             backend:
               service:
                 name: nima-api
                 port:
                   number: 8000
+<<<<<<< HEAD
           - path: /
             pathType: Prefix
             backend:
@@ -34,3 +39,5 @@ spec:
                 name: nima-frontend
                 port:
                   number: 3000
+=======
+>>>>>>> origin/main
