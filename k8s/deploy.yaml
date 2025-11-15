@@ -8,11 +8,7 @@ metadata:
     app: nima
     component: api
 spec:
-<<<<<<< HEAD
-  replicas: 0  # Disabled - nima not needed at the moment
-=======
   replicas: 1
->>>>>>> origin/main
   selector:
     matchLabels:
       app: nima
