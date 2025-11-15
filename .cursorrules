@@ -20,6 +20,15 @@ Educational project for learning AI by building language models from scratch usi
 
 **CLUSTER**: Deployed on the **`eldertree`** Raspberry Pi k3s cluster (when enabled).
 
+## Security Requirements
+
+### ALWAYS USE HTTPS
+
+- ✅ **Production**: Use HTTPS for all services
+- ✅ **Development**: `localhost` or HTTPS tunnels
+- ✅ **Kubernetes Ingress**: TLS certificates
+- ❌ **NEVER**: HTTP in production
+
 ## Project Structure
 
 ```
