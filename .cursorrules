@@ -72,6 +72,24 @@ nima/
 - **Image Changes**: Any changes to Docker images (Dockerfile, base images, image tags, etc.) must always update the CHANGELOG.md file
 - **Never run git commands at workspace root**: Always ensure you are in the project directory (`nima/`) before running any git commands. Never run git commands at `/Users/roliveira/WORKSPACE/raolivei`
 
+**CHANGELOG Requirements:**
+
+**ALWAYS update CHANGELOG.md when:**
+
+- ✅ Adding new features (user-facing or internal)
+- ✅ Fixing bugs or issues
+- ✅ Changing behavior, UI, or UX
+- ✅ Modifying Docker images, Dockerfiles, or deployment configs
+- ✅ Making breaking changes or deprecations
+- ✅ Updating dependencies that affect functionality
+
+**Format:** Follow [Keep a Changelog](https://keepachangelog.com/) format:
+
+- Version header: `## [X.Y.Z] - YYYY-MM-DD`
+- Categories: `Added`, `Changed`, `Fixed`, `Removed`, `Deprecated`, `Security`
+- Each entry starts with a dash and describes the change clearly
+- Link related PRs/issues when applicable
+
 ### Docker Images & GitHub Container Registry (GHCR)
 
 - **Image Location**: `ghcr.io/raolivei/nima-api:<tag>`
