@@ -85,4 +85,3 @@ jobs:
         run: |
           echo "Image tags:"
           echo "${{ steps.meta.outputs.tags }}" | tr ' ' '\n'
-
