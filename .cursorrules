@@ -1,5 +1,19 @@
 # Nima - Cursor Rules
 
+## Workspace Configuration
+
+**IMPORTANT**: This project is part of the `raolivei` workspace. Workspace-level configuration is managed in the `workspace-config` repository.
+
+- **Port Assignments**: See `../workspace-config/ports/.env.ports` for assigned ports
+  - Frontend: Port `3002` (assigned to avoid conflicts)
+  - API: Port `8002` (assigned to avoid conflicts)
+  - PostgreSQL: Port `5434`, Redis: Port `6381`
+- **Workspace Conventions**: See `../workspace-config/docs/PROJECT_CONVENTIONS.md`
+- **Port Conflict Checker**: Run `../workspace-config/scripts/check-ports.sh` before starting services
+- **Workspace Scripts**: Available in `../workspace-config/scripts/`
+
+When starting services locally, always use the assigned ports from `workspace-config` to prevent conflicts with other projects.
+
 ## Project Overview
 
 Educational project for learning AI by building language models from scratch using PyTorch. Beginner-friendly transformer implementation.
@@ -89,13 +103,43 @@ nima/
 
 ## Development Setup
 
-### Installation
+### Recommended: Docker Compose (Primary Method)
 
 ```bash
-pip install -r requirements.txt
+# Load port assignments
+source ../workspace-config/ports/.env.ports
+
+# Start API service with hot reload
+docker-compose up api
+
+# Or start all services (API + Frontend + DB)
+docker-compose up
 ```
 
-### Training Example
+**Access:**
+- Frontend: http://localhost:3002 (if enabled)
+- API: http://localhost:8002
+- API Docs: http://localhost:8002/docs
+
+**Benefits:**
+- Consistent environment (matches production)
+- Hot reload enabled via volume mounts
+- No local Python version conflicts
+- Single command to start everything
+
+See `../workspace-config/docs/DOCKER_COMPOSE_GUIDE.md` for complete guide.
+
+### Alternative: Local Development (Fallback)
+
+```bash
+# Installation
+pip install -r requirements.txt
+
+# Start API
+python -m uvicorn api.main:app --reload --host 0.0.0.0 --port 8002
+```
+
+### Training (Local Only)
 
 ```bash
 # Base model on Shakespeare
@@ -103,11 +147,8 @@ python scripts/train.py --config configs/base_model.yaml
 
 # Technical content
 python scripts/train_technical.py --config configs/technical_training.yaml
-```
 
-### Monitoring
-
-```bash
+# Monitoring
 tensorboard --logdir experiments/logs
 # Open http://localhost:6006
 ```

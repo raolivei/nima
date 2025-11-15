@@ -41,13 +41,47 @@ A beginner-friendly project for understanding how AI text generation works. Buil
 
 ## 🚀 Quick Start
 
-### Step 1: Install Requirements
+### Recommended: Docker Compose (Primary Method)
+
+```bash
+# Load port assignments from workspace-config
+source ../workspace-config/ports/.env.ports
+
+# Start API service with hot reload
+docker-compose up api
+
+# Or start all services (API + Frontend + DB)
+docker-compose up
+```
+
+**Access:**
+- Frontend: http://localhost:3002 (if enabled)
+- API: http://localhost:8002
+- API Docs: http://localhost:8002/docs
+
+**Benefits:**
+- Consistent environment (matches production)
+- Hot reload enabled via volume mounts
+- No local Python version conflicts
+- Single command to start everything
+
+See `../workspace-config/docs/DOCKER_COMPOSE_GUIDE.md` for complete guide.
+
+### Alternative: Local Development (Fallback)
+
+#### Step 1: Install Requirements
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 2: Try Training on Shakespeare
+#### Step 2: Start API
+
+```bash
+python -m uvicorn api.main:app --reload --host 0.0.0.0 --port 8002
+```
+
+#### Step 3: Try Training on Shakespeare
 
 ```bash
 # Train a small model on Shakespeare text
@@ -57,7 +91,7 @@ python scripts/train.py --config configs/base_model.yaml
 tensorboard --logdir experiments/logs
 ```
 
-### Step 3: Chat with Your Model
+#### Step 4: Chat with Your Model
 
 ```bash
 # Test your trained model
@@ -66,7 +100,7 @@ python scripts/ask_nima.py \
   --prompt "To be or not to be"
 ```
 
-### Step 4: Train on Your Own Text
+#### Step 5: Train on Your Own Text
 
 ```bash
 # Train on technical documentation
