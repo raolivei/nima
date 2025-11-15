@@ -5,6 +5,7 @@ This document summarizes the implementation of the Nima chat frontend and applic
 ## Overview
 
 Nima has been enhanced to:
+
 1. Understand all user applications (canopy, swimTO, us-law-severity-map)
 2. Provide a modern chat interface similar to ChatGPT/Claude/Grok
 3. Support conversation history and streaming responses
@@ -14,6 +15,7 @@ Nima has been enhanced to:
 ### ✅ Phase 1: Data Collection and Training
 
 **Completed:**
+
 - ✅ Created `scripts/prepare_applications_data.py` - Collects documentation from all applications
 - ✅ Created `scripts/train_applications.py` - Training script for applications model
 - ✅ Created `configs/applications_training.yaml` - Training configuration
@@ -23,10 +25,12 @@ Nima has been enhanced to:
   - US Law Severity Map: 74 pairs
 
 **Data Location:**
+
 - Raw data: `data/raw/applications/`
 - Training data: `data/processed/applications/` (to be generated)
 
 **Next Steps:**
+
 1. Run `python3 scripts/prepare_technical_data.py` to process collected data
 2. Run `python3 scripts/train_applications.py` to train the model
 3. Update API to use applications model checkpoint
@@ -34,6 +38,7 @@ Nima has been enhanced to:
 ### ✅ Phase 2: API Enhancements
 
 **Completed:**
+
 - ✅ Added `/v1/chat` endpoint - Chat with conversation history
 - ✅ Added `/v1/chat/stream` endpoint - Streaming chat (SSE)
 - ✅ Added `/v1/conversations/{id}` endpoints - Conversation management
@@ -42,17 +47,20 @@ Nima has been enhanced to:
 - ✅ Added system prompt with application context
 
 **API Endpoints:**
+
 - `POST /v1/chat` - Send chat message
 - `POST /v1/chat/stream` - Stream chat response
 - `GET /v1/conversations/{id}` - Get conversation history
 - `DELETE /v1/conversations/{id}` - Delete conversation
 
 **Files Modified:**
+
 - `api/main.py` - Enhanced with chat endpoints
 
 ### ✅ Phase 3: Frontend Chat Interface
 
 **Completed:**
+
 - ✅ Created Next.js frontend in `frontend-chat/`
 - ✅ Built chat components:
   - `ChatInterface.tsx` - Main container
@@ -69,6 +77,7 @@ Nima has been enhanced to:
   - Keyboard shortcuts
 
 **Frontend Structure:**
+
 ```
 frontend-chat/
 ├── pages/
@@ -91,12 +100,14 @@ frontend-chat/
 ### ✅ Phase 4: Deployment Configuration
 
 **Completed:**
+
 - ✅ Created `frontend-chat/Dockerfile` - Frontend container
 - ✅ Created `k8s/deploy-frontend.yaml` - Frontend Kubernetes deployment
 - ✅ Updated `k8s/ingress.yaml` - Routes `/api` to API, `/` to frontend
 - ✅ Updated `requirements.txt` - Added FastAPI and uvicorn
 
 **Deployment:**
+
 - Frontend: `nima-frontend` service on port 3000
 - API: `nima-api` service on port 8000
 - Ingress: Routes frontend and API appropriately
@@ -106,12 +117,14 @@ frontend-chat/
 ### Development
 
 **Backend API:**
+
 ```bash
 cd nima
 python3 -m uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 **Frontend:**
+
 ```bash
 cd frontend-chat
 npm install
@@ -123,11 +136,13 @@ Open http://localhost:3000
 ### Training the Applications Model
 
 1. **Collect data** (already done):
+
 ```bash
 python3 scripts/prepare_applications_data.py
 ```
 
 2. **Prepare training dataset**:
+
 ```bash
 python3 scripts/prepare_technical_data.py \
   --output-dir data/processed/applications \
@@ -136,24 +151,28 @@ python3 scripts/prepare_technical_data.py \
 ```
 
 3. **Train model**:
+
 ```bash
 python3 scripts/train_applications.py --config configs/applications_training.yaml
 ```
 
 4. **Update API to use applications model**:
-Set environment variables:
+   Set environment variables:
+
 - `NIMA_CHECKPOINT_PATH=/app/experiments/nima_applications/checkpoint_best.pt`
 - `NIMA_TOKENIZER_PATH=/app/data/processed/applications/tokenizer_bpe.json`
 
 ### Production Deployment
 
 1. **Build frontend image**:
+
 ```bash
 cd frontend-chat
 docker build -t nima-frontend:latest .
 ```
 
 2. **Deploy to Kubernetes**:
+
 ```bash
 kubectl apply -f k8s/deploy-frontend.yaml
 kubectl apply -f k8s/ingress.yaml
@@ -162,6 +181,7 @@ kubectl apply -f k8s/ingress.yaml
 ## Features
 
 ### Chat Interface
+
 - 💬 Real-time chat with streaming support
 - 📝 Markdown rendering for code blocks
 - 💾 Conversation persistence
@@ -170,6 +190,7 @@ kubectl apply -f k8s/ingress.yaml
 - ⌨️ Keyboard shortcuts (Enter to send, Shift+Enter for newline)
 
 ### API Features
+
 - Conversation history management
 - Streaming responses (SSE)
 - System prompts for application context
@@ -186,6 +207,7 @@ kubectl apply -f k8s/ingress.yaml
 ## Files Created/Modified
 
 ### New Files
+
 - `scripts/prepare_applications_data.py`
 - `scripts/train_applications.py`
 - `configs/applications_training.yaml`
@@ -194,6 +216,7 @@ kubectl apply -f k8s/ingress.yaml
 - `CHAT_IMPLEMENTATION.md` (this file)
 
 ### Modified Files
+
 - `api/main.py` - Added chat endpoints
 - `requirements.txt` - Added FastAPI dependencies
 - `k8s/ingress.yaml` - Added frontend routing

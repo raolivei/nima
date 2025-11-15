@@ -35,3 +35,4 @@ spec:
           persistentVolumeClaim:
             claimName: nima-tokenizer-pvc
       restartPolicy: Never
+

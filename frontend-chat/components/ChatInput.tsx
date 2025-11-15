@@ -1,38 +1,38 @@
-import { useState, KeyboardEvent, useRef, useEffect } from 'react'
-import { Send } from 'lucide-react'
+import { useState, KeyboardEvent, useRef, useEffect } from "react";
+import { Send } from "lucide-react";
 
 interface ChatInputProps {
-  onSend: (message: string) => void
-  isLoading: boolean
+  onSend: (message: string) => void;
+  isLoading: boolean;
 }
 
 export default function ChatInput({ onSend, isLoading }: ChatInputProps) {
-  const [input, setInput] = useState('')
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [input, setInput] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto'
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  }, [input])
+  }, [input]);
 
   const handleSend = () => {
     if (input.trim() && !isLoading) {
-      onSend(input.trim())
-      setInput('')
+      onSend(input.trim());
+      setInput("");
       if (textareaRef.current) {
-        textareaRef.current.style.height = 'auto'
+        textareaRef.current.style.height = "auto";
       }
     }
-  }
+  };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSend()
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
     }
-  }
+  };
 
   return (
     <div className="border-t border-gray-200 dark:border-gray-800 p-4">
@@ -66,6 +66,6 @@ export default function ChatInput({ onSend, isLoading }: ChatInputProps) {
         Press Enter to send, Shift+Enter for new line
       </p>
     </div>
-  )
+  );
 }
 

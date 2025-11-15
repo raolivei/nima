@@ -1,7 +1,7 @@
-import { Trash2 } from 'lucide-react'
+import { Trash2 } from "lucide-react";
 
 interface HeaderProps {
-  onClear: () => void
+  onClear: () => void;
 }
 
 export default function Header({ onClear }: HeaderProps) {
@@ -23,6 +23,6 @@ export default function Header({ onClear }: HeaderProps) {
         <Trash2 size={20} />
       </button>
     </header>
-  )
+  );
 }
 

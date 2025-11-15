@@ -1,18 +1,18 @@
-import { ChatMessage } from '@/utils/api'
-import MessageBubble from './MessageBubble'
-import { useEffect, useRef } from 'react'
+import { ChatMessage } from "@/utils/api";
+import MessageBubble from "./MessageBubble";
+import { useEffect, useRef } from "react";
 
 interface MessageListProps {
-  messages: ChatMessage[]
-  isLoading: boolean
+  messages: ChatMessage[];
+  isLoading: boolean;
 }
 
 export default function MessageList({ messages, isLoading }: MessageListProps) {
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, isLoading])
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading]);
 
   if (messages.length === 0) {
     return (
@@ -22,11 +22,12 @@ export default function MessageList({ messages, isLoading }: MessageListProps) {
             Welcome to Nima Chat
           </h2>
           <p className="text-gray-600 dark:text-gray-400">
-            Ask me anything about your applications: Canopy, SwimTO, or US Law Severity Map.
+            Ask me anything about your applications: Canopy, SwimTO, or US Law
+            Severity Map.
           </p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -42,9 +43,18 @@ export default function MessageList({ messages, isLoading }: MessageListProps) {
           <div className="flex-1">
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
               <div className="flex space-x-1">
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div
+                  className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "0ms" }}
+                />
+                <div
+                  className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "150ms" }}
+                />
+                <div
+                  className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "300ms" }}
+                />
               </div>
             </div>
           </div>
@@ -52,6 +62,6 @@ export default function MessageList({ messages, isLoading }: MessageListProps) {
       )}
       <div ref={messagesEndRef} />
     </div>
-  )
+  );
 }
 

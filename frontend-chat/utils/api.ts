@@ -1,39 +1,40 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 
-  (typeof window !== 'undefined' ? '/api' : 'http://localhost:8000')
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  (typeof window !== "undefined" ? "/api" : "http://localhost:8000");
 
 export interface ChatMessage {
-  role: 'user' | 'assistant'
-  content: string
+  role: "user" | "assistant";
+  content: string;
 }
 
 export interface ChatRequest {
-  messages: ChatMessage[]
-  conversation_id?: string
-  max_length?: number
-  temperature?: number
-  top_k?: number
-  stream?: boolean
+  messages: ChatMessage[];
+  conversation_id?: string;
+  max_length?: number;
+  temperature?: number;
+  top_k?: number;
+  stream?: boolean;
 }
 
 export interface ChatResponse {
-  response: string
-  messages: ChatMessage[]
-  conversation_id: string
+  response: string;
+  messages: ChatMessage[];
+  conversation_id: string;
 }
 
 export async function sendChatMessage(
   messages: ChatMessage[],
   conversationId?: string,
   options?: {
-    max_length?: number
-    temperature?: number
-    top_k?: number
+    max_length?: number;
+    temperature?: number;
+    top_k?: number;
   }
 ): Promise<ChatResponse> {
   const response = await fetch(`${API_URL}/v1/chat`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       messages,
@@ -43,28 +44,28 @@ export async function sendChatMessage(
       top_k: options?.top_k || 50,
       stream: false,
     }),
-  })
+  });
 
   if (!response.ok) {
-    throw new Error(`API error: ${response.statusText}`)
+    throw new Error(`API error: ${response.statusText}`);
   }
 
-  return response.json()
+  return response.json();
 }
 
 export async function* streamChatMessage(
   messages: ChatMessage[],
   conversationId?: string,
   options?: {
-    max_length?: number
-    temperature?: number
-    top_k?: number
+    max_length?: number;
+    temperature?: number;
+    top_k?: number;
   }
 ): AsyncGenerator<string, void, unknown> {
   const response = await fetch(`${API_URL}/v1/chat/stream`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       messages,
@@ -74,39 +75,39 @@ export async function* streamChatMessage(
       top_k: options?.top_k || 50,
       stream: true,
     }),
-  })
+  });
 
   if (!response.ok) {
-    throw new Error(`API error: ${response.statusText}`)
+    throw new Error(`API error: ${response.statusText}`);
   }
 
-  const reader = response.body?.getReader()
-  const decoder = new TextDecoder()
+  const reader = response.body?.getReader();
+  const decoder = new TextDecoder();
 
   if (!reader) {
-    throw new Error('No response body')
+    throw new Error("No response body");
   }
 
-  let buffer = ''
+  let buffer = "";
 
   while (true) {
-    const { done, value } = await reader.read()
-    
-    if (done) break
+    const { done, value } = await reader.read();
 
-    buffer += decoder.decode(value, { stream: true })
-    const lines = buffer.split('\n\n')
-    buffer = lines.pop() || ''
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n\n");
+    buffer = lines.pop() || "";
 
     for (const line of lines) {
-      if (line.startsWith('data: ')) {
+      if (line.startsWith("data: ")) {
         try {
-          const data = JSON.parse(line.slice(6))
+          const data = JSON.parse(line.slice(6));
           if (data.content) {
-            yield data.content
+            yield data.content;
           }
           if (data.done) {
-            return
+            return;
           }
         } catch (e) {
           // Skip invalid JSON
@@ -115,4 +116,3 @@ export async function* streamChatMessage(
     }
   }
 }
-
