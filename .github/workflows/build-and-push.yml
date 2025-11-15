@@ -19,7 +19,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: nima-api
+  IMAGE_NAME: ghcr.io/raolivei/nima-api
 
 jobs:
   build-and-push:
@@ -43,7 +43,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/raolivei/${{ env.IMAGE_NAME }}
+          images: ${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -77,3 +77,4 @@ jobs:
         run: |
           echo "Image tags:"
           echo "${{ steps.meta.outputs.tags }}" | tr ' ' '\n'
+
