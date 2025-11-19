@@ -19,6 +19,9 @@ import torch
 from models.transformer import GPTModel
 from data.tokenizer import SimpleBPETokenizer, CharTokenizer, WordTokenizer
 
+# Import memory routes
+from routes import memory as memory_routes
+
 app = FastAPI(title="Nima API", version="0.5.0")
 
 # CORS middleware for frontend
@@ -29,6 +32,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include memory routes
+app.include_router(memory_routes.router)
 
 # Global model and tokenizer
 model = None
