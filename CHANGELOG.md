@@ -5,6 +5,28 @@ All notable changes to the NIMA LLM project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2025-01-XX
+
+### Fixed
+
+- Resolved merge conflicts in `api/main.py`
+- Preserved chat functionality, CORS middleware, and streaming endpoints
+- Cleaned up conflict markers and ensured all endpoints are functional
+
+### Changed
+
+- Updated version from 1.0.0 to 0.5.0 to reflect transition phase
+- Updated API version string in `api/main.py` and root endpoint
+
+### Added
+
+- Created `IMPLEMENTATION_PLAN.md` with phased implementation strategy
+- Established baseline for AI Personality Engine development
+- Updated GitHub Actions workflow to build and push both API and frontend images (based on swimTO workflow)
+- Multi-platform Docker builds (linux/amd64, linux/arm64) for main/dev branches
+- Separate build jobs for API and frontend images
+- Image tagging with version, branch, SHA, and latest tags
+
 ## [0.4.0] - 2025-11-14
 
 ### Added

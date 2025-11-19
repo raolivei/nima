@@ -4,30 +4,23 @@ FastAPI server for Nima inference service.
 import os
 import sys
 from pathlib import Path
-<<<<<<< HEAD
 from typing import List, Optional
 from uuid import uuid4
 import json
-=======
->>>>>>> origin/main
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from fastapi import FastAPI, HTTPException
-<<<<<<< HEAD
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
-=======
->>>>>>> origin/main
 from pydantic import BaseModel
 import torch
 from models.transformer import GPTModel
 from data.tokenizer import SimpleBPETokenizer, CharTokenizer, WordTokenizer
 
-app = FastAPI(title="Nima API", version="1.0.0")
+app = FastAPI(title="Nima API", version="0.5.0")
 
-<<<<<<< HEAD
 # CORS middleware for frontend
 app.add_middleware(
     CORSMiddleware,
@@ -37,18 +30,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-=======
->>>>>>> origin/main
 # Global model and tokenizer
 model = None
 tokenizer = None
 
-<<<<<<< HEAD
 # In-memory conversation storage (use Redis in production)
 conversations: dict = {}
 
-=======
->>>>>>> origin/main
 class InferenceRequest(BaseModel):
     prompt: str
     max_length: int = 200
@@ -59,7 +47,6 @@ class InferenceResponse(BaseModel):
     response: str
     prompt: str
 
-<<<<<<< HEAD
 class ChatMessage(BaseModel):
     role: str  # "user" or "assistant"
     content: str
@@ -76,9 +63,6 @@ class ChatResponse(BaseModel):
     response: str
     messages: List[ChatMessage]
     conversation_id: str
-
-=======
->>>>>>> origin/main
 def load_model(checkpoint_path: str, tokenizer_instance):
     """Load the trained model."""
     checkpoint = torch.load(checkpoint_path, map_location='cpu', weights_only=False)
@@ -168,7 +152,6 @@ def generate_text(model_instance, tokenizer_instance, prompt: str, max_length: i
     
     return generated_text
 
-<<<<<<< HEAD
 def format_chat_prompt(messages: List[ChatMessage], system_prompt: Optional[str] = None) -> str:
     """
     Format chat messages into a single prompt for the model.
@@ -240,8 +223,6 @@ def generate_streaming(model_instance, tokenizer_instance, prompt: str, max_leng
             if pad_id is not None and next_token.item() == pad_id:
                 break
 
-=======
->>>>>>> origin/main
 @app.on_event("startup")
 async def startup_event():
     """Load model and tokenizer on startup."""
@@ -300,7 +281,6 @@ async def inference(request: InferenceRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-<<<<<<< HEAD
 @app.post("/v1/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     """Chat endpoint with conversation history."""
@@ -405,24 +385,18 @@ async def delete_conversation(conversation_id: str):
         del conversations[conversation_id]
     return {"status": "deleted"}
 
-=======
->>>>>>> origin/main
 @app.get("/")
 async def root():
     """Root endpoint."""
     return {
         "service": "Nima API",
-        "version": "1.0.0",
+        "version": "0.5.0",
         "endpoints": {
             "health": "/health",
-<<<<<<< HEAD
             "inference": "/v1/inference",
             "chat": "/v1/chat",
             "chat_stream": "/v1/chat/stream",
             "conversations": "/v1/conversations/{id}"
-=======
-            "inference": "/v1/inference"
->>>>>>> origin/main
         }
     }
 
