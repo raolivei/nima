@@ -20,7 +20,12 @@ from models.transformer import GPTModel
 from data.tokenizer import SimpleBPETokenizer, CharTokenizer, WordTokenizer
 
 # Import memory routes
-from routes import memory as memory_routes
+# Use absolute import since uvicorn loads api.main as a module
+try:
+    from api.routes import memory as memory_routes
+except ImportError:
+    # Fallback for relative import
+    from routes import memory as memory_routes
 
 app = FastAPI(title="Nima API", version="0.5.0")
 

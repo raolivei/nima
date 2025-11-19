@@ -13,12 +13,14 @@ python3 scripts/test-memory-engine.py
 ## Test with Docker Compose (Recommended)
 
 1. **Start the API**:
+
 ```bash
 source ../workspace-config/ports/.env.ports
 docker-compose up api
 ```
 
 2. **In another terminal, run API tests**:
+
 ```bash
 ./scripts/test-api-memory.sh
 ```
@@ -57,16 +59,19 @@ curl http://localhost:8002/v1/memory/profile
 ## Test with Local Python (If Dependencies Installed)
 
 1. **Install dependencies**:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 2. **Run test script**:
+
 ```bash
 python3 scripts/test-memory-engine.py
 ```
 
 3. **Start API**:
+
 ```bash
 python -m uvicorn api.main:app --reload --port 8002
 ```
@@ -76,11 +81,13 @@ python -m uvicorn api.main:app --reload --port 8002
 ## Expected Results
 
 ### Storage
+
 - ✅ Facts stored in `data/memory/facts.json`
 - ✅ Profile stored in `data/memory/profile.json`
 - ✅ Embeddings generated and stored with facts
 
 ### API Endpoints
+
 - ✅ `GET /v1/memory/facts` - Returns list of facts
 - ✅ `POST /v1/memory/facts` - Creates new fact
 - ✅ `GET /v1/memory/facts/{id}` - Returns specific fact
@@ -90,6 +97,7 @@ python -m uvicorn api.main:app --reload --port 8002
 - ✅ `PUT /v1/memory/profile` - Updates profile
 
 ### Semantic Search
+
 - ✅ Returns relevant facts based on query
 - ✅ Uses embeddings for similarity matching
 - ✅ Filters by category and confidence
@@ -97,19 +105,25 @@ python -m uvicorn api.main:app --reload --port 8002
 ## Troubleshooting
 
 ### "No module named 'pydantic'"
+
 Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### "sentence-transformers not available"
+
 Install embeddings:
+
 ```bash
 pip install sentence-transformers
 ```
 
 ### "API not running"
+
 Start the API:
+
 ```bash
 docker-compose up api
 # or
@@ -117,13 +131,14 @@ python -m uvicorn api.main:app --reload --port 8002
 ```
 
 ### "Import error: memory.models"
+
 Make sure you're running from project root and `src/` is in Python path.
 
 ## Next Steps
 
 After testing:
+
 1. ✅ Verify facts are stored correctly
 2. ✅ Test semantic search returns relevant results
 3. ✅ Integrate with chat endpoint (Phase 1 continuation)
 4. ✅ Add fact extraction from conversations
-
