@@ -27,39 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Separate build jobs for API and frontend images
 - Image tagging with version, branch, SHA, and latest tags
 
-## [1.0.0] - 2025-01-XX
-
-### Added
-
-- Comprehensive MASTER_PROMPT.md document defining Nima as AI Personality Engine
-- Complete project architecture documentation covering all 6 core modules:
-  - Core Memory Engine
-  - Long-Term Goals Engine
-  - Task Executor
-  - Personality Kernel
-  - Knowledge Packs
-  - Conversation Orchestrator
-- Zen engineer persona definition with voice, tone, and style guidelines
-- Flexible frontend options documentation (React + Vite, Next.js, Svelte, Vanilla JS)
-- Raspberry Pi safety guidelines and resource management best practices
-- Complete API documentation with endpoint specifications
-- Deployment guide with GitOps, emergency, and direct deployment methods
-- Memory schema and data model definitions
-- Development workflow and Git practices (mandatory feature branches, CHANGELOG updates)
-- Usage examples and tutorials
-- Troubleshooting guide with Pi-specific issues
-
-### Changed
-
-- Project vision updated from educational LLM to AI Personality Engine
-- Documentation structure aligned with workspace conventions (similar to swimTO and canopy master prompts)
-
-### Documentation
-
-- Created comprehensive master prompt serving as complete project reference
-- Documented all core modules, architecture, and deployment procedures
-- Added safety-first guidelines for Raspberry Pi cluster deployment
-
 ## [0.4.0] - 2025-11-14
 
 ### Added
