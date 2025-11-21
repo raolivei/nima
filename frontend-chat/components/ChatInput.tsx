@@ -69,3 +69,5 @@ export default function ChatInput({ onSend, isLoading }: ChatInputProps) {
   );
 }
 
+
+
