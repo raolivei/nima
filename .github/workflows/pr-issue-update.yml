@@ -1,0 +1,338 @@
+name: Update Issues on PR Close
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  issues: write
+  pull-requests: read
+  contents: read
+  projects: write
+
+jobs:
+  update-issues:
+    name: Update Linked Issues and Project Status
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.state == 'closed'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Detect linked issues
+        id: detect-issues
+        uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const prTitle = context.payload.pull_request.title || '';
+            const prBody = context.payload.pull_request.body || '';
+            const isMerged = context.payload.pull_request.merged;
+
+            console.log(`Processing PR #${prNumber} - Merged: ${isMerged}`);
+
+            // Keywords that link issues
+            const keywords = ['closes', 'close', 'fixes', 'fix', 'resolves', 'resolve'];
+
+            // Extract issue numbers from PR title and body using keywords
+            const text = `${prTitle} ${prBody}`.toLowerCase();
+            const keywordPattern = new RegExp(`(${keywords.join('|')})\\s*#?(\\d+)`, 'gi');
+            const keywordMatches = [...text.matchAll(keywordPattern)];
+            const keywordIssues = keywordMatches.map(m => parseInt(m[2]));
+
+            // Also get issues mentioned without keywords (GitHub automatic linking)
+            const mentionPattern = /#(\d+)/g;
+            const mentionMatches = [...text.matchAll(mentionPattern)];
+            const mentionIssues = mentionMatches.map(m => parseInt(m[1]));
+
+            // Combine and deduplicate
+            const allIssues = [...new Set([...keywordIssues, ...mentionIssues])];
+
+            console.log(`Found ${allIssues.length} linked issues: ${allIssues.join(', ')}`);
+
+            // Get additional linked issues from GitHub API
+            try {
+              const { data: pr } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber
+              });
+              
+              // GitHub API doesn't directly provide linked_issues, but we can check issue comments
+              // For now, we'll rely on the parsed issues from title/body
+            } catch (error) {
+              console.log(`Warning: Could not fetch PR details: ${error.message}`);
+            }
+
+            const result = JSON.stringify({
+              issues: allIssues,
+              isMerged: isMerged,
+              prNumber: prNumber
+            });
+            core.setOutput('result', result);
+            return result;
+
+      - name: Process issues
+        id: process-issues
+        uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            let issues, isMerged, prNumber;
+            try {
+              const parsed = JSON.parse('${{ steps.detect-issues.outputs.result }}');
+              issues = parsed.issues || [];
+              isMerged = parsed.isMerged || false;
+              prNumber = parsed.prNumber || context.payload.pull_request.number;
+            } catch (error) {
+              console.error(`Error parsing detect-issues output: ${error.message}`);
+              core.setFailed(`Failed to parse issue detection results: ${error.message}`);
+              return;
+            }
+
+            const results = {
+              updated: [],
+              reopened: [],
+              errors: []
+            };
+
+            if (issues.length === 0) {
+              console.log('No linked issues found, skipping...');
+              const result = JSON.stringify(results);
+              core.setOutput('result', result);
+              return result;
+            }
+
+            for (const issueNumber of issues) {
+              try {
+                // Get issue details
+                const { data: issue } = await github.rest.issues.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber
+                });
+                
+                if (!issue) {
+                  console.log(`Issue #${issueNumber} not found, skipping...`);
+                  continue;
+                }
+                
+                console.log(`Processing issue #${issueNumber} - State: ${issue.state}`);
+                
+                if (isMerged) {
+                  // PR was merged - update project board status to "Done"
+                  await updateProjectStatus(issueNumber, 'Done');
+                  
+                  // Add comment if issue is still open
+                  if (issue.state === 'open') {
+                    await github.rest.issues.createComment({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: issueNumber,
+                      body: `✅ This issue was resolved by PR #${prNumber} which has been merged.`
+                    });
+                  }
+                  
+                  results.updated.push(issueNumber);
+                } else {
+                  // PR was closed without merging - reopen issue if it was auto-closed
+                  if (issue.state === 'closed') {
+                    // Check if issue was recently closed (within last hour) to avoid reopening old issues
+                    const closedAt = new Date(issue.closed_at);
+                    const now = new Date();
+                    const hoursSinceClosed = (now - closedAt) / (1000 * 60 * 60);
+                    
+                    if (hoursSinceClosed < 24) { // Only reopen if closed within last 24 hours
+                      await github.rest.issues.update({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: issueNumber,
+                        state: 'open'
+                      });
+                      
+                      await github.rest.issues.createComment({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: issueNumber,
+                        body: `⚠️ This issue was reopened because PR #${prNumber} that referenced it was closed without merging.`
+                      });
+                      
+                      // Update project status back to "To Do" or "In Progress"
+                      await updateProjectStatus(issueNumber, 'To Do');
+                      
+                      results.reopened.push(issueNumber);
+                    } else {
+                      console.log(`Issue #${issueNumber} was closed ${hoursSinceClosed.toFixed(1)} hours ago, not reopening`);
+                    }
+                  }
+                }
+              } catch (error) {
+                console.error(`Error processing issue #${issueNumber}: ${error.message}`);
+                results.errors.push({ issue: issueNumber, error: error.message });
+              }
+            }
+
+            const result = JSON.stringify(results);
+            core.setOutput('result', result);
+            return result;
+
+            // Helper function to update project board status
+            async function updateProjectStatus(issueNumber, targetStatus) {
+              try {
+                // Find projects containing this issue
+                const { data: projects } = await github.graphql(`
+                  query($owner: String!, $repo: String!, $issueNumber: Int!) {
+                    repository(owner: $owner, name: $repo) {
+                      issue(number: $issueNumber) {
+                        projectItems(first: 10) {
+                          nodes {
+                            id
+                            project {
+                              id
+                              title
+                            }
+                            fieldValues(first: 20) {
+                              nodes {
+                                ... on ProjectV2ItemFieldSingleSelectValue {
+                                  field {
+                                    ... on ProjectV2FieldCommon {
+                                      id
+                                      name
+                                    }
+                                  }
+                                  name
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                `, {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issueNumber: issueNumber
+                });
+                
+                const projectItems = projects.repository?.issue?.projectItems?.nodes || [];
+                
+                if (projectItems.length === 0) {
+                  console.log(`Issue #${issueNumber} is not in any project boards`);
+                  return;
+                }
+                
+                for (const item of projectItems) {
+                  const projectId = item.project.id;
+                  const itemId = item.id;
+                  
+                  // Find Status field
+                  const statusField = item.fieldValues.nodes.find(
+                    fv => fv.field?.name === 'Status'
+                  );
+                  
+                  if (!statusField) {
+                    console.log(`Project ${item.project.title} does not have a Status field`);
+                    continue;
+                  }
+                  
+                  const statusFieldId = statusField.field.id;
+                  
+                  // Get available status options
+                  const { data: projectData } = await github.graphql(`
+                    query($projectId: ID!) {
+                      node(id: $projectId) {
+                        ... on ProjectV2 {
+                          field(name: "Status") {
+                            ... on ProjectV2SingleSelectField {
+                              id
+                              options {
+                                id
+                                name
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  `, {
+                    projectId: projectId
+                  });
+                  
+                  const statusOptions = projectData.node?.field?.options || [];
+                  const targetOption = statusOptions.find(opt => 
+                    opt.name.toLowerCase() === targetStatus.toLowerCase()
+                  );
+                  
+                  if (!targetOption) {
+                    // Try common alternatives
+                    const alternatives = ['Done', 'Complete', 'Completed', 'Closed'];
+                    const found = alternatives.find(alt => 
+                      statusOptions.some(opt => opt.name.toLowerCase() === alt.toLowerCase())
+                    );
+                    
+                    if (found) {
+                      const altOption = statusOptions.find(opt => 
+                        opt.name.toLowerCase() === found.toLowerCase()
+                      );
+                      await updateProjectField(projectId, itemId, statusFieldId, altOption.id);
+                      console.log(`Updated project ${item.project.title} status to ${altOption.name}`);
+                    } else {
+                      console.log(`Could not find status option "${targetStatus}" in project ${item.project.title}`);
+                    }
+                  } else {
+                    await updateProjectField(projectId, itemId, statusFieldId, targetOption.id);
+                    console.log(`Updated project ${item.project.title} status to ${targetStatus}`);
+                  }
+                }
+              } catch (error) {
+                console.error(`Error updating project status: ${error.message}`);
+                // Don't fail the workflow if project update fails
+              }
+            }
+
+            // Helper function to update a project field
+            async function updateProjectField(projectId, itemId, fieldId, optionId) {
+              try {
+                await github.graphql(`
+                  mutation($input: UpdateProjectV2ItemFieldValueInput!) {
+                    updateProjectV2ItemFieldValue(input: $input) {
+                      projectV2Item {
+                        id
+                      }
+                    }
+                  }
+                `, {
+                  input: {
+                    projectId: projectId,
+                    itemId: itemId,
+                    fieldId: fieldId,
+                    value: {
+                      singleSelectOptionId: optionId
+                    }
+                  }
+                });
+              } catch (error) {
+                console.error(`Error updating project field: ${error.message}`);
+                throw error;
+              }
+            }
+
+      - name: Summary
+        run: |
+          echo "## PR Issue Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "PR #${{ github.event.pull_request.number }} was ${{ github.event.pull_request.merged && 'merged' || 'closed without merging' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          RESULTS='${{ steps.process-issues.outputs.result }}'
+          if [ -n "$RESULTS" ]; then
+            echo "### Results" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
+            echo "$RESULTS" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          fi
