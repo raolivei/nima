@@ -1,0 +1,24 @@
+# Monitoring Configuration for NIMA
+# ML/AI learning and training platform
+# Dashboard: https://grafana.eldertree.local/d/nima-dashboard
+
+app:
+  name: "NIMA"
+  namespace: "nima"
+  type: gpu-worker  # ML training workload
+
+  components:
+    api:
+      service: nima-api
+      port: 8000
+      metrics: false
+
+    web:
+      service: nima-frontend
+      port: 3000
+
+  alerts:
+    cpu_threshold: 90
+    memory_threshold: 90
+    enabled: true
+    severity: warning
