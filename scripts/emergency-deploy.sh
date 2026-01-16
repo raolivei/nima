@@ -82,3 +82,6 @@ echo "💡 To check logs:"
 echo "    kubectl logs -n $NAMESPACE -l app=nima-api"
 echo "    kubectl logs -n $NAMESPACE -l app=nima-frontend"
 
+
+
+

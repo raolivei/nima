@@ -228,3 +228,6 @@ kubectl apply -f k8s/ingress.yaml
 - Conversation storage is currently in-memory (upgrade to Redis for production)
 - The model checkpoint path can be configured via environment variables
 
+
+
+

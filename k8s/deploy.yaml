@@ -33,6 +33,30 @@ spec:
               value: "/app/experiments/nima_technical/checkpoint_best.pt"
             - name: NIMA_TOKENIZER_PATH
               value: "/app/data/processed/technical_example/tokenizer_bpe.json"
+            # Memory storage directory (optional, defaults to data/memory)
+            - name: NIMA_MEMORY_DIR
+              value: "/app/data/memory"
+            # Database URL (optional, for PostgreSQL storage backend)
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: nima-secrets
+                  key: DATABASE_URL
+                  optional: true
+            # Redis URL (optional, for Redis caching)
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: nima-secrets
+                  key: REDIS_URL
+                  optional: true
+            # Secret key (optional, for future use)
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nima-secrets
+                  key: SECRET_KEY
+                  optional: true
           resources:
             requests:
               memory: "256Mi"

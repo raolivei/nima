@@ -26,6 +26,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Multi-platform Docker builds (linux/amd64, linux/arm64) for main/dev branches
 - Separate build jobs for API and frontend images
 - Image tagging with version, branch, SHA, and latest tags
+- **Secrets Management:**
+  - Created `k8s/nima-secrets-external.yaml` for Vault integration via External Secrets Operator
+  - Updated `k8s/deploy.yaml` to reference secrets via `secretKeyRef` (DATABASE_URL, REDIS_URL, SECRET_KEY)
+  - Updated `docker-compose.yml` to support environment variable-based secrets
+  - Created `docs/GITHUB_SECRETS.md` - Comprehensive guide for GitHub Actions secrets
+  - Created `docs/GITHUB_SECRETS_QUICKSTART.md` - Quick setup checklist for CI/CD secrets
 
 ## [0.4.0] - 2025-11-14
 
