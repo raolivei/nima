@@ -1,353 +1,100 @@
 # Nima - Cursor Rules
 
-## Workspace Configuration
+## Workspace
 
-**IMPORTANT**: This project is part of the `raolivei` workspace. Workspace-level configuration is managed in the `workspace-config` repository.
+See `../workspace-config/docs/PROJECT_CONVENTIONS.md` for shared conventions (git workflow, CHANGELOG, Docker/GHCR, K8s, security).
 
-- **Port Assignments**: See `../workspace-config/ports/.env.ports` for assigned ports
-  - Frontend: Port `3002` (assigned to avoid conflicts)
-  - API: Port `8002` (assigned to avoid conflicts)
-  - PostgreSQL: Port `5434`, Redis: Port `6381`
-- **Workspace Conventions**: See `../workspace-config/docs/PROJECT_CONVENTIONS.md`
-- **Port Conflict Checker**: Run `../workspace-config/scripts/check-ports.sh` before starting services
-- **Workspace Scripts**: Available in `../workspace-config/scripts/`
+**Ports** (from `../workspace-config/ports/.env.ports`):
 
-When starting services locally, always use the assigned ports from `workspace-config` to prevent conflicts with other projects.
+- Frontend: `3002`
+- API: `8002`
+- PostgreSQL: `5434`
+- Redis: `6381`
+
+## Commands
+
+```bash
+# Development (Docker Compose - recommended)
+source ../workspace-config/ports/.env.ports
+docker-compose up api              # Start API only
+docker-compose up                  # Start all services
+
+# Training (local - requires GPU/CPU)
+python scripts/train.py --config configs/base_model.yaml        # Shakespeare
+python scripts/train_technical.py --config configs/technical_training.yaml
+
+# Monitoring
+tensorboard --logdir experiments/logs   # Open http://localhost:6006
+
+# Inference
+python scripts/ask_nima.py --checkpoint experiments/nima_technical/checkpoint_best.pt --prompt "What is Kubernetes?"
+
+# Linting (run after changes)
+ruff check . && ruff format .
+```
+
+## Workflow
+
+1. Always lint/format after code changes
+2. Run tests before committing
+3. Update CHANGELOG.md for all changes
+4. Never run git commands at workspace root
 
 ## Project Overview
 
-Educational project for learning AI by building language models from scratch using PyTorch. Beginner-friendly transformer implementation.
-
-**CLUSTER**: Deployed on the **`eldertree`** Raspberry Pi k3s cluster (when enabled).
-
-## Security Requirements
-
-### ALWAYS USE HTTPS
-
-- ✅ **Production**: Use HTTPS for all services
-- ✅ **Development**: `localhost` or HTTPS tunnels
-- ✅ **Kubernetes Ingress**: TLS certificates
-- ❌ **NEVER**: HTTP in production
-
-## Project Structure
+Educational AI/ML project - build language models from scratch with PyTorch. Beginner-friendly transformer implementation.
 
 ```
 nima/
 ├── src/                    # Core AI model code
-│   ├── models/            # Neural network architecture
-│   ├── data/              # Text processing
-│   ├── training/          # Training logic
-│   └── inference/         # Text generation
-├── scripts/               # Training and inference scripts
-├── configs/               # YAML training configurations
-├── experiments/          # Trained models and logs
-└── data/                  # Training datasets
+│   ├── models/            # Transformer architecture
+│   ├── data/              # Text processing, tokenization
+│   ├── training/          # Training loops, optimization
+│   ├── inference/         # Text generation
+│   └── memory/            # RAG memory system
+├── scripts/               # User-facing scripts
+├── configs/               # YAML training configs
+├── experiments/           # Trained models (gitignored)
+├── data/                  # Training datasets
+├── api/                   # FastAPI inference API
+└── k8s/                   # Kubernetes manifests
 ```
 
-## Code Conventions
+## Code Style
 
-### Python Style
+**Python**: See `src/models/transformer.py` for architecture patterns, `src/training/trainer.py` for training loop patterns.
 
-- Follow PEP 8
-- Use type hints for clarity
-- Docstrings for functions/classes
-- Clear variable names (educational focus)
-- Comment complex math/ML concepts
-
-### File Organization
-
-- `src/models/` - Core transformer architecture
-- `src/training/` - Training loops and utilities
-- `src/inference/` - Text generation logic
-- `scripts/` - User-facing scripts (easy to run)
-- `configs/` - YAML configs for different training runs
-
-### Git Workflow
-
-- Use conventional commits: `feat:`, `fix:`, `docs:`, `chore:`
-- Feature branches: `feature/<name>`
-- **CRITICAL**: Create different branches for different work. Do not mix up work - each branch should focus on a single feature, fix, or task. Keep branches focused and separate.
-- Keep experiments in `experiments/` (gitignored)
-- **Version Consistency**: Git tag versions must match Docker image tag versions. When creating a release, ensure the git tag (e.g., `v1.2.3`) matches the Docker image tag used in deployment manifests
-- **Image Changes**: Any changes to Docker images (Dockerfile, base images, image tags, etc.) must always update the CHANGELOG.md file
-- **Never run git commands at workspace root**: Always ensure you are in the project directory (`nima/`) before running any git commands. Never run git commands at `/Users/roliveira/WORKSPACE/raolivei`
-
-**CHANGELOG Requirements:**
-
-**ALWAYS update CHANGELOG.md when:**
-
-- ✅ Adding new features (user-facing or internal)
-- ✅ Fixing bugs or issues
-- ✅ Changing behavior, UI, or UX
-- ✅ Modifying Docker images, Dockerfiles, or deployment configs
-- ✅ Making breaking changes or deprecations
-- ✅ Updating dependencies that affect functionality
-
-**Format:** Follow [Keep a Changelog](https://keepachangelog.com/) format:
-
-- Version header: `## [X.Y.Z] - YYYY-MM-DD`
-- Categories: `Added`, `Changed`, `Fixed`, `Removed`, `Deprecated`, `Security`
-- Each entry starts with a dash and describes the change clearly
-- Link related PRs/issues when applicable
-
-### Docker Images & GitHub Container Registry (GHCR)
-
-- **Image Location**: `ghcr.io/raolivei/nima-api:<tag>`
-- **Image Tagging**: GitHub Actions automatically creates multiple tags per push:
-  - Push to `main`: Creates `main`, `latest`, `sha-<commit-hash>` tags
-  - Push to `dev`: Creates `dev`, `sha-<commit-hash>` tags
-  - Push git tag (e.g., `v1.0.1`): Creates `v1.0.1`, `1.0`, `sha-<commit-hash>` tags
-- **When Images Are Pushed**: Only on pushes to `main`/`dev` branches or git tag pushes. PR builds test but don't push images.
-- **Viewing Images**: Check https://github.com/users/raolivei/packages
-- **Testing Images Locally**: Build and test Docker images locally before pushing to ensure they work correctly
-- **Deployment**: Use `latest` tag for automatic updates, or specific version tags (e.g., `v1.0.1`) for production stability
+**Educational focus**: Code should be readable and well-commented. Explain complex ML concepts.
 
 ## Common Tasks
 
 ### Training a Model
 
-1. Prepare data in `data/raw/` or `data/processed/`
+1. Prepare data in `data/raw/`
 2. Create/update config in `configs/`
-3. Run: `python scripts/train.py --config configs/base_model.yaml`
-4. Monitor with TensorBoard: `tensorboard --logdir experiments/logs`
-
-### Testing Inference
-
-1. Use trained checkpoint: `python scripts/ask_nima.py --checkpoint <path> --prompt "text"`
-2. Checkpoint location: `experiments/<experiment_name>/checkpoint_best.pt`
+3. Run training script
+4. Monitor with TensorBoard
 
 ### Adding New Dataset
 
 1. Add raw data to `data/raw/`
-2. Create processing script in `src/data/`
-3. Process: `python scripts/prepare_data.py`
+2. Create processing script
+3. Run: `python scripts/prepare_data.py`
 4. Update config to point to processed data
 
-### Modifying Architecture
+## Docker Images
 
-1. Edit files in `src/models/`
-2. Update config if needed
-3. Test with small dataset first
-4. Document changes in docstrings
+- API: `ghcr.io/raolivei/nima-api:<tag>`
 
-## Development Setup
+## Key Concepts (Educational)
 
-### Recommended: Docker Compose (Primary Method)
-
-```bash
-# Load port assignments
-source ../workspace-config/ports/.env.ports
-
-# Start API service with hot reload
-docker-compose up api
-
-# Or start all services (API + Frontend + DB)
-docker-compose up
-```
-
-**Access:**
-
-- Frontend: http://localhost:3002 (if enabled)
-- API: http://localhost:8002
-- API Docs: http://localhost:8002/docs
-
-**Benefits:**
-
-- Consistent environment (matches production)
-- Hot reload enabled via volume mounts
-- No local Python version conflicts
-- Single command to start everything
-
-See `../workspace-config/docs/DOCKER_COMPOSE_GUIDE.md` for complete guide.
-
-### Alternative: Local Development (Fallback)
-
-```bash
-# Installation
-pip install -r requirements.txt
-
-# Start API
-python -m uvicorn api.main:app --reload --host 0.0.0.0 --port 8002
-```
-
-### Training (Local Only)
-
-```bash
-# Base model on Shakespeare
-python scripts/train.py --config configs/base_model.yaml
-
-# Technical content
-python scripts/train_technical.py --config configs/technical_training.yaml
-
-# Monitoring
-tensorboard --logdir experiments/logs
-# Open http://localhost:6006
-```
-
-## Testing Locally
-
-### Pre-flight Checks
-
-```bash
-# 1. Check for port conflicts
-../workspace-config/scripts/check-ports.sh
-
-# 2. Ensure Docker is running
-docker ps
-
-# 3. Load port assignments
-source ../workspace-config/ports/.env.ports
-```
-
-### Starting Services
-
-```bash
-# Start API service only
-docker-compose up api
-
-# Start all services (API + Frontend + DB)
-docker-compose up
-
-# Start in detached mode (background)
-docker-compose up -d
-```
-
-### Verifying Services
-
-```bash
-# Check running containers
-docker-compose ps
-
-# View logs
-docker-compose logs -f [service-name]
-
-# Test API health endpoint
-curl http://localhost:8002/health
-
-# Test API docs
-curl http://localhost:8002/docs
-```
-
-### Hot Reload Verification
-
-1. Make a small code change (e.g., add a comment)
-2. Save the file
-3. Check docker-compose logs - should see reload message
-4. Test endpoint - changes should appear
-
-### Common Issues & Solutions
-
-**Port conflicts:**
-
-```bash
-# Find what's using a port
-lsof -i :<PORT>
-
-# Kill process if needed
-kill -9 <PID>
-```
-
-**Container won't start:**
-
-```bash
-# Rebuild containers
-docker-compose build --no-cache
-
-# Check logs
-docker-compose logs [service-name]
-```
-
-**Database connection issues:**
-
-```bash
-# Wait for health checks
-docker-compose ps  # Check health status
-
-# Restart services
-docker-compose restart [service-name]
-```
-
-**Hot reload not working:**
-
-- Verify volume mounts in docker-compose.yml
-- Check file permissions
-- Ensure source code directory matches volume path
-
-## Environment Variables
-
-### Required for Docker Compose
-
-Always source port assignments before running docker-compose:
-
-```bash
-# From project root
-source ../workspace-config/ports/.env.ports
-
-# Or set WORKSPACE_CONFIG variable
-export WORKSPACE_CONFIG="$HOME/WORKSPACE/raolivei/workspace-config"
-source "$WORKSPACE_CONFIG/ports/.env.ports"
-```
-
-### Project-Specific Variables
-
-See `.env.local.example` for required variables. Copy to `.env.local` and configure as needed.
-
-## Database Migrations
-
-### With Docker Compose
-
-```bash
-# Run migrations (if applicable)
-docker-compose exec api alembic upgrade head
-
-# Access PostgreSQL shell
-docker-compose exec postgres psql -U postgres -d nima
-
-# Redis CLI
-docker-compose exec redis redis-cli
-```
-
-## Key Concepts
-
-### Transformer Architecture
-
-- Attention mechanism
-- Positional encoding
-- Multi-head attention
-- Feed-forward networks
-- Layer normalization
-
-### Training Process
-
-- Loss function (cross-entropy)
-- Optimizer (Adam)
-- Learning rate scheduling
-- Gradient clipping
-- Checkpointing
-
-### Evaluation Metrics
-
-- Loss (lower is better)
-- Perplexity (lower is better)
-- Generated text quality
+- **Transformer**: Attention mechanism, positional encoding, multi-head attention
+- **Training**: Loss (cross-entropy), optimizer (Adam), learning rate scheduling
+- **Evaluation**: Loss and perplexity (lower is better)
 
 ## Important Notes
 
-- **Educational focus** - Code should be readable and well-commented
-- **Small scale** - Designed for learning, not production
-- **Experiments** - Keep in `experiments/` directory (gitignored)
-- **Configs** - Use YAML for easy experimentation
-- **TensorBoard** - Use for monitoring training progress
-
-## Documentation
-
-- `README.md` - Quick start and overview
-- `docs/training.md` - Training guide
-- `docs/architecture.md` - Model architecture
-- `docs/getting_started.md` - Beginner guide
-
-## Learning Path
-
-1. **Beginner**: Run Shakespeare example, watch TensorBoard
-2. **Intermediate**: Train on own data, experiment with configs
-3. **Advanced**: Modify architecture, implement new features
+- **Educational focus** - Readable, well-commented code
+- **Small scale** - Learning, not production
+- **Experiments** - Keep in `experiments/` (gitignored)
+- **TensorBoard** - Monitor training progress
