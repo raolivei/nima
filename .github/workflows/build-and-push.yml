@@ -33,6 +33,10 @@ on:
         required: false
         default: "latest"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME_API: ghcr.io/raolivei/nima-api
