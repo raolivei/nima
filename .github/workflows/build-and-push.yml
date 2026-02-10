@@ -2,11 +2,7 @@ name: Build and Push Docker Images
 
 on:
   push:
-    branches:
-      - main
-      - dev
-    tags:
-      - "v*"
+    branches: [main]
     paths:
       - "api/**"
       - "src/**"
@@ -16,181 +12,35 @@ on:
       - "VERSION"
       - ".github/workflows/build-and-push.yml"
   pull_request:
-    branches:
-      - main
+    branches: [main]
     paths:
       - "api/**"
       - "src/**"
       - "frontend-chat/**"
       - "Dockerfile"
       - "frontend-chat/Dockerfile"
-      - "VERSION"
-      - ".github/workflows/build-and-push.yml"
   workflow_dispatch:
-    inputs:
-      tag:
-        description: "Image tag (e.g., v1.0.0)"
-        required: false
-        default: "latest"
+
+permissions:
+  contents: read
+  packages: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME_API: ghcr.io/raolivei/nima-api
-  IMAGE_NAME_FRONTEND: ghcr.io/raolivei/nima-frontend
-
 jobs:
-  prepare:
-    name: Prepare Build Metadata
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    outputs:
-      version: ${{ steps.package-version.outputs.version }}
-      api-tags: ${{ steps.meta-api.outputs.tags }}
-      api-labels: ${{ steps.meta-api.outputs.labels }}
-      frontend-tags: ${{ steps.meta-frontend.outputs.tags }}
-      frontend-labels: ${{ steps.meta-frontend.outputs.labels }}
-      api-sha-tag: ${{ steps.get-sha-tags.outputs.api_tag }}
-      frontend-sha-tag: ${{ steps.get-sha-tags.outputs.frontend_tag }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Extract version
-        id: package-version
-        run: |
-          VERSION=$(cat VERSION | tr -d '[:space:]')
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Version: v$VERSION"
-
-      - name: Extract metadata for API
-        id: meta-api
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.IMAGE_NAME_API }}
-          tags: |
-            type=semver,pattern=v{{version}},value=v${{ steps.package-version.outputs.version }}
-            type=semver,pattern=v{{major}}.{{minor}},value=v${{ steps.package-version.outputs.version }}
-            type=semver,pattern=v{{major}},value=v${{ steps.package-version.outputs.version }}
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha,prefix={{branch}}-,enable={{is_default_branch}}
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=raw,value=${{ github.event.inputs.tag }},enable=${{ github.event.inputs.tag != '' }}
-
-      - name: Extract metadata for Frontend
-        id: meta-frontend
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.IMAGE_NAME_FRONTEND }}
-          tags: |
-            type=semver,pattern=v{{version}},value=v${{ steps.package-version.outputs.version }}
-            type=semver,pattern=v{{major}}.{{minor}},value=v${{ steps.package-version.outputs.version }}
-            type=semver,pattern=v{{major}},value=v${{ steps.package-version.outputs.version }}
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha,prefix={{branch}}-,enable={{is_default_branch}}
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=raw,value=${{ github.event.inputs.tag }},enable=${{ github.event.inputs.tag != '' }}
-
-      - name: Get SHA tags for deployment
-        id: get-sha-tags
-        if: github.event_name != 'pull_request'
-        run: |
-          # Extract SHA tag (format: branch-sha) from tags
-          API_TAG=$(echo "${{ steps.meta-api.outputs.tags }}" | tr ' ' '\n' | grep -E '[a-z]+-[a-f0-9]{7,}' | head -1 || echo "${{ github.sha }}")
-          FRONTEND_TAG=$(echo "${{ steps.meta-frontend.outputs.tags }}" | tr ' ' '\n' | grep -E '[a-z]+-[a-f0-9]{7,}' | head -1 || echo "${{ github.sha }}")
-          echo "api_tag=${API_TAG}" >> $GITHUB_OUTPUT
-          echo "frontend_tag=${FRONTEND_TAG}" >> $GITHUB_OUTPUT
-
   build-api:
-    name: Build and Push API Image
-    runs-on: ubuntu-latest
-    needs: prepare
-    timeout-minutes: 30
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Log in to GitHub Container Registry
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build and push API image
-        id: build-api
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          # For PR builds, use single platform (faster). For main/dev, use multi-platform
-          platforms: ${{ github.event_name == 'pull_request' && 'linux/amd64' || 'linux/amd64,linux/arm64' }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ needs.prepare.outputs.api-tags }}
-          labels: ${{ needs.prepare.outputs.api-labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: Output image info
-        if: github.event_name != 'pull_request'
-        run: |
-          echo "API image pushed with digest ${{ steps.build-api.outputs.digest }}"
-          echo "API image tags:"
-          echo "${{ needs.prepare.outputs.api-tags }}" | tr ' ' '\n'
+    uses: raolivei/github-workflows/.github/workflows/docker-build.yml@main
+    with:
+      image-name: nima-api
+    secrets:
+      REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-frontend:
-    name: Build and Push Frontend Image
-    runs-on: ubuntu-latest
-    needs: prepare
-    timeout-minutes: 30
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Log in to GitHub Container Registry
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build and push Frontend image
-        id: build-frontend
-        uses: docker/build-push-action@v5
-        with:
-          context: ./frontend-chat
-          file: ./frontend-chat/Dockerfile
-          # For PR builds, use single platform (faster). For main/dev, use multi-platform
-          platforms: ${{ github.event_name == 'pull_request' && 'linux/amd64' || 'linux/amd64,linux/arm64' }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ needs.prepare.outputs.frontend-tags }}
-          labels: ${{ needs.prepare.outputs.frontend-labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: Output image info
-        if: github.event_name != 'pull_request'
-        run: |
-          echo "Frontend image pushed with digest ${{ steps.build-frontend.outputs.digest }}"
-          echo "Frontend image tags:"
-          echo "${{ needs.prepare.outputs.frontend-tags }}" | tr ' ' '\n'
+    uses: raolivei/github-workflows/.github/workflows/docker-build.yml@main
+    with:
+      image-name: nima-frontend
+      context: ./frontend-chat
+    secrets:
+      REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
