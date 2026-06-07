@@ -13,7 +13,7 @@ permissions:
 jobs:
   update-issues:
     name: Update Linked Issues and Project Status
-    runs-on: ubuntu-latest
+    runs-on: ['self-hosted']
     if: github.event.pull_request.state == 'closed'
 
     steps:
